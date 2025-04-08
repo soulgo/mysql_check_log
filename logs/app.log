@@ -12345,3 +12345,1246 @@ UnboundLocalError: local variable 'hour' referenced before assignment
 2025-04-08 11:35:54,802 - __main__ - INFO - 筛选后的活动数据条数: 50 / 总数: 190
 2025-04-08 11:35:54,808 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 11:35:54] "GET /api/activities?server_id=&start_date=2025-04-02&end_date=2025-04-08&operation_type=&risk_level=&user_name=&page=1&limit=50 HTTP/1.1" 200 -
 2025-04-08 11:35:54,809 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 11:35:54] "GET /api/stats?server_id=&start_date=2025-04-02&end_date=2025-04-08 HTTP/1.1" 200 -
+2025-04-08 12:00:57,000 - models - INFO - user_activities 表检查/创建成功。
+2025-04-08 12:00:57,001 - __main__ - INFO - 数据库初始化成功或已存在。
+2025-04-08 12:00:57,019 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.100:5000
+2025-04-08 12:00:57,019 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-08 12:00:57,020 - werkzeug - INFO -  * Restarting with stat
+2025-04-08 12:00:57,357 - models - INFO - user_activities 表检查/创建成功。
+2025-04-08 12:00:57,358 - __main__ - INFO - 数据库初始化成功或已存在。
+2025-04-08 12:00:57,368 - werkzeug - WARNING -  * Debugger is active!
+2025-04-08 12:00:57,373 - werkzeug - INFO -  * Debugger PIN: 644-570-453
+2025-04-08 12:01:00,231 - __main__ - INFO - 从 config.py 加载的 server_options: [{'id': 1, 'name': 'MySQL服务器1'}]
+2025-04-08 12:01:00,237 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 12:01:00] "GET / HTTP/1.1" 200 -
+2025-04-08 12:01:00,345 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 12:01:00] "GET /static/js/main.js HTTP/1.1" 200 -
+2025-04-08 12:01:00,346 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 12:01:00] "GET /static/css/style.css HTTP/1.1" 200 -
+2025-04-08 12:01:02,874 - __main__ - INFO - 接收到的活动请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08, operation_type=, risk_level=, user_name=
+2025-04-08 12:01:02,874 - __main__ - INFO - 接收到的统计请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08
+2025-04-08 12:01:02,900 - __main__ - INFO - 筛选后的活动数据条数: 0 / 总数: 0
+2025-04-08 12:01:02,900 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 12:01:02] "GET /api/activities?server_id=&start_date=2025-04-02&end_date=2025-04-08&operation_type=&risk_level=&user_name=&page=1&limit=50 HTTP/1.1" 200 -
+2025-04-08 12:01:02,902 - models - ERROR - 获取操作统计信息时发生意外错误: local variable 'hour' referenced before assignment
+Traceback (most recent call last):
+  File "C:\Users\ljq90\Desktop\mysql_check_log\models.py", line 140, in get_operation_stats
+    if hour is not None: hourly_stats[hour] = row.get('count', 0); stats['hourly_distribution'] = hourly_stats
+UnboundLocalError: local variable 'hour' referenced before assignment
+2025-04-08 12:01:02,903 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 12:01:02] "GET /api/stats?server_id=&start_date=2025-04-02&end_date=2025-04-08 HTTP/1.1" 200 -
+2025-04-08 12:01:27,508 - __main__ - INFO - 收到扫描请求: server_id_to_scan=1
+2025-04-08 12:01:27,509 - __main__ - INFO - 开始扫描特定服务器 (来自 config.py): Name=MySQL服务器1, ID=1
+2025-04-08 12:01:27,509 - log_parser - INFO - 将只写入风险等级为 {'Medium', 'High'} 的记录。
+2025-04-08 12:01:27,509 - log_parser - INFO - 开始扫描服务器日志目录: Name=MySQL服务器1, Host=192.168.10.129, ID(Config)=1, LogDir=/data/general_log
+2025-04-08 12:01:27,553 - paramiko.transport - INFO - Connected (version 2.0, client OpenSSH_7.4)
+2025-04-08 12:01:27,993 - paramiko.transport - INFO - Authentication (publickey) failed.
+2025-04-08 12:01:28,011 - paramiko.transport - INFO - Authentication (password) successful!
+2025-04-08 12:01:28,013 - log_parser - INFO - SSH 已使用密码连接到 root@192.168.10.129:22。
+2025-04-08 12:01:28,090 - paramiko.transport.sftp - INFO - [chan 0] Opened sftp connection (server version 3)
+2025-04-08 12:01:28,091 - log_parser - INFO - SFTP 连接已建立，准备列出目录: /data/general_log
+2025-04-08 12:01:28,097 - log_parser - INFO - 选择最新的 .log 文件进行扫描: /data/general_log/SJZDXT-SJKFWQ-004-2025-04-02.log (修改时间: 2025-04-08 12:00:29)
+2025-04-08 12:01:28,097 - log_parser - INFO - 正在打开日志文件流: /data/general_log/SJZDXT-SJKFWQ-004-2025-04-02.log
+2025-04-08 12:01:28,102 - log_parser - INFO - L2: Connect: Thread 849 -> User=wushan, Host=59.219.58.69
+2025-04-08 12:01:28,106 - log_parser - INFO - L11: Connect: Thread 850 -> User=wushan, Host=59.219.58.69
+2025-04-08 12:01:28,107 - log_parser - INFO - L20: Connect: Thread 851 -> User=wushan, Host=59.219.58.69
+2025-04-08 12:01:28,108 - log_parser - INFO - L35: Connect: Thread 852 -> User=wushan, Host=59.219.58.69
+2025-04-08 12:01:28,117 - log_parser - INFO - L138: Connect: Thread 853 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:01:28,118 - log_parser - INFO - L145: Connect: Thread 854 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:01:28,118 - log_parser - INFO - L163: Connect: Thread 855 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:01:28,120 - log_parser - INFO - L172: Connect: Thread 856 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:01:28,122 - log_parser - INFO - L189: Connect: Thread 857 -> User=wushan, Host=59.219.58.69
+2025-04-08 12:01:28,122 - log_parser - INFO - L200: Connect: Thread 858 -> User=wushan, Host=59.219.58.69
+2025-04-08 12:01:28,122 - log_parser - INFO - L206: Connect: Thread 859 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:01:28,122 - log_parser - INFO - L218: Connect: Thread 860 -> User=wushan, Host=59.219.58.69
+2025-04-08 12:01:28,126 - log_parser - INFO - L344: Connect: Thread 861 -> User=wushan, Host=59.219.58.69
+2025-04-08 12:01:28,127 - log_parser - INFO - L364: Connect: Thread 862 -> User=wushan, Host=59.219.58.69
+2025-04-08 12:01:28,129 - log_parser - INFO - L458: Connect: Thread 863 -> User=wushan, Host=59.219.58.69
+2025-04-08 12:01:28,133 - log_parser - INFO - L573: Connect: Thread 864 -> User=wushan, Host=59.219.58.69
+2025-04-08 12:01:28,133 - log_parser - INFO - L577: Connect: Thread 865 -> User=wushan, Host=59.219.58.69
+2025-04-08 12:01:28,134 - log_parser - INFO - L593: Connect: Thread 866 -> User=wushan, Host=59.219.58.69
+2025-04-08 12:01:28,134 - log_parser - INFO - L596: Connect: Thread 867 -> User=wushan, Host=59.219.58.69
+2025-04-08 12:01:28,134 - log_parser - INFO - L604: Connect: Thread 868 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:01:28,135 - log_parser - INFO - L612: Connect: Thread 869 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:01:28,138 - log_parser - INFO - L619: Connect: Thread 870 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:01:28,139 - log_parser - INFO - L627: Connect: Thread 871 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:01:28,141 - log_parser - INFO - L635: Connect: Thread 872 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:01:28,146 - log_parser - INFO - L896: Connect: Thread 873 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:01:28,147 - log_parser - INFO - L904: Connect: Thread 874 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:01:28,147 - log_parser - INFO - L912: Connect: Thread 875 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:01:28,148 - log_parser - INFO - L920: Connect: Thread 876 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:01:28,149 - log_parser - INFO - L975: Connect: Thread 877 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:01:28,149 - log_parser - INFO - L982: Connect: Thread 878 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:01:28,150 - log_parser - INFO - L1000: Connect: Thread 879 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:01:28,153 - log_parser - INFO - L1090: Connect: Thread 880 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:01:28,154 - log_parser - INFO - L1095: Connect: Thread 881 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:01:28,154 - log_parser - INFO - L1102: Connect: Thread 882 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:01:28,155 - log_parser - INFO - L1120: Connect: Thread 883 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:01:28,160 - log_parser - INFO - L1461: Connect: Thread 884 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:01:28,161 - log_parser - INFO - L1468: Connect: Thread 885 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:01:28,162 - log_parser - INFO - L1486: Connect: Thread 886 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:01:28,163 - log_parser - INFO - L1517: Connect: Thread 887 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:01:28,163 - log_parser - INFO - L1522: Connect: Thread 888 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:01:28,164 - log_parser - INFO - L1529: Connect: Thread 889 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:01:28,165 - log_parser - INFO - L1547: Connect: Thread 890 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:01:28,170 - log_parser - INFO - L1630: Connect: Thread 891 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:01:28,174 - log_parser - INFO - L1648: Connect: Thread 892 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:01:28,210 - log_parser - INFO - L1676: Connect: Thread 893 -> User=lc, Host=172.101.7.2
+2025-04-08 12:01:28,211 - log_parser - INFO - L1681: Connect: Thread 894 -> User=lc, Host=172.101.7.2
+2025-04-08 12:01:28,211 - log_parser - INFO - L1686: Connect: Thread 895 -> User=lc, Host=172.101.7.2
+2025-04-08 12:01:28,211 - log_parser - INFO - L1692: Connect: Thread 896 -> User=lc, Host=172.101.7.2
+2025-04-08 12:01:28,212 - log_parser - INFO - L1699: Connect: Thread 897 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:01:28,212 - log_parser - INFO - L1708: Connect: Thread 898 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:01:28,215 - log_parser - INFO - L1788: Connect: Thread 899 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:01:28,218 - log_parser - INFO - L1913: Connect: Thread 900 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:01:28,222 - log_parser - INFO - L2049: Connect: Thread 901 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:01:28,222 - log_parser - INFO - L2058: Connect: Thread 902 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:01:28,224 - log_parser - INFO - L2089: Connect: Thread 904 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:01:28,224 - log_parser - INFO - L2091: Connect: Thread 903 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:01:28,225 - log_parser - INFO - L2127: Connect: Thread 905 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:01:28,225 - log_parser - INFO - L2136: Connect: Thread 906 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:01:28,226 - log_parser - INFO - L2167: Connect: Thread 908 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:01:28,226 - log_parser - INFO - L2168: Connect: Thread 907 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:01:28,226 - log_parser - INFO - L2169: Connect: Thread 909 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:01:28,227 - log_parser - INFO - L2216: Connect: Thread 910 -> User=lc, Host=59.219.183.30
+2025-04-08 12:01:28,227 - log_parser - INFO - L2225: Connect: Thread 911 -> User=lc, Host=59.219.183.30
+2025-04-08 12:01:28,231 - log_parser - INFO - L2249: Connect: Thread 912 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:01:28,231 - log_parser - INFO - L2261: Connect: Thread 913 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:01:28,231 - log_parser - INFO - L2278: Connect: Thread 914 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:01:28,232 - log_parser - INFO - L2285: Connect: Thread 915 -> User=gangu, Host=59.219.55.107
+2025-04-08 12:01:28,232 - log_parser - INFO - L2295: Connect: Thread 916 -> User=gangu, Host=59.219.55.107
+2025-04-08 12:01:28,232 - log_parser - INFO - L2304: Connect: Thread 917 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:01:28,233 - log_parser - INFO - L2308: Connect: Thread 918 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:01:35,214 - log_parser - INFO - L2459: Connect: Thread 919 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:01:35,214 - log_parser - INFO - L2460: Connect: Thread 921 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:01:35,215 - log_parser - INFO - L2461: Connect: Thread 920 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:01:35,215 - log_parser - INFO - L2478: Connect: Thread 922 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:01:35,217 - log_parser - INFO - L2490: Connect: Thread 923 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:01:35,220 - log_parser - INFO - L2512: Connect: Thread 924 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:01:39,764 - log_parser - INFO - L2743: Connect: Thread 925 -> User=gangu, Host=59.219.55.107
+2025-04-08 12:01:39,766 - log_parser - INFO - L2794: Connect: Thread 926 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:01:39,768 - log_parser - INFO - L2803: Connect: Thread 927 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:01:39,770 - log_parser - INFO - L2815: Connect: Thread 928 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:01:44,254 - log_parser - INFO - L2889: Connect: Thread 929 -> User=gangu, Host=59.219.55.107
+2025-04-08 12:01:58,875 - log_parser - INFO - L6564: Connect: Thread 930 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:02:12,258 - log_parser - INFO - 已处理 10000 行日志...
+2025-04-08 12:02:13,149 - log_parser - INFO - L10238: Connect: Thread 931 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:02:13,151 - log_parser - INFO - L10263: Connect: Thread 933 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:02:13,152 - log_parser - INFO - L10264: Connect: Thread 934 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:02:13,153 - log_parser - INFO - L10266: Connect: Thread 932 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:02:13,168 - log_parser - INFO - L10526: Connect: Thread 935 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:02:13,168 - log_parser - INFO - L10535: Connect: Thread 936 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:02:13,170 - log_parser - INFO - L10558: Connect: Thread 937 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:02:29,855 - log_parser - INFO - L10804: Connect: Thread 938 -> User=gangu, Host=59.219.55.107
+2025-04-08 12:02:29,856 - log_parser - INFO - L10832: Connect: Thread 939 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:02:29,856 - log_parser - INFO - L10843: Connect: Thread 940 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:02:29,859 - log_parser - INFO - L10861: Connect: Thread 941 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:02:29,865 - log_parser - INFO - L11044: Connect: Thread 942 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:02:29,866 - log_parser - INFO - L11060: Connect: Thread 943 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:02:29,866 - log_parser - INFO - L11074: Connect: Thread 944 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:02:29,866 - log_parser - INFO - L11086: Connect: Thread 945 -> User=lc, Host=59.219.183.30
+2025-04-08 12:02:29,866 - log_parser - INFO - L11093: Connect: Thread 946 -> User=lc, Host=59.219.183.30
+2025-04-08 12:02:29,868 - log_parser - INFO - L11115: Connect: Thread 947 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:02:29,870 - log_parser - INFO - L11122: Connect: Thread 948 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:02:29,871 - log_parser - INFO - L11168: Connect: Thread 949 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:02:29,872 - log_parser - INFO - L11170: Connect: Thread 950 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:02:29,874 - log_parser - INFO - L11195: Connect: Thread 951 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:02:29,874 - log_parser - INFO - L11202: Connect: Thread 952 -> User=gangu, Host=59.219.55.107
+2025-04-08 12:02:29,875 - log_parser - INFO - L11205: Connect: Thread 953 -> User=gangu, Host=59.219.55.107
+2025-04-08 12:02:29,877 - log_parser - INFO - L11214: Connect: Thread 954 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:02:29,877 - log_parser - INFO - L11226: Connect: Thread 955 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:02:29,878 - log_parser - INFO - L11256: Connect: Thread 956 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:02:29,881 - log_parser - INFO - L11330: Connect: Thread 957 -> User=lc, Host=59.219.183.30
+2025-04-08 12:02:29,881 - log_parser - INFO - L11335: Connect: Thread 958 -> User=lc, Host=59.219.183.30
+2025-04-08 12:02:31,436 - log_parser - INFO - 已处理 20000 行日志...
+2025-04-08 12:02:33,212 - log_parser - INFO - 已处理 30000 行日志...
+2025-04-08 12:02:35,134 - log_parser - INFO - 已处理 40000 行日志...
+2025-04-08 12:02:37,049 - log_parser - INFO - 已处理 50000 行日志...
+2025-04-08 12:02:38,670 - log_parser - INFO - 已处理 60000 行日志...
+2025-04-08 12:02:40,308 - log_parser - INFO - 已处理 70000 行日志...
+2025-04-08 12:02:42,157 - log_parser - INFO - 已处理 80000 行日志...
+2025-04-08 12:02:43,853 - log_parser - INFO - 已处理 90000 行日志...
+2025-04-08 12:02:45,496 - log_parser - INFO - 已处理 100000 行日志...
+2025-04-08 12:02:47,432 - log_parser - INFO - 已处理 110000 行日志...
+2025-04-08 12:02:49,339 - log_parser - INFO - 已处理 120000 行日志...
+2025-04-08 12:02:51,163 - log_parser - INFO - 已处理 130000 行日志...
+2025-04-08 12:02:52,704 - log_parser - INFO - 已处理 140000 行日志...
+2025-04-08 12:02:54,429 - log_parser - INFO - 已处理 150000 行日志...
+2025-04-08 12:02:56,425 - log_parser - INFO - 已处理 160000 行日志...
+2025-04-08 12:02:58,416 - log_parser - INFO - 已处理 170000 行日志...
+2025-04-08 12:03:00,001 - log_parser - INFO - 已处理 180000 行日志...
+2025-04-08 12:03:01,934 - log_parser - INFO - 已处理 190000 行日志...
+2025-04-08 12:03:03,926 - log_parser - INFO - 已处理 200000 行日志...
+2025-04-08 12:03:05,767 - log_parser - INFO - 已处理 210000 行日志...
+2025-04-08 12:03:07,880 - log_parser - INFO - 已处理 220000 行日志...
+2025-04-08 12:03:09,924 - log_parser - INFO - 已处理 230000 行日志...
+2025-04-08 12:03:11,936 - log_parser - INFO - 已处理 240000 行日志...
+2025-04-08 12:03:13,621 - log_parser - INFO - 已处理 250000 行日志...
+2025-04-08 12:03:15,538 - log_parser - INFO - 已处理 260000 行日志...
+2025-04-08 12:03:17,517 - log_parser - INFO - 已处理 270000 行日志...
+2025-04-08 12:03:19,408 - log_parser - INFO - 已处理 280000 行日志...
+2025-04-08 12:03:21,423 - log_parser - INFO - 已处理 290000 行日志...
+2025-04-08 12:03:23,143 - log_parser - INFO - 已处理 300000 行日志...
+2025-04-08 12:03:24,994 - log_parser - INFO - 已处理 310000 行日志...
+2025-04-08 12:03:27,028 - log_parser - INFO - 已处理 320000 行日志...
+2025-04-08 12:03:28,853 - log_parser - INFO - 已处理 330000 行日志...
+2025-04-08 12:03:30,727 - log_parser - INFO - 已处理 340000 行日志...
+2025-04-08 12:03:32,499 - log_parser - INFO - 已处理 350000 行日志...
+2025-04-08 12:03:34,507 - log_parser - INFO - 已处理 360000 行日志...
+2025-04-08 12:03:36,226 - log_parser - INFO - 已处理 370000 行日志...
+2025-04-08 12:03:38,242 - log_parser - INFO - 已处理 380000 行日志...
+2025-04-08 12:03:40,006 - log_parser - INFO - 已处理 390000 行日志...
+2025-04-08 12:03:41,652 - log_parser - INFO - 已处理 400000 行日志...
+2025-04-08 12:03:43,275 - log_parser - INFO - 已处理 410000 行日志...
+2025-04-08 12:03:44,783 - log_parser - INFO - 已处理 420000 行日志...
+2025-04-08 12:03:46,524 - log_parser - INFO - 已处理 430000 行日志...
+2025-04-08 12:03:48,354 - log_parser - INFO - 已处理 440000 行日志...
+2025-04-08 12:03:50,271 - log_parser - INFO - 已处理 450000 行日志...
+2025-04-08 12:03:51,866 - log_parser - INFO - 已处理 460000 行日志...
+2025-04-08 12:03:53,869 - log_parser - INFO - 已处理 470000 行日志...
+2025-04-08 12:03:55,660 - log_parser - INFO - 已处理 480000 行日志...
+2025-04-08 12:03:57,680 - log_parser - INFO - 已处理 490000 行日志...
+2025-04-08 12:03:59,227 - log_parser - INFO - 已处理 500000 行日志...
+2025-04-08 12:04:01,139 - log_parser - INFO - 已处理 510000 行日志...
+2025-04-08 12:04:03,102 - log_parser - INFO - 已处理 520000 行日志...
+2025-04-08 12:04:04,823 - log_parser - INFO - 已处理 530000 行日志...
+2025-04-08 12:04:06,606 - log_parser - INFO - 已处理 540000 行日志...
+2025-04-08 12:04:08,557 - log_parser - INFO - 已处理 550000 行日志...
+2025-04-08 12:04:10,501 - log_parser - INFO - 已处理 560000 行日志...
+2025-04-08 12:04:12,315 - log_parser - INFO - 已处理 570000 行日志...
+2025-04-08 12:04:14,020 - log_parser - INFO - 已处理 580000 行日志...
+2025-04-08 12:04:16,101 - log_parser - INFO - 已处理 590000 行日志...
+2025-04-08 12:04:18,047 - log_parser - INFO - 已处理 600000 行日志...
+2025-04-08 12:04:19,870 - log_parser - INFO - 已处理 610000 行日志...
+2025-04-08 12:04:21,524 - log_parser - INFO - 已处理 620000 行日志...
+2025-04-08 12:04:22,769 - log_parser - INFO - L628291: Connect: Thread 959 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:04:23,136 - log_parser - INFO - 已处理 630000 行日志...
+2025-04-08 12:04:24,021 - log_parser - INFO - L635623: Connect: Thread 960 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:04:24,024 - log_parser - INFO - L635758: Connect: Thread 961 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:04:24,024 - log_parser - INFO - L635777: Connect: Thread 962 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:04:24,024 - log_parser - INFO - L635808: Connect: Thread 963 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:04:24,026 - log_parser - INFO - L635813: Connect: Thread 964 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:04:24,027 - log_parser - INFO - L635907: Connect: Thread 965 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:04:24,027 - log_parser - INFO - L635930: Connect: Thread 966 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:04:24,029 - log_parser - INFO - L635948: Connect: Thread 967 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:04:24,030 - log_parser - INFO - L636086: Connect: Thread 968 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:04:24,032 - log_parser - INFO - L636106: Connect: Thread 969 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:04:24,033 - log_parser - INFO - L636175: Connect: Thread 970 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:04:24,035 - log_parser - INFO - L636203: Connect: Thread 971 -> User=gangu, Host=59.219.55.107
+2025-04-08 12:04:24,039 - log_parser - INFO - L636214: Connect: Thread 972 -> User=gangu, Host=59.219.55.107
+2025-04-08 12:04:36,381 - log_parser - INFO - L636455: Connect: Thread 973 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:04:36,382 - log_parser - INFO - L636463: Connect: Thread 974 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:04:36,383 - log_parser - INFO - L636473: Connect: Thread 975 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:04:36,394 - log_parser - INFO - L636593: Connect: Thread 976 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:04:36,396 - log_parser - INFO - L636600: Connect: Thread 977 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:04:36,398 - log_parser - INFO - L636618: Connect: Thread 978 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:04:36,401 - log_parser - INFO - L636641: Connect: Thread 979 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:04:36,406 - log_parser - INFO - L636685: Connect: Thread 980 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:04:36,409 - log_parser - INFO - L636710: Connect: Thread 981 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 12:04:47,252 - log_parser - INFO - L637158: Connect: Thread 982 -> User=gangu, Host=59.219.55.107
+2025-04-08 12:04:48,834 - log_parser - INFO - L637241: Connect: Thread 983 -> User=gangu, Host=59.219.55.107
+2025-04-08 12:04:52,259 - log_parser - INFO - L637357: Connect: Thread 984 -> User=gangu, Host=59.219.55.107
+2025-04-08 12:04:52,259 - log_parser - INFO - L637363: Connect: Thread 985 -> User=gangu, Host=59.219.55.107
+2025-04-08 12:04:52,260 - log_parser - INFO - L637366: Connect: Thread 986 -> User=gangu, Host=59.219.55.107
+2025-04-08 12:05:13,748 - log_parser - INFO - L637789: Connect: Thread 987 -> User=gangu, Host=59.219.55.107
+2025-04-08 12:05:13,751 - log_parser - INFO - L637792: Connect: Thread 988 -> User=gangu, Host=59.219.55.107
+2025-04-08 12:05:13,752 - log_parser - INFO - L637817: Connect: Thread 989 -> User=lc, Host=172.101.7.2
+2025-04-08 12:05:13,753 - log_parser - INFO - L637828: Connect: Thread 990 -> User=lc, Host=172.101.7.2
+2025-04-08 12:05:13,758 - log_parser - INFO - L637845: Connect: Thread 991 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:05:13,759 - log_parser - INFO - L637864: Connect: Thread 992 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:05:13,762 - log_parser - INFO - L637872: Connect: Thread 993 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:05:13,762 - log_parser - INFO - L637879: Connect: Thread 994 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:05:13,767 - log_parser - INFO - L637896: Connect: Thread 995 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:05:13,769 - log_parser - INFO - L637904: Connect: Thread 996 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:05:13,769 - log_parser - INFO - L637913: Connect: Thread 997 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:05:13,770 - log_parser - INFO - L637922: Connect: Thread 998 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:05:13,772 - log_parser - INFO - L637931: Connect: Thread 999 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:05:13,772 - log_parser - INFO - L637940: Connect: Thread 1000 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:05:13,773 - log_parser - INFO - L637949: Connect: Thread 1001 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:05:13,775 - log_parser - INFO - L637958: Connect: Thread 1002 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:05:13,775 - log_parser - INFO - L637967: Connect: Thread 1003 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:05:13,776 - log_parser - INFO - L637976: Connect: Thread 1004 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:05:13,777 - log_parser - INFO - L637986: Connect: Thread 1005 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:05:13,777 - log_parser - INFO - L637995: Connect: Thread 1006 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:05:13,777 - log_parser - INFO - L638004: Connect: Thread 1007 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:05:13,778 - log_parser - INFO - L638013: Connect: Thread 1008 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:05:13,780 - log_parser - INFO - L638022: Connect: Thread 1009 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:05:13,780 - log_parser - INFO - L638031: Connect: Thread 1010 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:05:13,781 - log_parser - INFO - L638040: Connect: Thread 1011 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:05:13,781 - log_parser - INFO - L638049: Connect: Thread 1012 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:05:13,782 - log_parser - INFO - L638058: Connect: Thread 1013 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:05:13,783 - log_parser - INFO - L638067: Connect: Thread 1014 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:05:13,784 - log_parser - INFO - L638076: Connect: Thread 1015 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:05:13,785 - log_parser - INFO - L638084: Connect: Thread 1016 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:05:13,794 - log_parser - INFO - L638093: Connect: Thread 1017 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:05:13,800 - log_parser - INFO - L638102: Connect: Thread 1018 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:05:13,802 - log_parser - INFO - L638111: Connect: Thread 1019 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:05:13,803 - log_parser - INFO - L638120: Connect: Thread 1020 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:05:13,804 - log_parser - INFO - L638129: Connect: Thread 1021 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:05:13,805 - log_parser - INFO - L638138: Connect: Thread 1022 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:05:13,808 - log_parser - INFO - L638147: Connect: Thread 1023 -> User=tsrh, Host=59.219.204.120
+2025-04-08 12:05:13,810 - log_parser - INFO - 日志流处理完成，共处理 638189 行，解析出 637099 个潜在活动记录。
+2025-04-08 12:05:13,810 - log_parser - INFO - 处理最后一批 85 条记录...
+2025-04-08 12:05:13,837 - models - INFO - 成功批量插入 85/85 条活动记录。
+2025-04-08 12:05:13,838 - log_parser - INFO - 扫描完成: 共处理 637099 条潜在活动, 成功添加 85 条记录到数据库。
+2025-04-08 12:05:13,840 - log_parser - INFO - SFTP 文件流已关闭 (192.168.10.129)。
+2025-04-08 12:05:13,840 - paramiko.transport.sftp - INFO - [chan 0] sftp session closed.
+2025-04-08 12:05:13,840 - log_parser - INFO - SFTP 连接已关闭 (192.168.10.129)。
+2025-04-08 12:05:13,841 - log_parser - INFO - SSH 连接已关闭 (192.168.10.129)。
+2025-04-08 12:05:13,841 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 12:05:13] "POST /api/scan HTTP/1.1" 200 -
+2025-04-08 12:05:13,855 - __main__ - INFO - 接收到的活动请求参数: server_id=1, start_date=2025-04-02, end_date=2025-04-08, operation_type=, risk_level=, user_name=
+2025-04-08 12:05:13,858 - __main__ - INFO - 接收到的统计请求参数: server_id=1, start_date=2025-04-02, end_date=2025-04-08
+2025-04-08 12:05:13,863 - __main__ - INFO - 筛选后的活动数据条数: 50 / 总数: 85
+2025-04-08 12:05:13,867 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 12:05:13] "GET /api/activities?server_id=1&start_date=2025-04-02&end_date=2025-04-08&operation_type=&risk_level=&user_name=&page=1&limit=50 HTTP/1.1" 200 -
+2025-04-08 12:05:13,873 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 12:05:13] "GET /api/stats?server_id=1&start_date=2025-04-02&end_date=2025-04-08 HTTP/1.1" 200 -
+2025-04-08 12:06:48,260 - __main__ - INFO - 接收到的活动请求参数: server_id=1, start_date=2025-03-10, end_date=2025-04-08, operation_type=, risk_level=, user_name=
+2025-04-08 12:06:48,262 - __main__ - INFO - 接收到的统计请求参数: server_id=1, start_date=2025-03-10, end_date=2025-04-08
+2025-04-08 12:06:48,272 - __main__ - INFO - 筛选后的活动数据条数: 50 / 总数: 85
+2025-04-08 12:06:48,274 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 12:06:48] "GET /api/activities?server_id=1&start_date=2025-03-10&end_date=2025-04-08&operation_type=&risk_level=&user_name=&page=1&limit=50 HTTP/1.1" 200 -
+2025-04-08 12:06:48,278 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 12:06:48] "GET /api/stats?server_id=1&start_date=2025-03-10&end_date=2025-04-08 HTTP/1.1" 200 -
+2025-04-08 12:06:56,500 - __main__ - INFO - 接收到的活动请求参数: server_id=1, start_date=2025-03-10, end_date=2025-04-08, operation_type=, risk_level=, user_name=
+2025-04-08 12:06:56,517 - __main__ - INFO - 筛选后的活动数据条数: 35 / 总数: 85
+2025-04-08 12:06:56,519 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 12:06:56] "GET /api/activities?server_id=1&start_date=2025-03-10&end_date=2025-04-08&operation_type=&risk_level=&user_name=&page=2&limit=50 HTTP/1.1" 200 -
+2025-04-08 12:07:39,612 - models - INFO - user_activities 表检查/创建成功。
+2025-04-08 12:07:39,612 - __main__ - INFO - 数据库初始化成功或已存在。
+2025-04-08 12:07:39,633 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.100:5000
+2025-04-08 12:07:39,633 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-08 12:07:39,634 - werkzeug - INFO -  * Restarting with stat
+2025-04-08 12:07:39,962 - models - INFO - user_activities 表检查/创建成功。
+2025-04-08 12:07:39,964 - __main__ - INFO - 数据库初始化成功或已存在。
+2025-04-08 12:07:39,971 - werkzeug - WARNING -  * Debugger is active!
+2025-04-08 12:07:39,975 - werkzeug - INFO -  * Debugger PIN: 644-570-453
+2025-04-08 12:08:22,614 - __main__ - INFO - 从 config.py 加载的 server_options: [{'id': 1, 'name': 'MySQL服务器1'}]
+2025-04-08 12:08:22,626 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 12:08:22] "GET / HTTP/1.1" 200 -
+2025-04-08 12:08:22,942 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 12:08:22] "GET /static/css/style.css HTTP/1.1" 200 -
+2025-04-08 12:08:22,946 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 12:08:22] "GET /static/js/main.js HTTP/1.1" 200 -
+2025-04-08 12:08:25,013 - __main__ - INFO - 接收到的统计请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08
+2025-04-08 12:08:25,013 - __main__ - INFO - 接收到的活动请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08, operation_type=, risk_level=, user_name=
+2025-04-08 12:08:25,027 - models - ERROR - 获取操作统计信息时发生意外错误: local variable 'hour' referenced before assignment
+Traceback (most recent call last):
+  File "C:\Users\ljq90\Desktop\mysql_check_log\models.py", line 140, in get_operation_stats
+    if hour is not None: hourly_stats[hour] = row.get('count', 0); stats['hourly_distribution'] = hourly_stats
+UnboundLocalError: local variable 'hour' referenced before assignment
+2025-04-08 12:08:25,029 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 12:08:25] "GET /api/stats?server_id=&start_date=2025-04-02&end_date=2025-04-08 HTTP/1.1" 200 -
+2025-04-08 12:08:25,038 - __main__ - INFO - 筛选后的活动数据条数: 0 / 总数: 0
+2025-04-08 12:08:25,038 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 12:08:25] "GET /api/activities?server_id=&start_date=2025-04-02&end_date=2025-04-08&operation_type=&risk_level=&user_name=&page=1&limit=50 HTTP/1.1" 200 -
+2025-04-08 12:08:30,094 - __main__ - INFO - 收到扫描请求: server_id_to_scan=1
+2025-04-08 12:08:30,094 - __main__ - INFO - 开始扫描特定服务器 (来自 config.py): Name=MySQL服务器1, ID=1
+2025-04-08 12:08:30,095 - log_parser - INFO - 将只写入风险等级为 {'Medium', 'High'} 的记录。
+2025-04-08 12:08:30,095 - log_parser - INFO - 开始扫描服务器日志目录: Name=MySQL服务器1, Host=192.168.10.129, ID(Config)=1, LogDir=/data/general_log
+2025-04-08 12:08:30,122 - paramiko.transport - INFO - Connected (version 2.0, client OpenSSH_7.4)
+2025-04-08 12:08:30,596 - paramiko.transport - INFO - Authentication (publickey) failed.
+2025-04-08 12:08:30,618 - paramiko.transport - INFO - Authentication (password) successful!
+2025-04-08 12:08:30,618 - log_parser - INFO - SSH 已使用密码连接到 root@192.168.10.129:22。
+2025-04-08 12:08:30,683 - paramiko.transport.sftp - INFO - [chan 0] Opened sftp connection (server version 3)
+2025-04-08 12:08:30,684 - log_parser - INFO - SFTP 连接已建立，准备列出目录: /data/general_log
+2025-04-08 12:08:30,688 - log_parser - INFO - 选择最新的 .log 文件进行扫描: /data/general_log/SJZDXT-SJKFWQ-004-2025-04-06.log (修改时间: 2025-04-07 01:59:16)
+2025-04-08 12:08:30,688 - log_parser - INFO - 正在打开日志文件流: /data/general_log/SJZDXT-SJKFWQ-004-2025-04-06.log
+2025-04-08 12:08:30,702 - log_parser - INFO - 日志流处理完成，共处理 1 行，解析出 0 个潜在活动记录。
+2025-04-08 12:08:30,702 - log_parser - INFO - 扫描完成: 共处理 0 条潜在活动, 成功添加 0 条记录到数据库。
+2025-04-08 12:08:30,704 - log_parser - INFO - SFTP 文件流已关闭 (192.168.10.129)。
+2025-04-08 12:08:30,704 - paramiko.transport.sftp - INFO - [chan 0] sftp session closed.
+2025-04-08 12:08:30,705 - log_parser - INFO - SFTP 连接已关闭 (192.168.10.129)。
+2025-04-08 12:08:30,705 - log_parser - INFO - SSH 连接已关闭 (192.168.10.129)。
+2025-04-08 12:08:30,706 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 12:08:30] "POST /api/scan HTTP/1.1" 200 -
+2025-04-08 12:08:30,710 - __main__ - INFO - 接收到的活动请求参数: server_id=1, start_date=2025-04-02, end_date=2025-04-08, operation_type=, risk_level=, user_name=
+2025-04-08 12:08:30,711 - __main__ - INFO - 接收到的统计请求参数: server_id=1, start_date=2025-04-02, end_date=2025-04-08
+2025-04-08 12:08:30,717 - __main__ - INFO - 筛选后的活动数据条数: 0 / 总数: 0
+2025-04-08 12:08:30,718 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 12:08:30] "GET /api/activities?server_id=1&start_date=2025-04-02&end_date=2025-04-08&operation_type=&risk_level=&user_name=&page=1&limit=50 HTTP/1.1" 200 -
+2025-04-08 12:08:30,720 - models - ERROR - 获取操作统计信息时发生意外错误: local variable 'hour' referenced before assignment
+Traceback (most recent call last):
+  File "C:\Users\ljq90\Desktop\mysql_check_log\models.py", line 140, in get_operation_stats
+    if hour is not None: hourly_stats[hour] = row.get('count', 0); stats['hourly_distribution'] = hourly_stats
+UnboundLocalError: local variable 'hour' referenced before assignment
+2025-04-08 12:08:30,723 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 12:08:30] "GET /api/stats?server_id=1&start_date=2025-04-02&end_date=2025-04-08 HTTP/1.1" 200 -
+2025-04-08 12:10:06,240 - __main__ - INFO - 从 config.py 加载的 server_options: [{'id': 1, 'name': 'MySQL服务器1'}]
+2025-04-08 12:10:06,242 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 12:10:06] "GET / HTTP/1.1" 200 -
+2025-04-08 12:10:06,264 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 12:10:06] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-08 12:10:06,267 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 12:10:06] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-08 12:10:06,760 - __main__ - INFO - 接收到的活动请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08, operation_type=, risk_level=, user_name=
+2025-04-08 12:10:06,764 - __main__ - INFO - 接收到的统计请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08
+2025-04-08 12:10:06,771 - __main__ - INFO - 筛选后的活动数据条数: 0 / 总数: 0
+2025-04-08 12:10:06,772 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 12:10:06] "GET /api/activities?server_id=&start_date=2025-04-02&end_date=2025-04-08&operation_type=&risk_level=&user_name=&page=1&limit=50 HTTP/1.1" 200 -
+2025-04-08 12:10:06,778 - models - ERROR - 获取操作统计信息时发生意外错误: local variable 'hour' referenced before assignment
+Traceback (most recent call last):
+  File "C:\Users\ljq90\Desktop\mysql_check_log\models.py", line 140, in get_operation_stats
+    if hour is not None: hourly_stats[hour] = row.get('count', 0); stats['hourly_distribution'] = hourly_stats
+UnboundLocalError: local variable 'hour' referenced before assignment
+2025-04-08 12:10:06,782 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 12:10:06] "GET /api/stats?server_id=&start_date=2025-04-02&end_date=2025-04-08 HTTP/1.1" 200 -
+2025-04-08 12:10:11,668 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 12:10:11] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-08 12:10:15,240 - __main__ - INFO - 收到扫描请求: server_id_to_scan=1
+2025-04-08 12:10:15,241 - __main__ - INFO - 开始扫描特定服务器 (来自 config.py): Name=MySQL服务器1, ID=1
+2025-04-08 12:10:15,241 - log_parser - INFO - 将只写入风险等级为 {'Medium', 'High'} 的记录。
+2025-04-08 12:10:15,241 - log_parser - INFO - 开始扫描服务器日志目录: Name=MySQL服务器1, Host=192.168.10.129, ID(Config)=1, LogDir=/data/general_log
+2025-04-08 12:10:15,256 - paramiko.transport - INFO - Connected (version 2.0, client OpenSSH_7.4)
+2025-04-08 12:10:15,710 - paramiko.transport - INFO - Authentication (publickey) failed.
+2025-04-08 12:10:15,731 - paramiko.transport - INFO - Authentication (password) successful!
+2025-04-08 12:10:15,732 - log_parser - INFO - SSH 已使用密码连接到 root@192.168.10.129:22。
+2025-04-08 12:10:15,799 - paramiko.transport.sftp - INFO - [chan 0] Opened sftp connection (server version 3)
+2025-04-08 12:10:15,799 - log_parser - INFO - SFTP 连接已建立，准备列出目录: /data/general_log
+2025-04-08 12:10:15,804 - log_parser - INFO - 选择最新的 .log 文件进行扫描: /data/general_log/SJZDXT-SJKFWQ-004-2025-04-06.log (修改时间: 2025-04-07 01:59:16)
+2025-04-08 12:10:15,804 - log_parser - INFO - 正在打开日志文件流: /data/general_log/SJZDXT-SJKFWQ-004-2025-04-06.log
+2025-04-08 12:10:15,809 - log_parser - INFO - 日志流处理完成，共处理 1 行，解析出 0 个潜在活动记录。
+2025-04-08 12:10:15,809 - log_parser - INFO - 扫描完成: 共处理 0 条潜在活动, 成功添加 0 条记录到数据库。
+2025-04-08 12:10:15,810 - log_parser - INFO - SFTP 文件流已关闭 (192.168.10.129)。
+2025-04-08 12:10:15,812 - paramiko.transport.sftp - INFO - [chan 0] sftp session closed.
+2025-04-08 12:10:15,813 - log_parser - INFO - SFTP 连接已关闭 (192.168.10.129)。
+2025-04-08 12:10:15,815 - log_parser - INFO - SSH 连接已关闭 (192.168.10.129)。
+2025-04-08 12:10:15,817 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 12:10:15] "POST /api/scan HTTP/1.1" 200 -
+2025-04-08 12:10:15,823 - __main__ - INFO - 接收到的活动请求参数: server_id=1, start_date=2025-04-02, end_date=2025-04-08, operation_type=, risk_level=, user_name=
+2025-04-08 12:10:15,825 - __main__ - INFO - 接收到的统计请求参数: server_id=1, start_date=2025-04-02, end_date=2025-04-08
+2025-04-08 12:10:15,830 - __main__ - INFO - 筛选后的活动数据条数: 0 / 总数: 0
+2025-04-08 12:10:15,831 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 12:10:15] "GET /api/activities?server_id=1&start_date=2025-04-02&end_date=2025-04-08&operation_type=&risk_level=&user_name=&page=1&limit=50 HTTP/1.1" 200 -
+2025-04-08 12:10:15,833 - models - ERROR - 获取操作统计信息时发生意外错误: local variable 'hour' referenced before assignment
+Traceback (most recent call last):
+  File "C:\Users\ljq90\Desktop\mysql_check_log\models.py", line 140, in get_operation_stats
+    if hour is not None: hourly_stats[hour] = row.get('count', 0); stats['hourly_distribution'] = hourly_stats
+UnboundLocalError: local variable 'hour' referenced before assignment
+2025-04-08 12:10:15,835 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 12:10:15] "GET /api/stats?server_id=1&start_date=2025-04-02&end_date=2025-04-08 HTTP/1.1" 200 -
+2025-04-08 14:04:51,621 - models - INFO - user_activities 表检查/创建成功。
+2025-04-08 14:04:51,622 - __main__ - INFO - 数据库初始化成功或已存在。
+2025-04-08 14:04:51,639 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.100:5000
+2025-04-08 14:04:51,639 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-08 14:04:51,641 - werkzeug - INFO -  * Restarting with stat
+2025-04-08 14:04:51,981 - models - INFO - user_activities 表检查/创建成功。
+2025-04-08 14:04:51,982 - __main__ - INFO - 数据库初始化成功或已存在。
+2025-04-08 14:04:51,991 - werkzeug - WARNING -  * Debugger is active!
+2025-04-08 14:04:51,995 - werkzeug - INFO -  * Debugger PIN: 644-570-453
+2025-04-08 14:04:55,504 - __main__ - INFO - 从 config.py 加载的 server_options: [{'id': 1, 'name': 'MySQL服务器1'}]
+2025-04-08 14:04:55,512 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:04:55] "GET / HTTP/1.1" 200 -
+2025-04-08 14:04:55,618 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:04:55] "GET /static/css/style.css HTTP/1.1" 200 -
+2025-04-08 14:04:55,620 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:04:55] "GET /static/js/main.js HTTP/1.1" 200 -
+2025-04-08 14:04:57,944 - __main__ - INFO - 接收到的活动请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08, operation_type=, risk_level=, user_name=
+2025-04-08 14:04:57,945 - __main__ - INFO - 接收到的统计请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08
+2025-04-08 14:04:57,949 - __main__ - INFO - 筛选后的活动数据条数: 0 / 总数: 0
+2025-04-08 14:04:57,949 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:04:57] "GET /api/activities?server_id=&start_date=2025-04-02&end_date=2025-04-08&operation_type=&risk_level=&user_name=&page=1&limit=50 HTTP/1.1" 200 -
+2025-04-08 14:04:57,950 - models - ERROR - 获取操作统计信息时发生意外错误: local variable 'hour' referenced before assignment
+Traceback (most recent call last):
+  File "C:\Users\ljq90\Desktop\mysql_check_log\models.py", line 140, in get_operation_stats
+    if hour is not None: hourly_stats[hour] = row.get('count', 0); stats['hourly_distribution'] = hourly_stats
+UnboundLocalError: local variable 'hour' referenced before assignment
+2025-04-08 14:04:57,953 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:04:57] "GET /api/stats?server_id=&start_date=2025-04-02&end_date=2025-04-08 HTTP/1.1" 200 -
+2025-04-08 14:05:53,779 - __main__ - INFO - 从 config.py 加载的 server_options: [{'id': 1, 'name': 'MySQL服务器1'}]
+2025-04-08 14:05:53,782 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:05:53] "GET / HTTP/1.1" 200 -
+2025-04-08 14:05:53,801 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:05:53] "GET /static/js/main.js HTTP/1.1" 200 -
+2025-04-08 14:05:53,801 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:05:53] "GET /static/css/style.css HTTP/1.1" 200 -
+2025-04-08 14:05:54,981 - __main__ - INFO - 接收到的活动请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08, operation_type=, risk_level=, user_name=
+2025-04-08 14:05:54,981 - __main__ - INFO - 接收到的统计请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08
+2025-04-08 14:05:54,985 - __main__ - INFO - 筛选后的活动数据条数: 0 / 总数: 0
+2025-04-08 14:05:54,985 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:05:54] "GET /api/activities?server_id=&start_date=2025-04-02&end_date=2025-04-08&operation_type=&risk_level=&user_name=&page=1&limit=50 HTTP/1.1" 200 -
+2025-04-08 14:05:54,986 - models - ERROR - 获取操作统计信息时发生意外错误: local variable 'hour' referenced before assignment
+Traceback (most recent call last):
+  File "C:\Users\ljq90\Desktop\mysql_check_log\models.py", line 140, in get_operation_stats
+    if hour is not None: hourly_stats[hour] = row.get('count', 0); stats['hourly_distribution'] = hourly_stats
+UnboundLocalError: local variable 'hour' referenced before assignment
+2025-04-08 14:05:54,986 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:05:54] "GET /api/stats?server_id=&start_date=2025-04-02&end_date=2025-04-08 HTTP/1.1" 200 -
+2025-04-08 14:07:42,546 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ljq90\\Desktop\\mysql_check_log\\models.py', reloading
+2025-04-08 14:07:42,632 - werkzeug - INFO -  * Restarting with stat
+2025-04-08 14:07:43,082 - models - INFO - user_activities 表检查/创建成功。
+2025-04-08 14:07:43,084 - __main__ - INFO - 数据库初始化成功或已存在。
+2025-04-08 14:07:43,094 - werkzeug - WARNING -  * Debugger is active!
+2025-04-08 14:07:43,098 - werkzeug - INFO -  * Debugger PIN: 644-570-453
+2025-04-08 14:07:47,404 - __main__ - INFO - 从 config.py 加载的 server_options: [{'id': 1, 'name': 'MySQL服务器1'}]
+2025-04-08 14:07:47,409 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:07:47] "GET / HTTP/1.1" 200 -
+2025-04-08 14:07:47,517 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:07:47] "GET /static/js/main.js HTTP/1.1" 200 -
+2025-04-08 14:07:47,518 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:07:47] "GET /static/css/style.css HTTP/1.1" 200 -
+2025-04-08 14:07:48,403 - __main__ - INFO - 接收到的活动请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08, operation_type=, risk_level=, user_name=
+2025-04-08 14:07:48,403 - __main__ - INFO - 接收到的统计请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08
+2025-04-08 14:07:48,409 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:07:48] "GET /api/stats?server_id=&start_date=2025-04-02&end_date=2025-04-08 HTTP/1.1" 200 -
+2025-04-08 14:07:48,427 - __main__ - INFO - 筛选后的活动数据条数: 0 / 总数: 0
+2025-04-08 14:07:48,427 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:07:48] "GET /api/activities?server_id=&start_date=2025-04-02&end_date=2025-04-08&operation_type=&risk_level=&user_name=&page=1&limit=50 HTTP/1.1" 200 -
+2025-04-08 14:07:55,892 - __main__ - INFO - 收到扫描请求: server_id_to_scan=1
+2025-04-08 14:07:55,892 - __main__ - INFO - 开始扫描特定服务器 (来自 config.py): Name=MySQL服务器1, ID=1
+2025-04-08 14:07:55,893 - log_parser - INFO - 将只写入风险等级为 {'High', 'Medium'} 的记录。
+2025-04-08 14:07:55,893 - log_parser - INFO - 开始扫描服务器日志目录: Name=MySQL服务器1, Host=192.168.10.129, ID(Config)=1, LogDir=/data/general_log
+2025-04-08 14:07:55,911 - paramiko.transport - INFO - Connected (version 2.0, client OpenSSH_7.4)
+2025-04-08 14:07:56,121 - paramiko.transport - INFO - Authentication (publickey) failed.
+2025-04-08 14:07:56,138 - paramiko.transport - INFO - Authentication (password) successful!
+2025-04-08 14:07:56,139 - log_parser - INFO - SSH 已使用密码连接到 root@192.168.10.129:22。
+2025-04-08 14:07:56,203 - paramiko.transport.sftp - INFO - [chan 0] Opened sftp connection (server version 3)
+2025-04-08 14:07:56,203 - log_parser - INFO - SFTP 连接已建立，准备列出目录: /data/general_log
+2025-04-08 14:07:56,206 - log_parser - INFO - 选择最新的 .log 文件进行扫描: /data/general_log/SJZDXT-SJKFWQ-004-2025-04-06.log (修改时间: 2025-04-07 01:59:16)
+2025-04-08 14:07:56,207 - log_parser - INFO - 正在打开日志文件流: /data/general_log/SJZDXT-SJKFWQ-004-2025-04-06.log
+2025-04-08 14:07:56,209 - log_parser - INFO - 日志流处理完成，共处理 1 行，解析出 0 个潜在活动记录。
+2025-04-08 14:07:56,209 - log_parser - INFO - 扫描完成: 共处理 0 条潜在活动, 成功添加 0 条记录到数据库。
+2025-04-08 14:07:56,209 - log_parser - INFO - SFTP 文件流已关闭 (192.168.10.129)。
+2025-04-08 14:07:56,209 - paramiko.transport.sftp - INFO - [chan 0] sftp session closed.
+2025-04-08 14:07:56,210 - log_parser - INFO - SFTP 连接已关闭 (192.168.10.129)。
+2025-04-08 14:07:56,210 - log_parser - INFO - SSH 连接已关闭 (192.168.10.129)。
+2025-04-08 14:07:56,210 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:07:56] "POST /api/scan HTTP/1.1" 200 -
+2025-04-08 14:07:56,216 - __main__ - INFO - 接收到的活动请求参数: server_id=1, start_date=2025-04-02, end_date=2025-04-08, operation_type=, risk_level=, user_name=
+2025-04-08 14:07:56,217 - __main__ - INFO - 接收到的统计请求参数: server_id=1, start_date=2025-04-02, end_date=2025-04-08
+2025-04-08 14:07:56,226 - __main__ - INFO - 筛选后的活动数据条数: 0 / 总数: 0
+2025-04-08 14:07:56,227 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:07:56] "GET /api/activities?server_id=1&start_date=2025-04-02&end_date=2025-04-08&operation_type=&risk_level=&user_name=&page=1&limit=50 HTTP/1.1" 200 -
+2025-04-08 14:07:56,228 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:07:56] "GET /api/stats?server_id=1&start_date=2025-04-02&end_date=2025-04-08 HTTP/1.1" 200 -
+2025-04-08 14:17:48,956 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ljq90\\Desktop\\mysql_check_log\\log_parser.py', reloading
+2025-04-08 14:17:49,029 - werkzeug - INFO -  * Restarting with stat
+2025-04-08 14:17:49,445 - models - INFO - user_activities 表检查/创建成功。
+2025-04-08 14:17:49,445 - __main__ - INFO - 数据库初始化成功或已存在。
+2025-04-08 14:17:49,453 - werkzeug - WARNING -  * Debugger is active!
+2025-04-08 14:17:49,457 - werkzeug - INFO -  * Debugger PIN: 644-570-453
+2025-04-08 14:17:55,205 - __main__ - INFO - 从 config.py 加载的 server_options: [{'id': 1, 'name': 'MySQL服务器1'}]
+2025-04-08 14:17:55,210 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:17:55] "GET / HTTP/1.1" 200 -
+2025-04-08 14:17:55,311 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:17:55] "GET /static/css/style.css HTTP/1.1" 200 -
+2025-04-08 14:17:55,312 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:17:55] "GET /static/js/main.js HTTP/1.1" 200 -
+2025-04-08 14:17:58,210 - __main__ - INFO - 接收到的活动请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08, operation_type=, risk_level=, user_name=
+2025-04-08 14:17:58,210 - __main__ - INFO - 接收到的统计请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08
+2025-04-08 14:17:58,216 - __main__ - INFO - 筛选后的活动数据条数: 0 / 总数: 0
+2025-04-08 14:17:58,216 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:17:58] "GET /api/activities?server_id=&start_date=2025-04-02&end_date=2025-04-08&operation_type=&risk_level=&user_name=&page=1&limit=50 HTTP/1.1" 200 -
+2025-04-08 14:17:58,221 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:17:58] "GET /api/stats?server_id=&start_date=2025-04-02&end_date=2025-04-08 HTTP/1.1" 200 -
+2025-04-08 14:18:02,211 - __main__ - INFO - 收到扫描请求: server_id_to_scan=1
+2025-04-08 14:18:02,211 - __main__ - INFO - 开始扫描特定服务器 (来自 config.py): Name=MySQL服务器1, ID=1
+2025-04-08 14:18:02,212 - log_parser - INFO - 将只写入风险等级为 {'Medium', 'High'} 的记录。
+2025-04-08 14:18:02,212 - log_parser - INFO - 开始扫描服务器日志文件: Name=MySQL服务器1, Host=192.168.10.129, ID(Config)=1, LogFile=/data/general_log
+2025-04-08 14:18:02,240 - paramiko.transport - INFO - Connected (version 2.0, client OpenSSH_7.4)
+2025-04-08 14:18:02,755 - paramiko.transport - INFO - Authentication (publickey) failed.
+2025-04-08 14:18:02,782 - paramiko.transport - INFO - Authentication (password) successful!
+2025-04-08 14:18:02,782 - log_parser - INFO - SSH 已使用密码连接到 root@192.168.10.129:22。
+2025-04-08 14:18:02,841 - paramiko.transport.sftp - INFO - [chan 0] Opened sftp connection (server version 3)
+2025-04-08 14:18:02,842 - log_parser - INFO - SFTP 连接已建立
+2025-04-08 14:18:02,842 - log_parser - INFO - 正在打开日志文件流: /data/general_log
+2025-04-08 14:18:02,845 - log_parser - ERROR - 处理日志流时发生错误 (约在第 0 行): Failure
+Traceback (most recent call last):
+  File "C:\Users\ljq90\Desktop\mysql_check_log\log_parser.py", line 111, in parse_general_log_stream
+    for line_bytes in sftp_file:
+  File "C:\Users\ljq90\Desktop\env\myenv\lib\site-packages\paramiko\file.py", line 109, in __next__
+    line = self.readline()
+  File "C:\Users\ljq90\Desktop\env\myenv\lib\site-packages\paramiko\file.py", line 275, in readline
+    new_data = self._read(n)
+  File "C:\Users\ljq90\Desktop\env\myenv\lib\site-packages\paramiko\sftp_file.py", line 185, in _read
+    t, msg = self.sftp._request(
+  File "C:\Users\ljq90\Desktop\env\myenv\lib\site-packages\paramiko\sftp_client.py", line 822, in _request
+    return self._read_response(num)
+  File "C:\Users\ljq90\Desktop\env\myenv\lib\site-packages\paramiko\sftp_client.py", line 874, in _read_response
+    self._convert_status(msg)
+  File "C:\Users\ljq90\Desktop\env\myenv\lib\site-packages\paramiko\sftp_client.py", line 907, in _convert_status
+    raise IOError(text)
+OSError: Failure
+2025-04-08 14:18:02,862 - log_parser - INFO - 日志流处理完成，共处理 0 行，解析出 0 个潜在活动记录。
+2025-04-08 14:18:02,863 - log_parser - INFO - 扫描完成: 共处理 0 条潜在活动, 成功添加 0 条记录到数据库。
+2025-04-08 14:18:02,865 - log_parser - INFO - SFTP 文件流已关闭 (192.168.10.129)。
+2025-04-08 14:18:02,865 - paramiko.transport.sftp - INFO - [chan 0] sftp session closed.
+2025-04-08 14:18:02,866 - log_parser - INFO - SFTP 连接已关闭 (192.168.10.129)。
+2025-04-08 14:18:02,867 - log_parser - INFO - SSH 连接已关闭 (192.168.10.129)。
+2025-04-08 14:18:02,868 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:18:02] "POST /api/scan HTTP/1.1" 200 -
+2025-04-08 14:18:02,874 - __main__ - INFO - 接收到的活动请求参数: server_id=1, start_date=2025-04-02, end_date=2025-04-08, operation_type=, risk_level=, user_name=
+2025-04-08 14:18:02,876 - __main__ - INFO - 接收到的统计请求参数: server_id=1, start_date=2025-04-02, end_date=2025-04-08
+2025-04-08 14:18:02,880 - __main__ - INFO - 筛选后的活动数据条数: 0 / 总数: 0
+2025-04-08 14:18:02,881 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:18:02] "GET /api/activities?server_id=1&start_date=2025-04-02&end_date=2025-04-08&operation_type=&risk_level=&user_name=&page=1&limit=50 HTTP/1.1" 200 -
+2025-04-08 14:18:02,884 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:18:02] "GET /api/stats?server_id=1&start_date=2025-04-02&end_date=2025-04-08 HTTP/1.1" 200 -
+2025-04-08 14:35:58,145 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ljq90\\Desktop\\mysql_check_log\\models.py', reloading
+2025-04-08 14:35:58,232 - werkzeug - INFO -  * Restarting with stat
+2025-04-08 14:35:58,802 - models - INFO - user_activities 表检查/创建成功。
+2025-04-08 14:35:58,810 - models - INFO - server_scan_status 表检查/创建成功。
+2025-04-08 14:35:58,811 - __main__ - INFO - 数据库初始化成功或已存在。
+2025-04-08 14:35:58,822 - werkzeug - WARNING -  * Debugger is active!
+2025-04-08 14:35:58,826 - werkzeug - INFO -  * Debugger PIN: 644-570-453
+2025-04-08 14:38:17,173 - werkzeug - INFO -  * Detected change in 'C:\\Users\\ljq90\\Desktop\\mysql_check_log\\log_parser.py', reloading
+2025-04-08 14:38:17,257 - werkzeug - INFO -  * Restarting with stat
+2025-04-08 14:38:17,745 - models - INFO - user_activities 表检查/创建成功。
+2025-04-08 14:38:17,747 - models - INFO - server_scan_status 表检查/创建成功。
+2025-04-08 14:38:17,748 - __main__ - INFO - 数据库初始化成功或已存在。
+2025-04-08 14:38:17,756 - werkzeug - WARNING -  * Debugger is active!
+2025-04-08 14:38:17,761 - werkzeug - INFO -  * Debugger PIN: 644-570-453
+2025-04-08 14:38:21,407 - __main__ - INFO - 从 config.py 加载的 server_options: [{'id': 1, 'name': 'MySQL服务器1'}]
+2025-04-08 14:38:21,412 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:38:21] "GET / HTTP/1.1" 200 -
+2025-04-08 14:38:21,519 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:38:21] "GET /static/css/style.css HTTP/1.1" 200 -
+2025-04-08 14:38:21,520 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:38:21] "GET /static/js/main.js HTTP/1.1" 200 -
+2025-04-08 14:38:24,285 - __main__ - INFO - 接收到的活动请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08, operation_type=, risk_level=, user_name=
+2025-04-08 14:38:24,285 - __main__ - INFO - 接收到的统计请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08
+2025-04-08 14:38:24,294 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:38:24] "GET /api/stats?server_id=&start_date=2025-04-02&end_date=2025-04-08 HTTP/1.1" 200 -
+2025-04-08 14:38:24,311 - __main__ - INFO - 筛选后的活动数据条数: 0 / 总数: 0
+2025-04-08 14:38:24,311 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:38:24] "GET /api/activities?server_id=&start_date=2025-04-02&end_date=2025-04-08&operation_type=&risk_level=&user_name=&page=1&limit=50 HTTP/1.1" 200 -
+2025-04-08 14:38:54,677 - __main__ - INFO - 收到扫描请求: server_id_to_scan=1
+2025-04-08 14:38:54,678 - __main__ - INFO - 开始扫描特定服务器 (来自 config.py): Name=MySQL服务器1, ID=1
+2025-04-08 14:38:54,679 - log_parser - INFO - 将只写入风险等级为 {'High', 'Medium'} 的记录。
+2025-04-08 14:38:54,679 - log_parser - INFO - 开始增量扫描服务器日志目录: Name=MySQL服务器1, Host=192.168.10.129, ID(Config)=1, LogDir=/data/general_log
+2025-04-08 14:38:54,685 - models - INFO - 未找到服务器 1 的上次扫描时间记录，将进行全量扫描。
+2025-04-08 14:38:54,685 - log_parser - INFO - 未找到上次扫描时间，将处理所有时间戳晚于 1970-01-01 00:00:00+00:00 的记录。
+2025-04-08 14:38:54,699 - paramiko.transport - INFO - Connected (version 2.0, client OpenSSH_7.4)
+2025-04-08 14:38:55,271 - paramiko.transport - INFO - Authentication (publickey) failed.
+2025-04-08 14:38:55,293 - paramiko.transport - INFO - Authentication (password) successful!
+2025-04-08 14:38:55,294 - log_parser - INFO - SSH 已使用密码连接到 root@192.168.10.129:22。
+2025-04-08 14:38:55,349 - paramiko.transport.sftp - INFO - [chan 0] Opened sftp connection (server version 3)
+2025-04-08 14:38:55,349 - log_parser - INFO - SFTP 连接已建立，准备列出目录: /data/general_log
+2025-04-08 14:38:55,352 - log_parser - INFO - 将按顺序处理 12 个修改过的日志文件: ['SJZDXT-SJKFWQ-004-2025-03-26.log', 'SJZDXT-SJKFWQ-004-2025-03-27.log', 'SJZDXT-SJKFWQ-004-2025-03-28.log', 'SJZDXT-SJKFWQ-004-2025-03-29.log', 'SJZDXT-SJKFWQ-004-2025-03-30.log', 'SJZDXT-SJKFWQ-004-2025-03-31.log', 'SJZDXT-SJKFWQ-004-2025-04-01.log', 'SJZDXT-SJKFWQ-004-2025-04-02.log', 'SJZDXT-SJKFWQ-004-2025-04-03.log', 'SJZDXT-SJKFWQ-004-2025-04-04.log', 'SJZDXT-SJKFWQ-004-2025-04-05.log', 'SJZDXT-SJKFWQ-004-2025-04-06.log']
+2025-04-08 14:38:55,353 - log_parser - INFO - 正在打开日志文件流: /data/general_log/SJZDXT-SJKFWQ-004-2025-03-26.log
+2025-04-08 14:38:55,378 - log_parser - INFO - 日志流处理完成，共处理 1 行，解析出 0 个潜在活动记录。
+2025-04-08 14:38:55,378 - log_parser - INFO - 文件 SJZDXT-SJKFWQ-004-2025-03-26.log 处理完成: 处理 0 条潜在活动, 添加 0 条新记录。
+2025-04-08 14:38:55,379 - log_parser - INFO - SFTP 文件流已关闭 (/data/general_log/SJZDXT-SJKFWQ-004-2025-03-26.log)。
+2025-04-08 14:38:55,379 - log_parser - INFO - 正在打开日志文件流: /data/general_log/SJZDXT-SJKFWQ-004-2025-03-27.log
+2025-04-08 14:38:55,385 - log_parser - INFO - L2: Connect: Thread 512 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:38:55,387 - log_parser - INFO - L9: Connect: Thread 513 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:38:55,387 - log_parser - INFO - L27: Connect: Thread 514 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:38:55,388 - log_parser - INFO - L34: Connect: Thread 515 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:38:55,390 - log_parser - INFO - L76: Connect: Thread 516 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:38:55,391 - log_parser - INFO - L84: Connect: Thread 517 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:38:55,391 - log_parser - INFO - L94: Connect: Thread 518 -> User=gangu, Host=59.219.55.107
+2025-04-08 14:38:55,393 - log_parser - INFO - L126: Connect: Thread 519 -> User=gangu, Host=59.219.55.107
+2025-04-08 14:38:55,702 - log_parser - INFO - L130: Connect: Thread 520 -> User=gangu, Host=59.219.55.107
+2025-04-08 14:38:56,031 - log_parser - INFO - L138: Connect: Thread 521 -> User=gangu, Host=59.219.55.107
+2025-04-08 14:38:56,033 - log_parser - INFO - L155: Connect: Thread 522 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:38:56,037 - log_parser - INFO - L163: Connect: Thread 523 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:38:56,038 - log_parser - INFO - L170: Connect: Thread 524 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:38:56,039 - log_parser - INFO - L178: Connect: Thread 525 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:38:56,039 - log_parser - INFO - L186: Connect: Thread 526 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:38:56,040 - log_parser - INFO - L206: Connect: Thread 527 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:38:56,041 - log_parser - INFO - L213: Connect: Thread 528 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:38:56,042 - log_parser - INFO - L231: Connect: Thread 529 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:38:56,083 - log_parser - INFO - L334: Connect: Thread 530 -> User=qinshui, Host=59.219.183.77
+2025-04-08 14:38:56,517 - log_parser - INFO - L4293: Connect: Thread 531 -> User=qinan, Host=59.219.183.81
+2025-04-08 14:38:56,517 - log_parser - INFO - L4302: Connect: Thread 532 -> User=qinan, Host=59.219.183.81
+2025-04-08 14:38:56,518 - log_parser - INFO - L4312: Connect: Thread 533 -> User=qinan, Host=59.219.183.81
+2025-04-08 14:38:56,521 - log_parser - INFO - L4397: Connect: Thread 534 -> User=qinan, Host=59.219.183.81
+2025-04-08 14:38:56,522 - log_parser - INFO - L4403: Connect: Thread 535 -> User=qinan, Host=59.219.183.81
+2025-04-08 14:38:56,523 - log_parser - INFO - L4408: Connect: Thread 536 -> User=qinan, Host=59.219.183.81
+2025-04-08 14:38:56,524 - log_parser - INFO - L4458: Connect: Thread 537 -> User=qinan, Host=59.219.183.81
+2025-04-08 14:38:56,525 - log_parser - INFO - L4476: Connect: Thread 538 -> User=qinan, Host=59.219.183.81
+2025-04-08 14:38:56,526 - log_parser - INFO - L4484: Connect: Thread 539 -> User=qinan, Host=59.219.183.81
+2025-04-08 14:38:56,526 - log_parser - INFO - L4496: Connect: Thread 540 -> User=qinan, Host=59.219.183.81
+2025-04-08 14:38:56,527 - log_parser - INFO - L4507: Connect: Thread 541 -> User=qinan, Host=59.219.183.81
+2025-04-08 14:38:56,528 - log_parser - INFO - L4512: Connect: Thread 542 -> User=qinan, Host=59.219.183.81
+2025-04-08 14:38:56,531 - log_parser - INFO - L4544: Connect: Thread 543 -> User=qinan, Host=59.219.183.81
+2025-04-08 14:38:56,531 - log_parser - INFO - L4547: Connect: Thread 544 -> User=qinan, Host=59.219.183.81
+2025-04-08 14:38:56,533 - log_parser - INFO - L4613: Connect: Thread 545 -> User=qinan, Host=59.219.183.81
+2025-04-08 14:38:56,534 - log_parser - INFO - L4644: Connect: Thread 546 -> User=qinan, Host=59.219.183.81
+2025-04-08 14:38:56,534 - log_parser - INFO - L4649: Connect: Thread 547 -> User=qinan, Host=59.219.183.81
+2025-04-08 14:38:56,547 - log_parser - INFO - L4973: Connect: Thread 548 -> User=qinan, Host=59.219.183.81
+2025-04-08 14:38:56,549 - log_parser - INFO - L4983: Connect: Thread 549 -> User=qinan, Host=59.219.183.81
+2025-04-08 14:38:56,549 - log_parser - INFO - L5003: Connect: Thread 550 -> User=qinan, Host=59.219.183.81
+2025-04-08 14:38:56,551 - log_parser - INFO - L5004: Connect: Thread 551 -> User=qinan, Host=59.219.183.81
+2025-04-08 14:38:56,629 - log_parser - INFO - L5526: Connect: Thread 552 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:38:56,629 - log_parser - INFO - L5534: Connect: Thread 553 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:38:56,634 - log_parser - INFO - L5600: Connect: Thread 554 -> User=lc, Host=59.219.183.30
+2025-04-08 14:38:56,635 - log_parser - INFO - L5613: Connect: Thread 555 -> User=gangu, Host=59.219.55.107
+2025-04-08 14:38:56,637 - log_parser - INFO - L5624: Connect: Thread 556 -> User=gangu, Host=59.219.55.107
+2025-04-08 14:38:56,637 - log_parser - INFO - L5633: Connect: Thread 557 -> User=qinshui, Host=59.219.183.77
+2025-04-08 14:38:56,637 - log_parser - INFO - L5637: Connect: Thread 558 -> User=gangu, Host=59.219.55.107
+2025-04-08 14:38:56,639 - log_parser - INFO - L5643: Connect: Thread 559 -> User=gangu, Host=59.219.55.107
+2025-04-08 14:39:02,423 - log_parser - INFO - 已处理 20000 行日志...
+2025-04-08 14:39:02,515 - log_parser - INFO - 文件 SJZDXT-SJKFWQ-004-2025-03-27.log: 达到批次大小 500，执行批量插入...
+2025-04-08 14:39:02,563 - models - INFO - 成功批量插入 500/500 条活动记录。
+2025-04-08 14:39:02,627 - log_parser - INFO - L23820: Connect: Thread 560 -> User=qinshui, Host=59.219.183.77
+2025-04-08 14:39:04,536 - log_parser - INFO - L24959: Connect: Thread 561 -> User=qinshui, Host=59.219.183.77
+2025-04-08 14:39:09,330 - log_parser - INFO - 文件 SJZDXT-SJKFWQ-004-2025-03-27.log: 达到批次大小 500，执行批量插入...
+2025-04-08 14:39:09,371 - models - INFO - 成功批量插入 500/500 条活动记录。
+2025-04-08 14:39:12,048 - log_parser - INFO - 已处理 40000 行日志...
+2025-04-08 14:39:12,553 - log_parser - INFO - L44754: Connect: Thread 562 -> User=lc, Host=59.219.183.30
+2025-04-08 14:39:12,553 - log_parser - INFO - L44760: Connect: Thread 563 -> User=qinshui, Host=59.219.183.77
+2025-04-08 14:39:12,553 - log_parser - INFO - L44764: Connect: Thread 564 -> User=maiji, Host=59.219.54.125
+2025-04-08 14:39:12,553 - log_parser - INFO - L44780: Connect: Thread 565 -> User=maiji, Host=59.219.54.125
+2025-04-08 14:39:12,553 - log_parser - INFO - L44783: Connect: Thread 566 -> User=maiji, Host=59.219.54.125
+2025-04-08 14:39:12,554 - log_parser - INFO - L44833: Connect: Thread 567 -> User=lc, Host=172.101.7.2
+2025-04-08 14:39:12,554 - log_parser - INFO - L44854: Connect: Thread 568 -> User=lc, Host=172.101.7.2
+2025-04-08 14:39:12,556 - log_parser - INFO - L44891: Connect: Thread 569 -> User=lc, Host=172.101.7.2
+2025-04-08 14:39:12,556 - log_parser - INFO - L44899: Connect: Thread 570 -> User=lc, Host=172.101.7.2
+2025-04-08 14:39:12,556 - log_parser - INFO - L44910: Connect: Thread 571 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:39:12,556 - log_parser - INFO - L44915: Connect: Thread 572 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:39:12,556 - log_parser - INFO - L44920: Connect: Thread 573 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:39:12,557 - log_parser - INFO - L44925: Connect: Thread 574 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:39:12,557 - log_parser - INFO - L44930: Connect: Thread 575 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:39:12,557 - log_parser - INFO - L45078: Connect: Thread 576 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:39:12,559 - log_parser - INFO - L45086: Connect: Thread 577 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:39:12,559 - log_parser - INFO - L45094: Connect: Thread 578 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:39:12,560 - log_parser - INFO - L45106: Connect: Thread 579 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:39:12,560 - log_parser - INFO - L45118: Connect: Thread 580 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:39:12,560 - log_parser - INFO - L45130: Connect: Thread 581 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:39:12,561 - log_parser - INFO - L45150: Connect: Thread 582 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:39:12,561 - log_parser - INFO - L45157: Connect: Thread 583 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:39:12,561 - log_parser - INFO - L45165: Connect: Thread 584 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:39:12,561 - log_parser - INFO - L45172: Connect: Thread 585 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:39:12,561 - log_parser - INFO - L45179: Connect: Thread 586 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:39:12,563 - log_parser - INFO - L45230: Connect: Thread 587 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:39:12,565 - log_parser - INFO - L45249: Connect: Thread 588 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:39:12,565 - log_parser - INFO - L45257: Connect: Thread 589 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:39:12,565 - log_parser - INFO - L45264: Connect: Thread 590 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:39:12,565 - log_parser - INFO - L45272: Connect: Thread 591 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:39:12,607 - log_parser - INFO - L45279: Connect: Thread 592 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:39:12,608 - log_parser - INFO - L45294: Connect: Thread 593 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:39:12,612 - log_parser - INFO - L45427: Connect: Thread 594 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:39:12,612 - log_parser - INFO - L45436: Connect: Thread 595 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:39:12,614 - log_parser - INFO - L45445: Connect: Thread 596 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:39:12,615 - log_parser - INFO - L45453: Connect: Thread 597 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:39:12,615 - log_parser - INFO - L45460: Connect: Thread 598 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:39:12,616 - log_parser - INFO - L45468: Connect: Thread 599 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:39:12,617 - log_parser - INFO - L45475: Connect: Thread 600 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:39:12,617 - log_parser - INFO - L45483: Connect: Thread 601 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:39:12,617 - log_parser - INFO - L45490: Connect: Thread 602 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:39:12,618 - log_parser - INFO - L45499: Connect: Thread 603 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:39:12,619 - log_parser - INFO - L45570: Connect: Thread 604 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:39:12,622 - log_parser - INFO - L45669: Connect: Thread 605 -> User=maiji, Host=59.219.54.125
+2025-04-08 14:39:29,070 - log_parser - INFO - L45816: Connect: Thread 606 -> User=maiji, Host=59.219.54.125
+2025-04-08 14:39:29,071 - log_parser - INFO - L45819: Connect: Thread 607 -> User=maiji, Host=59.219.54.125
+2025-04-08 14:39:29,073 - log_parser - INFO - L45832: Connect: Thread 608 -> User=maiji, Host=59.219.54.125
+2025-04-08 14:39:42,898 - log_parser - INFO - L45943: Connect: Thread 609 -> User=maiji, Host=59.219.54.125
+2025-04-08 14:39:42,898 - log_parser - INFO - L45953: Connect: Thread 610 -> User=maiji, Host=59.219.54.125
+2025-04-08 14:41:02,736 - log_parser - INFO - L46468: Connect: Thread 611 -> User=maiji, Host=59.219.54.125
+2025-04-08 14:41:02,736 - log_parser - INFO - L46471: Connect: Thread 612 -> User=maiji, Host=59.219.54.125
+2025-04-08 14:41:02,737 - log_parser - INFO - 日志流处理完成，共处理 46481 行，解析出 19457 个潜在活动记录。
+2025-04-08 14:41:02,737 - log_parser - INFO - 文件 SJZDXT-SJKFWQ-004-2025-03-27.log: 处理最后一批 102 条记录...
+2025-04-08 14:41:02,772 - models - INFO - 成功批量插入 102/102 条活动记录。
+2025-04-08 14:41:02,773 - log_parser - INFO - 文件 SJZDXT-SJKFWQ-004-2025-03-27.log 处理完成: 处理 19457 条潜在活动, 添加 1102 条新记录。
+2025-04-08 14:41:02,774 - log_parser - INFO - SFTP 文件流已关闭 (/data/general_log/SJZDXT-SJKFWQ-004-2025-03-27.log)。
+2025-04-08 14:41:02,774 - log_parser - INFO - 正在打开日志文件流: /data/general_log/SJZDXT-SJKFWQ-004-2025-03-28.log
+2025-04-08 14:41:02,776 - log_parser - INFO - L2: Connect: Thread 613 -> User=qinshui, Host=59.219.183.77
+2025-04-08 14:41:02,777 - log_parser - INFO - L7: Connect: Thread 614 -> User=qinshui, Host=59.219.183.77
+2025-04-08 14:41:02,777 - log_parser - INFO - L15: Connect: Thread 615 -> User=qinshui, Host=59.219.183.77
+2025-04-08 14:41:02,777 - log_parser - INFO - L19: Connect: Thread 616 -> User=lc, Host=172.101.7.2
+2025-04-08 14:41:02,777 - log_parser - INFO - L24: Connect: Thread 617 -> User=lc, Host=172.101.7.2
+2025-04-08 14:41:02,779 - log_parser - INFO - L29: Connect: Thread 618 -> User=lc, Host=172.101.7.2
+2025-04-08 14:41:02,779 - log_parser - INFO - L40: Connect: Thread 619 -> User=lc, Host=172.101.7.2
+2025-04-08 14:41:02,780 - log_parser - INFO - L57: Connect: Thread 620 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:41:02,780 - log_parser - INFO - L65: Connect: Thread 621 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:41:02,780 - log_parser - INFO - L83: Connect: Thread 622 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:41:02,782 - log_parser - INFO - L91: Connect: Thread 623 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:41:02,782 - log_parser - INFO - L103: Connect: Thread 624 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:41:02,829 - log_parser - INFO - L530: Connect: Thread 625 -> User=lc, Host=59.219.183.30
+2025-04-08 14:41:02,841 - log_parser - INFO - L1041: Connect: Thread 626 -> User=gangu, Host=59.219.183.70
+2025-04-08 14:41:02,842 - log_parser - INFO - L1042: Connect: Thread 626 -> User=Access denied for user 'gangu', Host='59.219.183.70'
+2025-04-08 14:41:02,845 - log_parser - INFO - L1120: Connect: Thread 627 -> User=gangu, Host=59.219.183.70
+2025-04-08 14:41:02,846 - log_parser - INFO - L1132: Connect: Thread 628 -> User=gangu, Host=59.219.183.70
+2025-04-08 14:41:02,847 - log_parser - INFO - L1152: Connect: Thread 629 -> User=gangu, Host=59.219.183.70
+2025-04-08 14:41:02,851 - log_parser - INFO - L1279: Connect: Thread 630 -> User=root, Host=localhost
+2025-04-08 14:41:02,851 - log_parser - INFO - L1280: Connect: Thread 630 -> User=Access denied for user 'root', Host='localhost'
+2025-04-08 14:41:02,851 - log_parser - INFO - L1287: Connect: Thread 631 -> User=lc, Host=localhost
+2025-04-08 14:41:02,851 - log_parser - INFO - L1295: Connect: Thread 632 -> User=gangu, Host=59.219.183.70
+2025-04-08 14:41:02,852 - log_parser - INFO - L1344: Connect: Thread 633 -> User=lc, Host=59.219.183.30
+2025-04-08 14:41:02,852 - log_parser - INFO - L1370: Connect: Thread 634 -> User=lc, Host=59.219.183.30
+2025-04-08 14:41:02,873 - log_parser - INFO - L1769: Connect: Thread 635 -> User=gangu, Host=59.219.183.70
+2025-04-08 14:41:02,874 - log_parser - INFO - L1811: Connect: Thread 636 -> User=gangu, Host=59.219.183.70
+2025-04-08 14:41:02,875 - log_parser - INFO - L1819: Connect: Thread 637 -> User=gangu, Host=59.219.183.70
+2025-04-08 14:42:42,870 - log_parser - INFO - L2147370: Connect: Thread 638 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:42,870 - log_parser - INFO - L2147387: Connect: Thread 639 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:42,871 - log_parser - INFO - L2147420: Connect: Thread 640 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:42,871 - log_parser - INFO - L2147425: Connect: Thread 641 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:42,871 - log_parser - INFO - L2147430: Connect: Thread 642 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:42,874 - log_parser - INFO - L2147447: Connect: Thread 643 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:42,878 - log_parser - INFO - L2147675: Connect: Thread 644 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:42:42,878 - log_parser - INFO - L2147680: Connect: Thread 645 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:42:42,880 - log_parser - INFO - L2147786: Connect: Thread 646 -> User=gangu, Host=59.219.183.70
+2025-04-08 14:42:42,881 - log_parser - INFO - L2147806: Connect: Thread 647 -> User=gangu, Host=59.219.183.70
+2025-04-08 14:42:42,882 - log_parser - INFO - L2147871: Connect: Thread 648 -> User=lc, Host=59.219.183.30
+2025-04-08 14:42:42,884 - log_parser - INFO - L2147983: Connect: Thread 649 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:42,884 - log_parser - INFO - L2147988: Connect: Thread 650 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:42,885 - log_parser - INFO - L2147993: Connect: Thread 651 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:42,885 - log_parser - INFO - L2148004: Connect: Thread 652 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:42,886 - log_parser - INFO - L2148067: Connect: Thread 653 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:42,886 - log_parser - INFO - L2148086: Connect: Thread 654 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:42,887 - log_parser - INFO - L2148115: Connect: Thread 655 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:42,889 - log_parser - INFO - L2148174: Connect: Thread 656 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:42,891 - log_parser - INFO - L2148179: Connect: Thread 657 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:42,891 - log_parser - INFO - L2148184: Connect: Thread 658 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:42,892 - log_parser - INFO - L2148189: Connect: Thread 659 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:42,892 - log_parser - INFO - L2148210: Connect: Thread 660 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:42,894 - log_parser - INFO - L2148243: Connect: Thread 661 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:42,895 - log_parser - INFO - L2148290: Connect: Thread 662 -> User=lc, Host=59.219.183.30
+2025-04-08 14:42:42,896 - log_parser - INFO - L2148296: Connect: Thread 663 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:42,901 - log_parser - INFO - L2148676: Connect: Thread 664 -> User=lc, Host=59.219.183.30
+2025-04-08 14:42:42,902 - log_parser - INFO - L2148690: Connect: Thread 665 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:42,904 - log_parser - INFO - L2148698: Connect: Thread 666 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:42,906 - log_parser - INFO - L2148708: Connect: Thread 667 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:42,906 - log_parser - INFO - L2148717: Connect: Thread 668 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:42,907 - log_parser - INFO - L2148726: Connect: Thread 669 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:42,909 - log_parser - INFO - L2148787: Connect: Thread 670 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:42,909 - log_parser - INFO - L2148794: Connect: Thread 671 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:42,910 - log_parser - INFO - L2148812: Connect: Thread 672 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:42,958 - log_parser - INFO - L2149149: Connect: Thread 673 -> User=gangu, Host=59.219.183.70
+2025-04-08 14:42:42,959 - log_parser - INFO - L2149159: Connect: Thread 674 -> User=gangu, Host=59.219.183.70
+2025-04-08 14:42:42,983 - log_parser - INFO - L2149521: Connect: Thread 675 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:42,986 - log_parser - INFO - L2149528: Connect: Thread 676 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:42,987 - log_parser - INFO - L2149546: Connect: Thread 677 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:43,004 - log_parser - INFO - L2150085: Connect: Thread 678 -> User=wushan, Host=59.219.58.69
+2025-04-08 14:42:43,014 - log_parser - INFO - L2150451: Connect: Thread 679 -> User=wushan, Host=59.219.58.69
+2025-04-08 14:42:46,093 - log_parser - INFO - L2150492: Connect: Thread 680 -> User=wushan, Host=59.219.58.69
+2025-04-08 14:42:46,094 - log_parser - INFO - L2150515: Connect: Thread 681 -> User=wushan, Host=59.219.58.69
+2025-04-08 14:42:46,096 - log_parser - INFO - L2150540: Connect: Thread 682 -> User=wushan, Host=59.219.58.69
+2025-04-08 14:42:46,097 - log_parser - INFO - L2150550: Connect: Thread 683 -> User=wushan, Host=59.219.58.69
+2025-04-08 14:42:46,097 - log_parser - INFO - L2150567: Connect: Thread 684 -> User=wushan, Host=59.219.58.69
+2025-04-08 14:42:46,106 - log_parser - INFO - L2151079: Connect: Thread 685 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,107 - log_parser - INFO - L2151086: Connect: Thread 686 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,107 - log_parser - INFO - L2151110: Connect: Thread 687 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,108 - log_parser - INFO - L2151117: Connect: Thread 688 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,109 - log_parser - INFO - L2151135: Connect: Thread 689 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,112 - log_parser - INFO - L2151220: Connect: Thread 690 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,112 - log_parser - INFO - L2151228: Connect: Thread 691 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,112 - log_parser - INFO - L2151237: Connect: Thread 692 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,113 - log_parser - INFO - L2151247: Connect: Thread 693 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,113 - log_parser - INFO - L2151274: Connect: Thread 694 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,114 - log_parser - INFO - L2151281: Connect: Thread 695 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,115 - log_parser - INFO - L2151299: Connect: Thread 696 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,120 - log_parser - INFO - L2151371: Connect: Thread 697 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,123 - log_parser - INFO - L2151433: Connect: Thread 698 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,125 - log_parser - INFO - L2151453: Connect: Thread 699 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,134 - log_parser - INFO - 日志流处理完成，共处理 2151833 行，解析出 1076805 个潜在活动记录。
+2025-04-08 14:42:46,134 - log_parser - INFO - 文件 SJZDXT-SJKFWQ-004-2025-03-28.log: 处理最后一批 9 条记录...
+2025-04-08 14:42:46,153 - models - INFO - 成功批量插入 9/9 条活动记录。
+2025-04-08 14:42:46,154 - log_parser - INFO - 文件 SJZDXT-SJKFWQ-004-2025-03-28.log 处理完成: 处理 1076805 条潜在活动, 添加 9 条新记录。
+2025-04-08 14:42:46,155 - log_parser - INFO - SFTP 文件流已关闭 (/data/general_log/SJZDXT-SJKFWQ-004-2025-03-28.log)。
+2025-04-08 14:42:46,155 - log_parser - INFO - 正在打开日志文件流: /data/general_log/SJZDXT-SJKFWQ-004-2025-03-29.log
+2025-04-08 14:42:46,168 - log_parser - INFO - 日志流处理完成，共处理 1 行，解析出 0 个潜在活动记录。
+2025-04-08 14:42:46,168 - log_parser - INFO - 文件 SJZDXT-SJKFWQ-004-2025-03-29.log 处理完成: 处理 0 条潜在活动, 添加 0 条新记录。
+2025-04-08 14:42:46,170 - log_parser - INFO - SFTP 文件流已关闭 (/data/general_log/SJZDXT-SJKFWQ-004-2025-03-29.log)。
+2025-04-08 14:42:46,170 - log_parser - INFO - 正在打开日志文件流: /data/general_log/SJZDXT-SJKFWQ-004-2025-03-30.log
+2025-04-08 14:42:46,174 - log_parser - INFO - 日志流处理完成，共处理 1 行，解析出 0 个潜在活动记录。
+2025-04-08 14:42:46,175 - log_parser - INFO - 文件 SJZDXT-SJKFWQ-004-2025-03-30.log 处理完成: 处理 0 条潜在活动, 添加 0 条新记录。
+2025-04-08 14:42:46,176 - log_parser - INFO - SFTP 文件流已关闭 (/data/general_log/SJZDXT-SJKFWQ-004-2025-03-30.log)。
+2025-04-08 14:42:46,176 - log_parser - INFO - 正在打开日志文件流: /data/general_log/SJZDXT-SJKFWQ-004-2025-03-31.log
+2025-04-08 14:42:46,181 - log_parser - INFO - L2: Connect: Thread 700 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,181 - log_parser - INFO - L9: Connect: Thread 701 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,182 - log_parser - INFO - L28: Connect: Thread 702 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,182 - log_parser - INFO - L37: Connect: Thread 703 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,183 - log_parser - INFO - L44: Connect: Thread 704 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,225 - log_parser - INFO - L71: Connect: Thread 705 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,232 - log_parser - INFO - L228: Connect: Thread 706 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:46,233 - log_parser - INFO - L233: Connect: Thread 707 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:46,233 - log_parser - INFO - L238: Connect: Thread 708 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:46,234 - log_parser - INFO - L243: Connect: Thread 709 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:46,236 - log_parser - INFO - L291: Connect: Thread 710 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:46,236 - log_parser - INFO - L312: Connect: Thread 711 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:46,238 - log_parser - INFO - L362: Connect: Thread 712 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,238 - log_parser - INFO - L369: Connect: Thread 713 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,238 - log_parser - INFO - L377: Connect: Thread 714 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,244 - log_parser - INFO - L384: Connect: Thread 715 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,247 - log_parser - INFO - L391: Connect: Thread 716 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,247 - log_parser - INFO - L400: Connect: Thread 717 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,248 - log_parser - INFO - L409: Connect: Thread 718 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,248 - log_parser - INFO - L418: Connect: Thread 719 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,249 - log_parser - INFO - L427: Connect: Thread 720 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,251 - log_parser - INFO - L436: Connect: Thread 721 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,252 - log_parser - INFO - L445: Connect: Thread 722 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,252 - log_parser - INFO - L454: Connect: Thread 723 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,253 - log_parser - INFO - L463: Connect: Thread 724 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,253 - log_parser - INFO - L472: Connect: Thread 725 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,257 - log_parser - INFO - L481: Connect: Thread 726 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,258 - log_parser - INFO - L490: Connect: Thread 727 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,259 - log_parser - INFO - L499: Connect: Thread 728 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,260 - log_parser - INFO - L523: Connect: Thread 729 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:46,262 - log_parser - INFO - L534: Connect: Thread 730 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:46,264 - log_parser - INFO - L581: Connect: Thread 731 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:42:46,265 - log_parser - INFO - L586: Connect: Thread 732 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:42:46,265 - log_parser - INFO - L591: Connect: Thread 733 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:42:46,265 - log_parser - INFO - L596: Connect: Thread 734 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:42:46,266 - log_parser - INFO - L601: Connect: Thread 735 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:42:46,266 - log_parser - INFO - L606: Connect: Thread 736 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:42:46,272 - log_parser - INFO - L898: Connect: Thread 737 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:42:46,272 - log_parser - INFO - L900: Connect: Thread 738 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:42:46,274 - log_parser - INFO - L922: Connect: Thread 739 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:42:46,274 - log_parser - INFO - L930: Connect: Thread 740 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:42:46,274 - log_parser - INFO - L942: Connect: Thread 741 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:42:46,275 - log_parser - INFO - L950: Connect: Thread 742 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:42:46,275 - log_parser - INFO - L958: Connect: Thread 743 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:42:46,276 - log_parser - INFO - L974: Connect: Thread 744 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:42:46,276 - log_parser - INFO - L982: Connect: Thread 745 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:42:46,277 - log_parser - INFO - L994: Connect: Thread 746 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:42:46,278 - log_parser - INFO - L1002: Connect: Thread 747 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:42:46,278 - log_parser - INFO - L1010: Connect: Thread 748 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:42:46,280 - log_parser - INFO - L1034: Connect: Thread 749 -> User=lc, Host=59.219.183.30
+2025-04-08 14:42:46,280 - log_parser - INFO - L1041: Connect: Thread 750 -> User=lc, Host=59.219.183.30
+2025-04-08 14:42:46,281 - log_parser - INFO - L1055: Connect: Thread 751 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,282 - log_parser - INFO - L1062: Connect: Thread 752 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,282 - log_parser - INFO - L1069: Connect: Thread 753 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,283 - log_parser - INFO - L1076: Connect: Thread 754 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,284 - log_parser - INFO - L1083: Connect: Thread 755 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,284 - log_parser - INFO - L1090: Connect: Thread 756 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,285 - log_parser - INFO - L1097: Connect: Thread 757 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,285 - log_parser - INFO - L1104: Connect: Thread 758 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,286 - log_parser - INFO - L1111: Connect: Thread 759 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,288 - log_parser - INFO - L1118: Connect: Thread 760 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,288 - log_parser - INFO - L1125: Connect: Thread 761 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,289 - log_parser - INFO - L1132: Connect: Thread 762 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,290 - log_parser - INFO - L1139: Connect: Thread 763 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,290 - log_parser - INFO - L1146: Connect: Thread 764 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,292 - log_parser - INFO - L1157: Connect: Thread 765 -> User=lc, Host=59.219.183.30
+2025-04-08 14:42:46,293 - log_parser - INFO - L1168: Connect: Thread 766 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:46,293 - log_parser - INFO - L1173: Connect: Thread 767 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:46,293 - log_parser - INFO - L1178: Connect: Thread 768 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:46,294 - log_parser - INFO - L1199: Connect: Thread 769 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:46,294 - log_parser - INFO - L1236: Connect: Thread 770 -> User=qinan, Host=59.219.183.81
+2025-04-08 14:42:46,296 - log_parser - INFO - L1245: Connect: Thread 771 -> User=qinan, Host=59.219.183.81
+2025-04-08 14:42:46,296 - log_parser - INFO - L1255: Connect: Thread 772 -> User=qinan, Host=59.219.183.81
+2025-04-08 14:42:46,300 - log_parser - INFO - L1352: Connect: Thread 773 -> User=qinan, Host=59.219.183.81
+2025-04-08 14:42:46,300 - log_parser - INFO - L1359: Connect: Thread 774 -> User=lc, Host=59.219.183.30
+2025-04-08 14:42:46,301 - log_parser - INFO - L1372: Connect: Thread 775 -> User=qinan, Host=59.219.183.81
+2025-04-08 14:42:46,302 - log_parser - INFO - L1395: Connect: Thread 776 -> User=qinan, Host=59.219.183.81
+2025-04-08 14:42:46,303 - log_parser - INFO - L1399: Connect: Thread 777 -> User=qinan, Host=59.219.183.81
+2025-04-08 14:42:46,308 - log_parser - INFO - L1493: Connect: Thread 778 -> User=maiji, Host=59.219.54.125
+2025-04-08 14:42:46,309 - log_parser - INFO - L1509: Connect: Thread 779 -> User=maiji, Host=59.219.54.125
+2025-04-08 14:42:46,309 - log_parser - INFO - L1512: Connect: Thread 780 -> User=maiji, Host=59.219.54.125
+2025-04-08 14:42:46,311 - log_parser - INFO - L1533: Connect: Thread 781 -> User=maiji, Host=59.219.54.125
+2025-04-08 14:42:46,311 - log_parser - INFO - L1540: Connect: Thread 782 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,312 - log_parser - INFO - L1548: Connect: Thread 783 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,312 - log_parser - INFO - L1558: Connect: Thread 784 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,313 - log_parser - INFO - L1567: Connect: Thread 785 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,315 - log_parser - INFO - 日志流处理完成，共处理 1578 行，解析出 1084 个潜在活动记录。
+2025-04-08 14:42:46,315 - log_parser - INFO - 文件 SJZDXT-SJKFWQ-004-2025-03-31.log: 处理最后一批 8 条记录...
+2025-04-08 14:42:46,340 - models - INFO - 成功批量插入 8/8 条活动记录。
+2025-04-08 14:42:46,341 - log_parser - INFO - 文件 SJZDXT-SJKFWQ-004-2025-03-31.log 处理完成: 处理 1084 条潜在活动, 添加 8 条新记录。
+2025-04-08 14:42:46,342 - log_parser - INFO - SFTP 文件流已关闭 (/data/general_log/SJZDXT-SJKFWQ-004-2025-03-31.log)。
+2025-04-08 14:42:46,342 - log_parser - INFO - 正在打开日志文件流: /data/general_log/SJZDXT-SJKFWQ-004-2025-04-01.log
+2025-04-08 14:42:46,345 - log_parser - INFO - L2: Connect: Thread 786 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,346 - log_parser - INFO - L9: Connect: Thread 787 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,346 - log_parser - INFO - L27: Connect: Thread 788 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,347 - log_parser - INFO - L36: Connect: Thread 789 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,347 - log_parser - INFO - L43: Connect: Thread 790 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,349 - log_parser - INFO - L52: Connect: Thread 791 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,352 - log_parser - INFO - L139: Connect: Thread 792 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,352 - log_parser - INFO - L146: Connect: Thread 793 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,353 - log_parser - INFO - L164: Connect: Thread 794 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,355 - log_parser - INFO - L178: Connect: Thread 795 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,356 - log_parser - INFO - L209: Connect: Thread 796 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,402 - log_parser - INFO - L265: Connect: Thread 797 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:42:46,404 - log_parser - INFO - L274: Connect: Thread 798 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:42:46,406 - log_parser - INFO - L306: Connect: Thread 799 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:42:46,420 - log_parser - INFO - L584: Connect: Thread 800 -> User=qinshui, Host=59.219.183.77
+2025-04-08 14:42:46,421 - log_parser - INFO - L595: Connect: Thread 801 -> User=qinshui, Host=59.219.183.77
+2025-04-08 14:42:46,425 - log_parser - INFO - L658: Connect: Thread 802 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:42:46,430 - log_parser - INFO - L683: Connect: Thread 803 -> User=qinshui, Host=59.219.183.77
+2025-04-08 14:42:46,431 - log_parser - INFO - L689: Connect: Thread 804 -> User=root, Host=59.219.183.77
+2025-04-08 14:42:46,432 - log_parser - INFO - L690: Connect: Thread 804 -> User=Access denied for user 'root', Host='59.219.183.77'
+2025-04-08 14:42:46,435 - log_parser - INFO - L735: Connect: Thread 805 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:42:46,436 - log_parser - INFO - L759: Connect: Thread 806 -> User=qinshui, Host=59.219.183.77
+2025-04-08 14:42:46,440 - log_parser - INFO - L770: Connect: Thread 807 -> User=qinshui, Host=59.219.183.77
+2025-04-08 14:42:46,441 - log_parser - INFO - L799: Connect: Thread 808 -> User=qinshui, Host=59.219.183.77
+2025-04-08 14:42:46,443 - log_parser - INFO - L810: Connect: Thread 809 -> User=qinshui, Host=59.219.183.77
+2025-04-08 14:42:46,449 - log_parser - INFO - L891: Connect: Thread 810 -> User=qinshui, Host=59.219.183.77
+2025-04-08 14:42:46,450 - log_parser - INFO - L902: Connect: Thread 811 -> User=qinshui, Host=59.219.183.77
+2025-04-08 14:42:46,454 - log_parser - INFO - L966: Connect: Thread 812 -> User=qinshui, Host=59.219.183.77
+2025-04-08 14:42:46,455 - log_parser - INFO - L983: Connect: Thread 813 -> User=lc, Host=59.219.183.30
+2025-04-08 14:42:46,456 - log_parser - INFO - L991: Connect: Thread 814 -> User=qinshui, Host=59.219.183.77
+2025-04-08 14:42:46,460 - log_parser - INFO - L1036: Connect: Thread 815 -> User=lc, Host=59.219.183.30
+2025-04-08 14:42:46,461 - log_parser - INFO - L1039: Connect: Thread 816 -> User=qinshui, Host=59.219.183.77
+2025-04-08 14:42:46,462 - log_parser - INFO - L1047: Connect: Thread 817 -> User=qinshui, Host=59.219.183.77
+2025-04-08 14:42:46,462 - log_parser - INFO - L1053: Connect: Thread 818 -> User=qinshui, Host=59.219.183.77
+2025-04-08 14:42:46,467 - log_parser - INFO - L1100: Connect: Thread 819 -> User=qinshui, Host=59.219.183.77
+2025-04-08 14:42:46,469 - log_parser - INFO - L1165: Connect: Thread 820 -> User=qinshui, Host=59.219.183.77
+2025-04-08 14:42:46,472 - log_parser - INFO - L1182: Connect: Thread 821 -> User=qinshui, Host=59.219.183.77
+2025-04-08 14:42:46,487 - log_parser - INFO - L1467: Connect: Thread 827 -> User=qinshui, Host=59.219.183.77
+2025-04-08 14:42:46,489 - log_parser - INFO - L1498: Connect: Thread 832 -> User=qinshui, Host=59.219.183.77
+2025-04-08 14:42:46,496 - log_parser - INFO - L1609: Connect: Thread 835 -> User=qinshui, Host=59.219.183.77
+2025-04-08 14:42:46,497 - log_parser - INFO - L1619: Connect: Thread 836 -> User=qinshui, Host=59.219.183.77
+2025-04-08 14:42:46,501 - log_parser - INFO - L1735: Connect: Thread 837 -> User=lc, Host=59.219.183.30
+2025-04-08 14:42:46,502 - log_parser - INFO - L1746: Connect: Thread 838 -> User=lc, Host=59.219.183.30
+2025-04-08 14:42:46,578 - log_parser - INFO - L2370: Connect: Thread 839 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:42:46,587 - log_parser - INFO - L2456: Connect: Thread 840 -> User=qinshui, Host=59.219.183.77
+2025-04-08 14:42:46,588 - log_parser - INFO - L2543: Connect: Thread 841 -> User=qinshui, Host=59.219.183.77
+2025-04-08 14:42:46,591 - log_parser - INFO - L2612: Connect: Thread 842 -> User=qinshui, Host=59.219.183.77
+2025-04-08 14:42:46,592 - log_parser - INFO - L2657: Connect: Thread 843 -> User=lc, Host=59.219.183.30
+2025-04-08 14:42:46,592 - log_parser - INFO - L2660: Connect: Thread 844 -> User=lc, Host=59.219.183.30
+2025-04-08 14:42:46,593 - log_parser - INFO - L2670: Connect: Thread 845 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:46,593 - log_parser - INFO - L2675: Connect: Thread 846 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:46,594 - log_parser - INFO - L2680: Connect: Thread 847 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:46,601 - log_parser - INFO - L2715: Connect: Thread 848 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:46,605 - log_parser - INFO - 日志流处理完成，共处理 2779 行，解析出 2413 个潜在活动记录。
+2025-04-08 14:42:46,605 - log_parser - INFO - 文件 SJZDXT-SJKFWQ-004-2025-04-01.log: 处理最后一批 124 条记录...
+2025-04-08 14:42:46,646 - models - INFO - 成功批量插入 124/124 条活动记录。
+2025-04-08 14:42:46,647 - log_parser - INFO - 文件 SJZDXT-SJKFWQ-004-2025-04-01.log 处理完成: 处理 2413 条潜在活动, 添加 124 条新记录。
+2025-04-08 14:42:46,648 - log_parser - INFO - SFTP 文件流已关闭 (/data/general_log/SJZDXT-SJKFWQ-004-2025-04-01.log)。
+2025-04-08 14:42:46,648 - log_parser - INFO - 正在打开日志文件流: /data/general_log/SJZDXT-SJKFWQ-004-2025-04-02.log
+2025-04-08 14:42:46,649 - log_parser - INFO - L2: Connect: Thread 849 -> User=wushan, Host=59.219.58.69
+2025-04-08 14:42:46,649 - log_parser - INFO - L11: Connect: Thread 850 -> User=wushan, Host=59.219.58.69
+2025-04-08 14:42:46,649 - log_parser - INFO - L20: Connect: Thread 851 -> User=wushan, Host=59.219.58.69
+2025-04-08 14:42:46,650 - log_parser - INFO - L35: Connect: Thread 852 -> User=wushan, Host=59.219.58.69
+2025-04-08 14:42:46,653 - log_parser - INFO - L138: Connect: Thread 853 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,653 - log_parser - INFO - L145: Connect: Thread 854 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,653 - log_parser - INFO - L163: Connect: Thread 855 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,654 - log_parser - INFO - L172: Connect: Thread 856 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,655 - log_parser - INFO - L189: Connect: Thread 857 -> User=wushan, Host=59.219.58.69
+2025-04-08 14:42:46,656 - log_parser - INFO - L200: Connect: Thread 858 -> User=wushan, Host=59.219.58.69
+2025-04-08 14:42:46,657 - log_parser - INFO - L206: Connect: Thread 859 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,657 - log_parser - INFO - L218: Connect: Thread 860 -> User=wushan, Host=59.219.58.69
+2025-04-08 14:42:46,662 - log_parser - INFO - L344: Connect: Thread 861 -> User=wushan, Host=59.219.58.69
+2025-04-08 14:42:46,664 - log_parser - INFO - L364: Connect: Thread 862 -> User=wushan, Host=59.219.58.69
+2025-04-08 14:42:46,665 - log_parser - INFO - L458: Connect: Thread 863 -> User=wushan, Host=59.219.58.69
+2025-04-08 14:42:46,668 - log_parser - INFO - L573: Connect: Thread 864 -> User=wushan, Host=59.219.58.69
+2025-04-08 14:42:46,669 - log_parser - INFO - L577: Connect: Thread 865 -> User=wushan, Host=59.219.58.69
+2025-04-08 14:42:46,670 - log_parser - INFO - L593: Connect: Thread 866 -> User=wushan, Host=59.219.58.69
+2025-04-08 14:42:46,670 - log_parser - INFO - L596: Connect: Thread 867 -> User=wushan, Host=59.219.58.69
+2025-04-08 14:42:46,671 - log_parser - INFO - L604: Connect: Thread 868 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,671 - log_parser - INFO - L612: Connect: Thread 869 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,672 - log_parser - INFO - L619: Connect: Thread 870 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,672 - log_parser - INFO - L627: Connect: Thread 871 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,674 - log_parser - INFO - L635: Connect: Thread 872 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,691 - log_parser - INFO - L896: Connect: Thread 873 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,693 - log_parser - INFO - L904: Connect: Thread 874 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,694 - log_parser - INFO - L912: Connect: Thread 875 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,695 - log_parser - INFO - L920: Connect: Thread 876 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,701 - log_parser - INFO - L975: Connect: Thread 877 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,702 - log_parser - INFO - L982: Connect: Thread 878 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,703 - log_parser - INFO - L1000: Connect: Thread 879 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,708 - log_parser - INFO - L1090: Connect: Thread 880 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,708 - log_parser - INFO - L1095: Connect: Thread 881 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,709 - log_parser - INFO - L1102: Connect: Thread 882 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,712 - log_parser - INFO - L1120: Connect: Thread 883 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,766 - log_parser - INFO - L1461: Connect: Thread 884 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,767 - log_parser - INFO - L1468: Connect: Thread 885 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,771 - log_parser - INFO - L1486: Connect: Thread 886 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,773 - log_parser - INFO - L1517: Connect: Thread 887 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,774 - log_parser - INFO - L1522: Connect: Thread 888 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,774 - log_parser - INFO - L1529: Connect: Thread 889 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,777 - log_parser - INFO - L1547: Connect: Thread 890 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,781 - log_parser - INFO - L1630: Connect: Thread 891 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,782 - log_parser - INFO - L1648: Connect: Thread 892 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:42:46,790 - log_parser - INFO - L1676: Connect: Thread 893 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:46,790 - log_parser - INFO - L1681: Connect: Thread 894 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:46,791 - log_parser - INFO - L1686: Connect: Thread 895 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:46,792 - log_parser - INFO - L1692: Connect: Thread 896 -> User=lc, Host=172.101.7.2
+2025-04-08 14:42:46,792 - log_parser - INFO - L1699: Connect: Thread 897 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:42:46,792 - log_parser - INFO - L1708: Connect: Thread 898 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:42:46,797 - log_parser - INFO - L1788: Connect: Thread 899 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:42:46,806 - log_parser - INFO - L1913: Connect: Thread 900 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:42:46,812 - log_parser - INFO - L2049: Connect: Thread 901 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:42:46,813 - log_parser - INFO - L2058: Connect: Thread 902 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:42:46,817 - log_parser - INFO - L2089: Connect: Thread 904 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:42:46,818 - log_parser - INFO - L2091: Connect: Thread 903 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:42:46,819 - log_parser - INFO - L2127: Connect: Thread 905 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:42:46,819 - log_parser - INFO - L2136: Connect: Thread 906 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:42:46,823 - log_parser - INFO - L2167: Connect: Thread 908 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:42:46,823 - log_parser - INFO - L2168: Connect: Thread 907 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:42:46,824 - log_parser - INFO - L2169: Connect: Thread 909 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:42:46,825 - log_parser - INFO - L2216: Connect: Thread 910 -> User=lc, Host=59.219.183.30
+2025-04-08 14:42:46,825 - log_parser - INFO - L2225: Connect: Thread 911 -> User=lc, Host=59.219.183.30
+2025-04-08 14:42:46,829 - log_parser - INFO - L2249: Connect: Thread 912 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:42:46,830 - log_parser - INFO - L2261: Connect: Thread 913 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:42:46,831 - log_parser - INFO - L2278: Connect: Thread 914 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:42:46,832 - log_parser - INFO - L2285: Connect: Thread 915 -> User=gangu, Host=59.219.55.107
+2025-04-08 14:42:46,833 - log_parser - INFO - L2295: Connect: Thread 916 -> User=gangu, Host=59.219.55.107
+2025-04-08 14:42:46,834 - log_parser - INFO - L2304: Connect: Thread 917 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:42:46,836 - log_parser - INFO - L2308: Connect: Thread 918 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:42:53,905 - log_parser - INFO - L2459: Connect: Thread 919 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:42:53,906 - log_parser - INFO - L2460: Connect: Thread 921 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:42:53,906 - log_parser - INFO - L2461: Connect: Thread 920 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:42:53,908 - log_parser - INFO - L2478: Connect: Thread 922 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:42:53,908 - log_parser - INFO - L2490: Connect: Thread 923 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:42:53,910 - log_parser - INFO - L2512: Connect: Thread 924 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:42:58,383 - log_parser - INFO - L2743: Connect: Thread 925 -> User=gangu, Host=59.219.55.107
+2025-04-08 14:42:58,385 - log_parser - INFO - L2794: Connect: Thread 926 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:42:58,386 - log_parser - INFO - L2803: Connect: Thread 927 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:42:58,386 - log_parser - INFO - L2815: Connect: Thread 928 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:43:02,723 - log_parser - INFO - L2889: Connect: Thread 929 -> User=gangu, Host=59.219.55.107
+2025-04-08 14:43:18,116 - log_parser - INFO - L6564: Connect: Thread 930 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:43:31,471 - log_parser - INFO - 已处理 10000 行日志...
+2025-04-08 14:43:32,334 - log_parser - INFO - L10238: Connect: Thread 931 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:43:32,334 - log_parser - INFO - L10263: Connect: Thread 933 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:43:32,334 - log_parser - INFO - L10264: Connect: Thread 934 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:43:32,334 - log_parser - INFO - L10266: Connect: Thread 932 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:43:32,341 - log_parser - INFO - L10526: Connect: Thread 935 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:43:32,343 - log_parser - INFO - L10535: Connect: Thread 936 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:43:32,343 - log_parser - INFO - L10558: Connect: Thread 937 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:43:49,621 - log_parser - INFO - L10804: Connect: Thread 938 -> User=gangu, Host=59.219.55.107
+2025-04-08 14:43:49,622 - log_parser - INFO - L10832: Connect: Thread 939 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:43:49,623 - log_parser - INFO - L10843: Connect: Thread 940 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:43:49,624 - log_parser - INFO - L10861: Connect: Thread 941 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:43:49,631 - log_parser - INFO - L11044: Connect: Thread 942 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:43:49,631 - log_parser - INFO - L11060: Connect: Thread 943 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:43:49,632 - log_parser - INFO - L11074: Connect: Thread 944 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:43:49,637 - log_parser - INFO - L11086: Connect: Thread 945 -> User=lc, Host=59.219.183.30
+2025-04-08 14:43:49,638 - log_parser - INFO - L11093: Connect: Thread 946 -> User=lc, Host=59.219.183.30
+2025-04-08 14:43:49,641 - log_parser - INFO - L11115: Connect: Thread 947 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:43:49,642 - log_parser - INFO - L11122: Connect: Thread 948 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:43:49,643 - log_parser - INFO - L11168: Connect: Thread 949 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:43:49,644 - log_parser - INFO - L11170: Connect: Thread 950 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:43:49,645 - log_parser - INFO - L11195: Connect: Thread 951 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:43:49,645 - log_parser - INFO - L11202: Connect: Thread 952 -> User=gangu, Host=59.219.55.107
+2025-04-08 14:43:49,646 - log_parser - INFO - L11205: Connect: Thread 953 -> User=gangu, Host=59.219.55.107
+2025-04-08 14:43:49,647 - log_parser - INFO - L11214: Connect: Thread 954 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:43:49,648 - log_parser - INFO - L11226: Connect: Thread 955 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:43:49,650 - log_parser - INFO - L11256: Connect: Thread 956 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:43:49,656 - log_parser - INFO - L11330: Connect: Thread 957 -> User=lc, Host=59.219.183.30
+2025-04-08 14:43:49,657 - log_parser - INFO - L11335: Connect: Thread 958 -> User=lc, Host=59.219.183.30
+2025-04-08 14:43:51,375 - log_parser - INFO - 已处理 20000 行日志...
+2025-04-08 14:43:53,341 - log_parser - INFO - 已处理 30000 行日志...
+2025-04-08 14:43:55,555 - log_parser - INFO - 已处理 40000 行日志...
+2025-04-08 14:43:57,490 - log_parser - INFO - 已处理 50000 行日志...
+2025-04-08 14:43:59,412 - log_parser - INFO - 已处理 60000 行日志...
+2025-04-08 14:44:01,461 - log_parser - INFO - 已处理 70000 行日志...
+2025-04-08 14:44:03,480 - log_parser - INFO - 已处理 80000 行日志...
+2025-04-08 14:44:05,641 - log_parser - INFO - 已处理 90000 行日志...
+2025-04-08 14:44:07,492 - log_parser - INFO - 已处理 100000 行日志...
+2025-04-08 14:44:09,415 - log_parser - INFO - 已处理 110000 行日志...
+2025-04-08 14:44:11,147 - log_parser - INFO - 已处理 120000 行日志...
+2025-04-08 14:44:12,946 - log_parser - INFO - 已处理 130000 行日志...
+2025-04-08 14:44:14,931 - log_parser - INFO - 已处理 140000 行日志...
+2025-04-08 14:44:16,744 - log_parser - INFO - 已处理 150000 行日志...
+2025-04-08 14:44:18,630 - log_parser - INFO - 已处理 160000 行日志...
+2025-04-08 14:44:20,461 - log_parser - INFO - 已处理 170000 行日志...
+2025-04-08 14:44:22,473 - log_parser - INFO - 已处理 180000 行日志...
+2025-04-08 14:44:24,345 - log_parser - INFO - 已处理 190000 行日志...
+2025-04-08 14:44:26,495 - log_parser - INFO - 已处理 200000 行日志...
+2025-04-08 14:44:28,406 - log_parser - INFO - 已处理 210000 行日志...
+2025-04-08 14:44:30,373 - log_parser - INFO - 已处理 220000 行日志...
+2025-04-08 14:44:32,308 - log_parser - INFO - 已处理 230000 行日志...
+2025-04-08 14:44:34,386 - log_parser - INFO - 已处理 240000 行日志...
+2025-04-08 14:44:36,546 - log_parser - INFO - 已处理 250000 行日志...
+2025-04-08 14:44:38,532 - log_parser - INFO - 已处理 260000 行日志...
+2025-04-08 14:44:40,452 - log_parser - INFO - 已处理 270000 行日志...
+2025-04-08 14:44:42,393 - log_parser - INFO - 已处理 280000 行日志...
+2025-04-08 14:44:44,270 - log_parser - INFO - 已处理 290000 行日志...
+2025-04-08 14:44:46,107 - log_parser - INFO - 已处理 300000 行日志...
+2025-04-08 14:44:47,956 - log_parser - INFO - 已处理 310000 行日志...
+2025-04-08 14:44:49,854 - log_parser - INFO - 已处理 320000 行日志...
+2025-04-08 14:44:51,664 - log_parser - INFO - 已处理 330000 行日志...
+2025-04-08 14:44:53,628 - log_parser - INFO - 已处理 340000 行日志...
+2025-04-08 14:44:55,429 - log_parser - INFO - 已处理 350000 行日志...
+2025-04-08 14:44:57,204 - log_parser - INFO - 已处理 360000 行日志...
+2025-04-08 14:44:58,848 - log_parser - INFO - 已处理 370000 行日志...
+2025-04-08 14:45:00,806 - log_parser - INFO - 已处理 380000 行日志...
+2025-04-08 14:45:02,542 - log_parser - INFO - 已处理 390000 行日志...
+2025-04-08 14:45:04,297 - log_parser - INFO - 已处理 400000 行日志...
+2025-04-08 14:45:06,306 - log_parser - INFO - 已处理 410000 行日志...
+2025-04-08 14:45:08,392 - log_parser - INFO - 已处理 420000 行日志...
+2025-04-08 14:45:10,538 - log_parser - INFO - 已处理 430000 行日志...
+2025-04-08 14:45:12,236 - log_parser - INFO - 已处理 440000 行日志...
+2025-04-08 14:45:13,990 - log_parser - INFO - 已处理 450000 行日志...
+2025-04-08 14:45:16,072 - log_parser - INFO - 已处理 460000 行日志...
+2025-04-08 14:45:17,968 - log_parser - INFO - 已处理 470000 行日志...
+2025-04-08 14:45:19,757 - log_parser - INFO - 已处理 480000 行日志...
+2025-04-08 14:45:21,484 - log_parser - INFO - 已处理 490000 行日志...
+2025-04-08 14:45:23,069 - log_parser - INFO - 已处理 500000 行日志...
+2025-04-08 14:45:24,773 - log_parser - INFO - 已处理 510000 行日志...
+2025-04-08 14:45:26,627 - log_parser - INFO - 已处理 520000 行日志...
+2025-04-08 14:45:28,387 - log_parser - INFO - 已处理 530000 行日志...
+2025-04-08 14:45:30,018 - log_parser - INFO - 已处理 540000 行日志...
+2025-04-08 14:45:31,741 - log_parser - INFO - 已处理 550000 行日志...
+2025-04-08 14:45:33,448 - log_parser - INFO - 已处理 560000 行日志...
+2025-04-08 14:45:35,306 - log_parser - INFO - 已处理 570000 行日志...
+2025-04-08 14:45:37,232 - log_parser - INFO - 已处理 580000 行日志...
+2025-04-08 14:45:38,835 - log_parser - INFO - 已处理 590000 行日志...
+2025-04-08 14:45:40,372 - log_parser - INFO - 已处理 600000 行日志...
+2025-04-08 14:45:42,054 - log_parser - INFO - 已处理 610000 行日志...
+2025-04-08 14:45:43,676 - log_parser - INFO - 已处理 620000 行日志...
+2025-04-08 14:45:45,088 - log_parser - INFO - L628291: Connect: Thread 959 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:45:45,430 - log_parser - INFO - 已处理 630000 行日志...
+2025-04-08 14:45:46,198 - log_parser - INFO - L635623: Connect: Thread 960 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:45:46,202 - log_parser - INFO - L635758: Connect: Thread 961 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:45:46,203 - log_parser - INFO - L635777: Connect: Thread 962 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:45:46,205 - log_parser - INFO - L635808: Connect: Thread 963 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:45:46,205 - log_parser - INFO - L635813: Connect: Thread 964 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:45:46,256 - log_parser - INFO - L635907: Connect: Thread 965 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:45:46,257 - log_parser - INFO - L635930: Connect: Thread 966 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:45:46,257 - log_parser - INFO - L635948: Connect: Thread 967 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:45:46,262 - log_parser - INFO - L636086: Connect: Thread 968 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:45:46,265 - log_parser - INFO - L636106: Connect: Thread 969 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:45:46,270 - log_parser - INFO - L636175: Connect: Thread 970 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:45:46,271 - log_parser - INFO - L636203: Connect: Thread 971 -> User=gangu, Host=59.219.55.107
+2025-04-08 14:45:46,272 - log_parser - INFO - L636214: Connect: Thread 972 -> User=gangu, Host=59.219.55.107
+2025-04-08 14:45:58,266 - log_parser - INFO - L636455: Connect: Thread 973 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:45:58,267 - log_parser - INFO - L636463: Connect: Thread 974 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:45:58,267 - log_parser - INFO - L636473: Connect: Thread 975 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:45:58,270 - log_parser - INFO - L636593: Connect: Thread 976 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:45:58,271 - log_parser - INFO - L636600: Connect: Thread 977 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:45:58,271 - log_parser - INFO - L636618: Connect: Thread 978 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:45:58,271 - log_parser - INFO - L636641: Connect: Thread 979 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:45:58,273 - log_parser - INFO - L636685: Connect: Thread 980 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:45:58,274 - log_parser - INFO - L636710: Connect: Thread 981 -> User=zhangjiachuan, Host=59.219.57.15
+2025-04-08 14:46:08,522 - log_parser - INFO - L637158: Connect: Thread 982 -> User=gangu, Host=59.219.55.107
+2025-04-08 14:46:10,088 - log_parser - INFO - L637241: Connect: Thread 983 -> User=gangu, Host=59.219.55.107
+2025-04-08 14:46:13,305 - log_parser - INFO - L637357: Connect: Thread 984 -> User=gangu, Host=59.219.55.107
+2025-04-08 14:46:13,305 - log_parser - INFO - L637363: Connect: Thread 985 -> User=gangu, Host=59.219.55.107
+2025-04-08 14:46:13,305 - log_parser - INFO - L637366: Connect: Thread 986 -> User=gangu, Host=59.219.55.107
+2025-04-08 14:46:34,424 - log_parser - INFO - L637789: Connect: Thread 987 -> User=gangu, Host=59.219.55.107
+2025-04-08 14:46:34,427 - log_parser - INFO - L637792: Connect: Thread 988 -> User=gangu, Host=59.219.55.107
+2025-04-08 14:46:34,428 - log_parser - INFO - L637817: Connect: Thread 989 -> User=lc, Host=172.101.7.2
+2025-04-08 14:46:34,429 - log_parser - INFO - L637828: Connect: Thread 990 -> User=lc, Host=172.101.7.2
+2025-04-08 14:46:34,433 - log_parser - INFO - L637845: Connect: Thread 991 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,445 - log_parser - INFO - L637864: Connect: Thread 992 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,445 - log_parser - INFO - L637872: Connect: Thread 993 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,445 - log_parser - INFO - L637879: Connect: Thread 994 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,447 - log_parser - INFO - L637896: Connect: Thread 995 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,449 - log_parser - INFO - L637904: Connect: Thread 996 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,450 - log_parser - INFO - L637913: Connect: Thread 997 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,450 - log_parser - INFO - L637922: Connect: Thread 998 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,453 - log_parser - INFO - L637931: Connect: Thread 999 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,456 - log_parser - INFO - L637940: Connect: Thread 1000 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,456 - log_parser - INFO - L637949: Connect: Thread 1001 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,458 - log_parser - INFO - L637958: Connect: Thread 1002 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,458 - log_parser - INFO - L637967: Connect: Thread 1003 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,461 - log_parser - INFO - L637976: Connect: Thread 1004 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,462 - log_parser - INFO - L637986: Connect: Thread 1005 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,464 - log_parser - INFO - L637995: Connect: Thread 1006 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,464 - log_parser - INFO - L638004: Connect: Thread 1007 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,466 - log_parser - INFO - L638013: Connect: Thread 1008 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,469 - log_parser - INFO - L638022: Connect: Thread 1009 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,471 - log_parser - INFO - L638031: Connect: Thread 1010 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,472 - log_parser - INFO - L638040: Connect: Thread 1011 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,474 - log_parser - INFO - L638049: Connect: Thread 1012 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,475 - log_parser - INFO - L638058: Connect: Thread 1013 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,479 - log_parser - INFO - L638067: Connect: Thread 1014 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,479 - log_parser - INFO - L638076: Connect: Thread 1015 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,481 - log_parser - INFO - L638084: Connect: Thread 1016 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,482 - log_parser - INFO - L638093: Connect: Thread 1017 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,483 - log_parser - INFO - L638102: Connect: Thread 1018 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,486 - log_parser - INFO - L638111: Connect: Thread 1019 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,487 - log_parser - INFO - L638120: Connect: Thread 1020 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,489 - log_parser - INFO - L638129: Connect: Thread 1021 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,491 - log_parser - INFO - L638138: Connect: Thread 1022 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,494 - log_parser - INFO - L638147: Connect: Thread 1023 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,498 - log_parser - INFO - 日志流处理完成，共处理 638189 行，解析出 637099 个潜在活动记录。
+2025-04-08 14:46:34,499 - log_parser - INFO - 文件 SJZDXT-SJKFWQ-004-2025-04-02.log: 处理最后一批 85 条记录...
+2025-04-08 14:46:34,515 - models - INFO - 成功批量插入 85/85 条活动记录。
+2025-04-08 14:46:34,518 - log_parser - INFO - 文件 SJZDXT-SJKFWQ-004-2025-04-02.log 处理完成: 处理 637099 条潜在活动, 添加 85 条新记录。
+2025-04-08 14:46:34,519 - log_parser - INFO - SFTP 文件流已关闭 (/data/general_log/SJZDXT-SJKFWQ-004-2025-04-02.log)。
+2025-04-08 14:46:34,520 - log_parser - INFO - 正在打开日志文件流: /data/general_log/SJZDXT-SJKFWQ-004-2025-04-03.log
+2025-04-08 14:46:34,526 - log_parser - INFO - L2: Connect: Thread 1024 -> User=gangu, Host=59.219.55.107
+2025-04-08 14:46:34,527 - log_parser - INFO - L13: Connect: Thread 1025 -> User=gangu, Host=59.219.55.107
+2025-04-08 14:46:34,569 - log_parser - INFO - L68: Connect: Thread 1026 -> User=gangu, Host=59.219.55.107
+2025-04-08 14:46:34,578 - log_parser - INFO - L146: Connect: Thread 1027 -> User=gangu, Host=59.219.55.107
+2025-04-08 14:46:34,582 - log_parser - INFO - L188: Connect: Thread 1028 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,583 - log_parser - INFO - L195: Connect: Thread 1029 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,588 - log_parser - INFO - L213: Connect: Thread 1030 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,591 - log_parser - INFO - L238: Connect: Thread 1031 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,623 - log_parser - INFO - L665: Connect: Thread 1032 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:46:34,624 - log_parser - INFO - L670: Connect: Thread 1033 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:46:34,625 - log_parser - INFO - L675: Connect: Thread 1034 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:46:34,625 - log_parser - INFO - L680: Connect: Thread 1035 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:46:34,634 - log_parser - INFO - L948: Connect: Thread 1036 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:46:34,635 - log_parser - INFO - L956: Connect: Thread 1037 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:46:34,636 - log_parser - INFO - L964: Connect: Thread 1038 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:46:34,638 - log_parser - INFO - L972: Connect: Thread 1039 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:46:34,638 - log_parser - INFO - L980: Connect: Thread 1040 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:46:34,642 - log_parser - INFO - L988: Connect: Thread 1041 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:46:34,642 - log_parser - INFO - L996: Connect: Thread 1042 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:46:34,643 - log_parser - INFO - L998: Connect: Thread 1043 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:46:34,643 - log_parser - INFO - L999: Connect: Thread 1044 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:46:34,644 - log_parser - INFO - L1020: Connect: Thread 1045 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:46:34,647 - log_parser - INFO - L1028: Connect: Thread 1046 -> User=tsrh, Host=59.219.204.52
+2025-04-08 14:46:34,650 - log_parser - INFO - L1080: Connect: Thread 1047 -> User=gangu, Host=59.219.55.107
+2025-04-08 14:46:34,653 - log_parser - INFO - L1107: Connect: Thread 1048 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,656 - log_parser - INFO - L1114: Connect: Thread 1049 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,657 - log_parser - INFO - L1134: Connect: Thread 1050 -> User=tsrh, Host=59.219.204.120
+2025-04-08 14:46:34,659 - log_parser - INFO - 日志流处理完成，共处理 1157 行，解析出 689 个潜在活动记录。
+2025-04-08 14:46:34,659 - log_parser - INFO - 文件 SJZDXT-SJKFWQ-004-2025-04-03.log: 处理最后一批 2 条记录...
+2025-04-08 14:46:34,665 - models - INFO - 成功批量插入 2/2 条活动记录。
+2025-04-08 14:46:34,666 - log_parser - INFO - 文件 SJZDXT-SJKFWQ-004-2025-04-03.log 处理完成: 处理 689 条潜在活动, 添加 2 条新记录。
+2025-04-08 14:46:34,667 - log_parser - INFO - SFTP 文件流已关闭 (/data/general_log/SJZDXT-SJKFWQ-004-2025-04-03.log)。
+2025-04-08 14:46:34,667 - log_parser - INFO - 正在打开日志文件流: /data/general_log/SJZDXT-SJKFWQ-004-2025-04-04.log
+2025-04-08 14:46:34,673 - log_parser - INFO - 日志流处理完成，共处理 1 行，解析出 0 个潜在活动记录。
+2025-04-08 14:46:34,676 - log_parser - INFO - 文件 SJZDXT-SJKFWQ-004-2025-04-04.log 处理完成: 处理 0 条潜在活动, 添加 0 条新记录。
+2025-04-08 14:46:34,679 - log_parser - INFO - SFTP 文件流已关闭 (/data/general_log/SJZDXT-SJKFWQ-004-2025-04-04.log)。
+2025-04-08 14:46:34,679 - log_parser - INFO - 正在打开日志文件流: /data/general_log/SJZDXT-SJKFWQ-004-2025-04-05.log
+2025-04-08 14:46:34,683 - log_parser - INFO - 日志流处理完成，共处理 1 行，解析出 0 个潜在活动记录。
+2025-04-08 14:46:34,683 - log_parser - INFO - 文件 SJZDXT-SJKFWQ-004-2025-04-05.log 处理完成: 处理 0 条潜在活动, 添加 0 条新记录。
+2025-04-08 14:46:34,684 - log_parser - INFO - SFTP 文件流已关闭 (/data/general_log/SJZDXT-SJKFWQ-004-2025-04-05.log)。
+2025-04-08 14:46:34,685 - log_parser - INFO - 正在打开日志文件流: /data/general_log/SJZDXT-SJKFWQ-004-2025-04-06.log
+2025-04-08 14:46:34,688 - log_parser - INFO - 日志流处理完成，共处理 1 行，解析出 0 个潜在活动记录。
+2025-04-08 14:46:34,688 - log_parser - INFO - 文件 SJZDXT-SJKFWQ-004-2025-04-06.log 处理完成: 处理 0 条潜在活动, 添加 0 条新记录。
+2025-04-08 14:46:34,690 - log_parser - INFO - SFTP 文件流已关闭 (/data/general_log/SJZDXT-SJKFWQ-004-2025-04-06.log)。
+2025-04-08 14:46:34,690 - log_parser - INFO - 服务器 MySQL服务器1 (192.168.10.129) 所有修改过的日志文件处理完毕。总共添加 1330 条新记录。
+2025-04-08 14:46:34,696 - models - INFO - 服务器 1 的最后扫描时间已更新为 2025-04-08 06:38:55.294515+00:00 (UTC)。
+2025-04-08 14:46:34,696 - paramiko.transport.sftp - INFO - [chan 0] sftp session closed.
+2025-04-08 14:46:34,697 - log_parser - INFO - SFTP 连接已关闭 (192.168.10.129)。
+2025-04-08 14:46:34,697 - log_parser - INFO - SSH 连接已关闭 (192.168.10.129)。
+2025-04-08 14:46:34,698 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:46:34] "POST /api/scan HTTP/1.1" 200 -
+2025-04-08 14:46:34,709 - __main__ - INFO - 接收到的活动请求参数: server_id=1, start_date=2025-04-02, end_date=2025-04-08, operation_type=, risk_level=, user_name=
+2025-04-08 14:46:34,710 - __main__ - INFO - 接收到的统计请求参数: server_id=1, start_date=2025-04-02, end_date=2025-04-08
+2025-04-08 14:46:34,721 - __main__ - INFO - 筛选后的活动数据条数: 50 / 总数: 87
+2025-04-08 14:46:34,724 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:46:34] "GET /api/activities?server_id=1&start_date=2025-04-02&end_date=2025-04-08&operation_type=&risk_level=&user_name=&page=1&limit=50 HTTP/1.1" 200 -
+2025-04-08 14:46:34,724 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:46:34] "GET /api/stats?server_id=1&start_date=2025-04-02&end_date=2025-04-08 HTTP/1.1" 200 -
+2025-04-08 14:48:52,685 - __main__ - INFO - 接收到的活动请求参数: server_id=1, start_date=2025-03-10, end_date=2025-04-08, operation_type=, risk_level=, user_name=
+2025-04-08 14:48:52,687 - __main__ - INFO - 接收到的统计请求参数: server_id=1, start_date=2025-03-10, end_date=2025-04-08
+2025-04-08 14:48:52,695 - __main__ - INFO - 筛选后的活动数据条数: 50 / 总数: 1330
+2025-04-08 14:48:52,697 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:48:52] "GET /api/activities?server_id=1&start_date=2025-03-10&end_date=2025-04-08&operation_type=&risk_level=&user_name=&page=1&limit=50 HTTP/1.1" 200 -
+2025-04-08 14:48:52,714 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:48:52] "GET /api/stats?server_id=1&start_date=2025-03-10&end_date=2025-04-08 HTTP/1.1" 200 -
