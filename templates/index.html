@@ -11,11 +11,11 @@
         body { font-family: sans-serif; }
         /* Spinner 动画样式 */
         .spinner {
-            border: 4px solid rgba(255, 255, 255, 0.2); /* 边框颜色稍亮以在深色背景上可见 */
-            width: 28px; /* 尺寸调小一点 */
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            width: 28px;
             height: 28px;
             border-radius: 50%;
-            border-left-color: #ffffff; /* 左侧边框用白色 */
+            border-left-color: #ffffff;
             animation: spin 1s ease infinite;
         }
         @keyframes spin {
@@ -34,36 +34,75 @@
                     <li class="mb-2"><a href="#" class="block px-4 py-2 rounded hover:bg-gray-700" data-tab="activities">操作记录</a></li>
                 </ul>
             </nav>
-            {/* mt-auto 将这部分推到底部 */}
             <div class="mt-auto">
-                {/* !! 添加侧边栏扫描状态指示器 (默认隐藏) !! */}
                 <div id="scan-indicator" class="text-center my-3 hidden">
-                    <div class="spinner mx-auto"></div> {/* Spinner 动画 */}
-                    <p class="text-sm text-gray-300 mt-2">扫描中...</p> {/* 提示文字 */}
-                </div>
+                    <div class="spinner mx-auto"></div> <p class="text-sm text-gray-300 mt-2">扫描中...</p> </div>
 
-                {/* 扫描日志按钮 */}
                 <button id="scan-logs-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded mb-2">扫描日志</button>
-                {/* 最终结果状态文本区域 */}
                 <div id="scan-status" class="text-xs text-gray-400 text-center h-4"></div>
             </div>
         </div>
 
-        {/* (主内容区代码保持不变) */}
         <div class="flex-1 flex flex-col overflow-hidden">
-            <header class="bg-white shadow p-4"><h2 class="text-xl font-semibold text-gray-800" id="main-content-title">仪表盘</h2></header>
+            <header class="bg-white shadow p-4">
+                <h2 class="text-xl font-semibold text-gray-800" id="main-content-title">仪表盘</h2>
+            </header>
             <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6">
                 <div class="bg-white p-4 rounded shadow mb-6">
                     <h3 class="text-lg font-medium mb-4 text-gray-700">筛选条件</h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 items-end">
-                        <div><label for="server-select" class="block text-sm font-medium text-gray-700">服务器</label><select id="server-select" name="server" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"><option value="">全部服务器</option>{% for server in servers %}<option value="{{ server.id }}">{{ server.name }}</option>{% endfor %}</select></div>
-                        <div><label for="daterange" class="block text-sm font-medium text-gray-700">时间范围</label><input type="text" id="daterange" name="daterange" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"></div>
-                        <div><label for="operation-type-select" class="block text-sm font-medium text-gray-700">操作类型</label><select id="operation-type-select" name="operation_type" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"><option value="">全部类型</option><option value="SELECT">SELECT (查询)</option><option value="INSERT">INSERT (插入)</option><option value="UPDATE">UPDATE (更新)</option><option value="DELETE">DELETE (删除)</option><option value="DDL">DDL (创建/修改/删除表结构)</option><option value="DCL">DCL (授权/撤销权限)</option><option value="TCL">TCL (事务控制)</option><option value="USE_DB">USE DB (切换数据库)</option><option value="CONNECT">CONNECT (连接)</option><option value="QUIT">QUIT (断开)</option><option value="OTHER">OTHER (其他)</option></select></div>
-                        <div><label for="risk-level-select" class="block text-sm font-medium text-gray-700">风险等级</label><select id="risk-level-select" name="risk_level" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"><option value="">全部</option><option value="Low">低危</option><option value="Medium">中危</option><option value="High">高危</option></select></div>
-                        <div><label for="username-input" class="block text-sm font-medium text-gray-700">用户名</label><input type="text" id="username-input" name="username" class="mt-1 block w-full pl-3 pr-2 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md" placeholder="输入用户名..."></div>
-                        <div><button id="filter-btn" class="w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">应用筛选</button></div>
+                        <div>
+                            <label for="server-select" class="block text-sm font-medium text-gray-700">服务器</label>
+                            <select id="server-select" name="server" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                <option value="">全部服务器</option>
+                                {# Jinja2 循环生成服务器选项 #}
+                                {% for server in servers %}
+                                <option value="{{ server.id }}">{{ server.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div>
+                            <label for="daterange" class="block text-sm font-medium text-gray-700">时间范围</label>
+                            <input type="text" id="daterange" name="daterange" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                        </div>
+                        <div>
+                            <label for="operation-type-select" class="block text-sm font-medium text-gray-700">操作类型</label>
+                            <select id="operation-type-select" name="operation_type" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                <option value="">全部类型</option>
+                                <option value="SELECT">SELECT (查询)</option>
+                                <option value="INSERT">INSERT (插入)</option>
+                                <option value="UPDATE">UPDATE (更新)</option>
+                                <option value="DELETE">DELETE (删除)</option>
+                                <option value="DDL">DDL (创建/修改/删除表结构)</option>
+                                <option value="DCL">DCL (授权/撤销权限)</option>
+                                <option value="TCL">TCL (事务控制)</option>
+                                <option value="USE_DB">USE DB (切换数据库)</option>
+                                <option value="CONNECT">CONNECT (连接)</option>
+                                <option value="QUIT">QUIT (断开)</option>
+                                <option value="OTHER">OTHER (其他)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="risk-level-select" class="block text-sm font-medium text-gray-700">风险等级</label>
+                             <select id="risk-level-select" name="risk_level" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                <option value="">全部</option>
+                                <option value="Low">低危</option>
+                                <option value="Medium">中危</option>
+                                <option value="High">高危</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="username-input" class="block text-sm font-medium text-gray-700">用户名</label>
+                            <input type="text" id="username-input" name="username" class="mt-1 block w-full pl-3 pr-2 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md" placeholder="输入用户名...">
+                        </div>
+                        <div>
+                             <button id="filter-btn" class="w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                应用筛选
+                            </button>
+                        </div>
                     </div>
                 </div>
+
                 <div id="content-area">
                     <div id="dashboard-content" class="tab-content">
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -72,8 +111,8 @@
                             <div class="bg-white p-4 rounded shadow"><h4 class="font-semibold mb-2 text-gray-600">活跃用户排行</h4><ul id="top-users-list" class="text-sm text-gray-700"></ul></div>
                             <div class="bg-white p-4 rounded shadow md:col-span-2 lg:col-span-3"><h4 class="font-semibold mb-2 text-gray-600">操作次数按小时分布</h4><div id="hourly-chart" style="height: 300px;"></div></div>
                         </div>
-                         <div id="stats-container"></div>
-                    </div>
+                         <div id="stats-container"></div> </div>
+
                     <div id="activities-content" class="tab-content hidden">
                         <div class="bg-white p-4 rounded shadow">
                             <h3 class="text-lg font-medium mb-4 text-gray-700">详细操作记录</h3>
@@ -83,15 +122,12 @@
                             <div id="pagination" class="mt-4"></div>
                         </div>
                     </div>
-                </div>
+                    </div>
             </main>
         </div>
     </div>
 
     <div id="details-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center hidden z-50"><div class="relative mx-auto p-5 border w-11/12 md:w-1/2 shadow-lg rounded-md bg-white"><div class="mt-3 text-center"><h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">SQL 语句详情</h3><div class="mt-2 px-7 py-3 max-h-60 overflow-y-auto"><pre id="details-modal-content" class="text-sm text-gray-700 text-left whitespace-pre-wrap break-all"></pre></div><div class="items-center px-4 py-3"><button id="details-modal-close" class="px-4 py-2 bg-gray-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300">关闭</button></div></div></div></div>
-
-    {/* !! 移除扫描进度模态框 !! */}
-    {/* <div id="scan-progress-modal" ...> ... </div> */}
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>

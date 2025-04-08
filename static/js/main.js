@@ -44,11 +44,11 @@ $(document).ready(function() {
     $('#details-modal-close').on('click', function() { $('#details-modal').addClass('hidden'); });
     $('#details-modal').on('click', function(event) { if (event.target === this) { $(this).addClass('hidden'); } });
 
-    // !! 修改扫描日志按钮点击事件 - 使用侧边栏指示器 !!
+    // !! 修改扫描日志按钮点击事件 - 成功后调用 fetchData !!
     $('#scan-logs-btn').on('click', function() {
         const scanButton = $(this);
-        const statusDiv = $('#scan-status'); // 按钮下方的最终状态文本区域
-        const indicatorDiv = $('#scan-indicator'); // 侧边栏的扫描中指示器区域
+        const statusDiv = $('#scan-status');
+        const indicatorDiv = $('#scan-indicator');
         const serverId = $('#server-select').val();
         const url = '/api/scan';
         const payload = {};
@@ -61,44 +61,49 @@ $(document).ready(function() {
         }
 
         if (confirm(confirmMessage)) {
-            // 更新 UI：禁用按钮，清空最终状态，显示侧边栏指示器
-            scanButton.prop('disabled', true).text('扫描中...'); // 按钮显示扫描中
-            statusDiv.text(''); // 清空按钮下方的状态
-            indicatorDiv.removeClass('hidden'); // 显示侧边栏的 spinner 和 "扫描中..." 文字
+            scanButton.prop('disabled', true).text('扫描中...');
+            statusDiv.text('');
+            indicatorDiv.removeClass('hidden');
 
             fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json', }, body: JSON.stringify(payload), })
             .then(response => response.json().then(data => ({ status: response.status, body: data })))
             .then(({ status, body }) => {
-                 if (status >= 200 && status < 300) {
+                 // !! 检查后端返回的状态 !!
+                 if (status >= 200 && status < 300 && body.status === 'success') {
                      console.log("扫描请求成功:", body.message);
-                     // 在底部状态区显示成功信息
-                     statusDiv.text(body.message || '扫描任务已启动').removeClass('text-red-500 text-gray-400').addClass('text-green-500');
-                     // 短暂显示后清除
-                     setTimeout(() => { statusDiv.text('').removeClass('text-green-500'); }, 5000);
+                     statusDiv.text(body.message || '扫描完成').removeClass('text-red-500 text-gray-400').addClass('text-green-500');
+                     // !! 扫描成功后，立即调用 fetchData 刷新数据 !!
+                     fetchData(1); // 刷新活动记录（回到第一页）和统计数据
                  } else {
-                     throw new Error(body.error || `请求失败，状态码: ${status}`);
+                     // 如果 HTTP 状态码是成功的，但后端返回了 error 状态，也视为错误
+                     throw new Error(body.error || body.message || `请求成功但扫描失败，状态码: ${status}`);
                  }
             })
             .catch(error => {
                 console.error('扫描日志请求失败:', error);
-                // 在底部状态区显示错误信息
                 statusDiv.text(`扫描失败: ${error.message}`).removeClass('text-green-500 text-gray-400').addClass('text-red-500');
-                 // 考虑错误信息是否需要自动清除，或者保留直到下次操作
-                 // setTimeout(() => { statusDiv.text('').removeClass('text-red-500'); }, 8000);
             })
             .finally(() => {
-                 // 恢复按钮状态并隐藏侧边栏指示器
                  scanButton.prop('disabled', false).text('扫描日志');
-                 indicatorDiv.addClass('hidden'); // 隐藏侧边栏的 spinner 和文字
+                 indicatorDiv.addClass('hidden');
+                 // 在 finally 中设置延时清除状态文本
+                 setTimeout(() => {
+                     statusDiv.text('').removeClass('text-green-500 text-red-500');
+                 }, 8000); // 8 秒后清除最终状态信息
             });
         } else {
-             statusDiv.text(''); // 用户取消，清除状态
+             statusDiv.text('');
         }
     });
 
-
     // --- 初始数据加载 ---
-    function fetchData(page = 1) { fetchActivities(page); fetchStats(); }
+    // !! fetchData 现在是主要的数据加载函数 !!
+    function fetchData(page = 1) {
+        // 总是获取当前页的活动记录和最新的统计数据
+        fetchActivities(page);
+        fetchStats();
+    }
+    // 页面加载时延迟执行初始加载
     setTimeout(fetchData, 100);
 
 }); // end of $(document).ready
