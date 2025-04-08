@@ -13588,3 +13588,129 @@ OSError: Failure
 2025-04-08 14:48:52,695 - __main__ - INFO - 筛选后的活动数据条数: 50 / 总数: 1330
 2025-04-08 14:48:52,697 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:48:52] "GET /api/activities?server_id=1&start_date=2025-03-10&end_date=2025-04-08&operation_type=&risk_level=&user_name=&page=1&limit=50 HTTP/1.1" 200 -
 2025-04-08 14:48:52,714 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:48:52] "GET /api/stats?server_id=1&start_date=2025-03-10&end_date=2025-04-08 HTTP/1.1" 200 -
+2025-04-08 14:58:53,451 - __main__ - INFO - 接收到的活动请求参数: server_id=1, start_date=2025-03-10, end_date=2025-04-08, operation_type=, risk_level=High, user_name=
+2025-04-08 14:58:53,452 - __main__ - INFO - 接收到的统计请求参数: server_id=1, start_date=2025-03-10, end_date=2025-04-08
+2025-04-08 14:58:53,487 - __main__ - INFO - 筛选后的活动数据条数: 50 / 总数: 1231
+2025-04-08 14:58:53,491 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:58:53] "GET /api/activities?server_id=1&start_date=2025-03-10&end_date=2025-04-08&operation_type=&risk_level=High&user_name=&page=1&limit=50 HTTP/1.1" 200 -
+2025-04-08 14:58:53,492 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:58:53] "GET /api/stats?server_id=1&start_date=2025-03-10&end_date=2025-04-08 HTTP/1.1" 200 -
+2025-04-08 14:59:05,476 - __main__ - INFO - 接收到的活动请求参数: server_id=1, start_date=2025-03-10, end_date=2025-04-08, operation_type=, risk_level=High, user_name=
+2025-04-08 14:59:05,498 - __main__ - INFO - 筛选后的活动数据条数: 50 / 总数: 1231
+2025-04-08 14:59:05,500 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 14:59:05] "GET /api/activities?server_id=1&start_date=2025-03-10&end_date=2025-04-08&operation_type=&risk_level=High&user_name=&page=2&limit=50 HTTP/1.1" 200 -
+2025-04-08 15:52:21,442 - __main__ - INFO - 从 config.py 加载的 server_options: [{'id': 1, 'name': 'MySQL服务器1'}]
+2025-04-08 15:52:21,458 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 15:52:21] "GET / HTTP/1.1" 200 -
+2025-04-08 15:52:21,484 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 15:52:21] "GET /static/css/style.css HTTP/1.1" 200 -
+2025-04-08 15:52:21,485 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 15:52:21] "GET /static/js/main.js HTTP/1.1" 200 -
+2025-04-08 15:52:24,037 - __main__ - INFO - 接收到的活动请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08, operation_type=, risk_level=, user_name=
+2025-04-08 15:52:24,039 - __main__ - INFO - 接收到的统计请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08
+2025-04-08 15:52:24,049 - __main__ - INFO - 筛选后的活动数据条数: 50 / 总数: 87
+2025-04-08 15:52:24,052 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 15:52:24] "GET /api/activities?server_id=&start_date=2025-04-02&end_date=2025-04-08&operation_type=&risk_level=&user_name=&page=1&limit=50 HTTP/1.1" 200 -
+2025-04-08 15:52:24,077 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 15:52:24] "GET /api/stats?server_id=&start_date=2025-04-02&end_date=2025-04-08 HTTP/1.1" 200 -
+2025-04-08 15:54:20,108 - __main__ - INFO - 从 config.py 加载的 server_options: [{'id': 1, 'name': 'MySQL服务器1'}]
+2025-04-08 15:54:20,115 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 15:54:20] "GET / HTTP/1.1" 200 -
+2025-04-08 15:54:20,136 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 15:54:20] "GET /static/css/style.css HTTP/1.1" 200 -
+2025-04-08 15:54:20,136 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 15:54:20] "GET /static/js/main.js HTTP/1.1" 200 -
+2025-04-08 15:54:21,414 - __main__ - INFO - 接收到的活动请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08, operation_type=, risk_level=, user_name=
+2025-04-08 15:54:21,415 - __main__ - INFO - 接收到的统计请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08
+2025-04-08 15:54:21,450 - __main__ - INFO - 筛选后的活动数据条数: 50 / 总数: 87
+2025-04-08 15:54:21,454 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 15:54:21] "GET /api/activities?server_id=&start_date=2025-04-02&end_date=2025-04-08&operation_type=&risk_level=&user_name=&page=1&limit=50 HTTP/1.1" 200 -
+2025-04-08 15:54:21,456 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 15:54:21] "GET /api/stats?server_id=&start_date=2025-04-02&end_date=2025-04-08 HTTP/1.1" 200 -
+2025-04-08 15:57:15,931 - __main__ - INFO - 从 config.py 加载的 server_options: [{'id': 1, 'name': 'MySQL服务器1'}]
+2025-04-08 15:57:15,933 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 15:57:15] "GET / HTTP/1.1" 200 -
+2025-04-08 15:57:15,951 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 15:57:15] "GET /static/css/style.css HTTP/1.1" 200 -
+2025-04-08 15:57:15,951 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 15:57:15] "GET /static/js/main.js HTTP/1.1" 200 -
+2025-04-08 15:57:19,162 - __main__ - INFO - 接收到的活动请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08, operation_type=, risk_level=, user_name=
+2025-04-08 15:57:19,164 - __main__ - INFO - 接收到的统计请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08
+2025-04-08 15:57:19,194 - __main__ - INFO - 筛选后的活动数据条数: 50 / 总数: 87
+2025-04-08 15:57:19,196 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 15:57:19] "GET /api/activities?server_id=&start_date=2025-04-02&end_date=2025-04-08&operation_type=&risk_level=&user_name=&page=1&limit=50 HTTP/1.1" 200 -
+2025-04-08 15:57:19,197 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 15:57:19] "GET /api/stats?server_id=&start_date=2025-04-02&end_date=2025-04-08 HTTP/1.1" 200 -
+2025-04-08 15:57:33,294 - __main__ - INFO - 从 config.py 加载的 server_options: [{'id': 1, 'name': 'MySQL服务器1'}]
+2025-04-08 15:57:33,295 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 15:57:33] "GET / HTTP/1.1" 200 -
+2025-04-08 15:57:33,356 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 15:57:33] "GET /static/css/style.css HTTP/1.1" 200 -
+2025-04-08 15:57:33,356 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 15:57:33] "GET /static/js/main.js HTTP/1.1" 200 -
+2025-04-08 15:57:34,552 - __main__ - INFO - 接收到的活动请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08, operation_type=, risk_level=, user_name=
+2025-04-08 15:57:34,552 - __main__ - INFO - 接收到的统计请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08
+2025-04-08 15:57:34,561 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 15:57:34] "GET /api/stats?server_id=&start_date=2025-04-02&end_date=2025-04-08 HTTP/1.1" 200 -
+2025-04-08 15:57:34,577 - __main__ - INFO - 筛选后的活动数据条数: 50 / 总数: 87
+2025-04-08 15:57:34,579 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 15:57:34] "GET /api/activities?server_id=&start_date=2025-04-02&end_date=2025-04-08&operation_type=&risk_level=&user_name=&page=1&limit=50 HTTP/1.1" 200 -
+2025-04-08 16:00:23,991 - __main__ - INFO - 从 config.py 加载的 server_options: [{'id': 1, 'name': 'MySQL服务器1'}]
+2025-04-08 16:00:23,993 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 16:00:23] "GET / HTTP/1.1" 200 -
+2025-04-08 16:00:24,013 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 16:00:24] "GET /static/js/main.js HTTP/1.1" 200 -
+2025-04-08 16:00:24,014 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 16:00:24] "GET /static/css/style.css HTTP/1.1" 200 -
+2025-04-08 16:00:25,195 - __main__ - INFO - 接收到的活动请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08, operation_type=, risk_level=, user_name=
+2025-04-08 16:00:25,196 - __main__ - INFO - 接收到的统计请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08
+2025-04-08 16:00:25,206 - __main__ - INFO - 筛选后的活动数据条数: 50 / 总数: 87
+2025-04-08 16:00:25,209 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 16:00:25] "GET /api/activities?server_id=&start_date=2025-04-02&end_date=2025-04-08&operation_type=&risk_level=&user_name=&page=1&limit=50 HTTP/1.1" 200 -
+2025-04-08 16:00:25,210 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 16:00:25] "GET /api/stats?server_id=&start_date=2025-04-02&end_date=2025-04-08 HTTP/1.1" 200 -
+2025-04-08 16:00:34,601 - models - INFO - user_activities 表检查/创建成功。
+2025-04-08 16:00:34,603 - models - INFO - server_scan_status 表检查/创建成功。
+2025-04-08 16:00:34,604 - __main__ - INFO - 数据库初始化成功或已存在。
+2025-04-08 16:00:34,628 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.100:5000
+2025-04-08 16:00:34,631 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-08 16:00:34,635 - werkzeug - INFO -  * Restarting with stat
+2025-04-08 16:00:35,004 - models - INFO - user_activities 表检查/创建成功。
+2025-04-08 16:00:35,007 - models - INFO - server_scan_status 表检查/创建成功。
+2025-04-08 16:00:35,008 - __main__ - INFO - 数据库初始化成功或已存在。
+2025-04-08 16:00:35,019 - werkzeug - WARNING -  * Debugger is active!
+2025-04-08 16:00:35,024 - werkzeug - INFO -  * Debugger PIN: 644-570-453
+2025-04-08 16:00:36,581 - __main__ - INFO - 从 config.py 加载的 server_options: [{'id': 1, 'name': 'MySQL服务器1'}]
+2025-04-08 16:00:36,587 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 16:00:36] "GET / HTTP/1.1" 200 -
+2025-04-08 16:00:36,712 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 16:00:36] "GET /static/js/main.js HTTP/1.1" 200 -
+2025-04-08 16:00:36,716 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 16:00:36] "GET /static/css/style.css HTTP/1.1" 200 -
+2025-04-08 16:00:37,819 - __main__ - INFO - 接收到的活动请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08, operation_type=, risk_level=, user_name=
+2025-04-08 16:00:37,819 - __main__ - INFO - 接收到的统计请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08
+2025-04-08 16:00:37,828 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 16:00:37] "GET /api/stats?server_id=&start_date=2025-04-02&end_date=2025-04-08 HTTP/1.1" 200 -
+2025-04-08 16:00:37,845 - __main__ - INFO - 筛选后的活动数据条数: 50 / 总数: 87
+2025-04-08 16:00:37,849 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 16:00:37] "GET /api/activities?server_id=&start_date=2025-04-02&end_date=2025-04-08&operation_type=&risk_level=&user_name=&page=1&limit=50 HTTP/1.1" 200 -
+2025-04-08 16:04:01,803 - __main__ - INFO - 从 config.py 加载的 server_options: [{'id': 1, 'name': 'MySQL服务器1'}]
+2025-04-08 16:04:01,804 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 16:04:01] "GET / HTTP/1.1" 200 -
+2025-04-08 16:04:01,825 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 16:04:01] "GET /static/css/style.css HTTP/1.1" 200 -
+2025-04-08 16:04:01,825 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 16:04:01] "GET /static/js/main.js HTTP/1.1" 200 -
+2025-04-08 16:04:04,407 - __main__ - INFO - 接收到的活动请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08, operation_type=, risk_level=, user_name=
+2025-04-08 16:04:04,409 - __main__ - INFO - 接收到的统计请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08
+2025-04-08 16:04:04,414 - __main__ - INFO - 筛选后的活动数据条数: 50 / 总数: 87
+2025-04-08 16:04:04,415 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 16:04:04] "GET /api/activities?server_id=&start_date=2025-04-02&end_date=2025-04-08&operation_type=&risk_level=&user_name=&page=1&limit=50 HTTP/1.1" 200 -
+2025-04-08 16:04:04,437 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 16:04:04] "GET /api/stats?server_id=&start_date=2025-04-02&end_date=2025-04-08 HTTP/1.1" 200 -
+2025-04-08 16:04:37,733 - __main__ - INFO - 从 config.py 加载的 server_options: [{'id': 1, 'name': 'MySQL服务器1'}]
+2025-04-08 16:04:37,734 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 16:04:37] "GET / HTTP/1.1" 200 -
+2025-04-08 16:04:37,772 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 16:04:37] "GET /static/css/style.css HTTP/1.1" 200 -
+2025-04-08 16:04:37,772 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 16:04:37] "GET /static/js/main.js HTTP/1.1" 200 -
+2025-04-08 16:04:40,277 - __main__ - INFO - 接收到的活动请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08, operation_type=, risk_level=, user_name=
+2025-04-08 16:04:40,278 - __main__ - INFO - 接收到的统计请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08
+2025-04-08 16:04:40,284 - __main__ - INFO - 筛选后的活动数据条数: 50 / 总数: 87
+2025-04-08 16:04:40,285 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 16:04:40] "GET /api/activities?server_id=&start_date=2025-04-02&end_date=2025-04-08&operation_type=&risk_level=&user_name=&page=1&limit=50 HTTP/1.1" 200 -
+2025-04-08 16:04:40,287 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 16:04:40] "GET /api/stats?server_id=&start_date=2025-04-02&end_date=2025-04-08 HTTP/1.1" 200 -
+2025-04-08 16:08:55,436 - __main__ - INFO - 从 config.py 加载的 server_options: [{'id': 1, 'name': 'MySQL服务器1'}]
+2025-04-08 16:08:55,438 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 16:08:55] "GET / HTTP/1.1" 200 -
+2025-04-08 16:08:55,458 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 16:08:55] "GET /static/css/style.css HTTP/1.1" 200 -
+2025-04-08 16:08:55,458 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 16:08:55] "GET /static/js/main.js HTTP/1.1" 200 -
+2025-04-08 16:08:56,616 - __main__ - INFO - 接收到的活动请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08, operation_type=, risk_level=, user_name=
+2025-04-08 16:08:56,617 - __main__ - INFO - 接收到的统计请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08
+2025-04-08 16:08:56,623 - __main__ - INFO - 筛选后的活动数据条数: 50 / 总数: 87
+2025-04-08 16:08:56,624 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 16:08:56] "GET /api/activities?server_id=&start_date=2025-04-02&end_date=2025-04-08&operation_type=&risk_level=&user_name=&page=1&limit=50 HTTP/1.1" 200 -
+2025-04-08 16:08:56,625 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 16:08:56] "GET /api/stats?server_id=&start_date=2025-04-02&end_date=2025-04-08 HTTP/1.1" 200 -
+2025-04-08 16:09:11,316 - models - INFO - user_activities 表检查/创建成功。
+2025-04-08 16:09:11,318 - models - INFO - server_scan_status 表检查/创建成功。
+2025-04-08 16:09:11,319 - __main__ - INFO - 数据库初始化成功或已存在。
+2025-04-08 16:09:11,333 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.100:5000
+2025-04-08 16:09:11,335 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-08 16:09:11,336 - werkzeug - INFO -  * Restarting with stat
+2025-04-08 16:09:11,657 - models - INFO - user_activities 表检查/创建成功。
+2025-04-08 16:09:11,659 - models - INFO - server_scan_status 表检查/创建成功。
+2025-04-08 16:09:11,661 - __main__ - INFO - 数据库初始化成功或已存在。
+2025-04-08 16:09:11,671 - werkzeug - WARNING -  * Debugger is active!
+2025-04-08 16:09:11,675 - werkzeug - INFO -  * Debugger PIN: 644-570-453
+2025-04-08 16:09:16,590 - __main__ - INFO - 从 config.py 加载的 server_options: [{'id': 1, 'name': 'MySQL服务器1'}]
+2025-04-08 16:09:16,598 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 16:09:16] "GET / HTTP/1.1" 200 -
+2025-04-08 16:09:16,695 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 16:09:16] "GET /static/js/main.js HTTP/1.1" 200 -
+2025-04-08 16:09:16,695 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 16:09:16] "GET /static/css/style.css HTTP/1.1" 200 -
+2025-04-08 16:09:17,812 - __main__ - INFO - 接收到的活动请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08, operation_type=, risk_level=, user_name=
+2025-04-08 16:09:17,813 - __main__ - INFO - 接收到的统计请求参数: server_id=None, start_date=2025-04-02, end_date=2025-04-08
+2025-04-08 16:09:17,838 - __main__ - INFO - 筛选后的活动数据条数: 50 / 总数: 87
+2025-04-08 16:09:17,839 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 16:09:17] "GET /api/activities?server_id=&start_date=2025-04-02&end_date=2025-04-08&operation_type=&risk_level=&user_name=&page=1&limit=50 HTTP/1.1" 200 -
+2025-04-08 16:09:17,840 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 16:09:17] "GET /api/stats?server_id=&start_date=2025-04-02&end_date=2025-04-08 HTTP/1.1" 200 -

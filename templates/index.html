@@ -7,8 +7,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        body { font-family: sans-serif; }
+        /* 基本字体和背景 */
+        body {
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f9fafb; /* bg-gray-50 */
+        }
         /* Spinner 动画样式 */
         .spinner {
             border: 4px solid rgba(255, 255, 255, 0.2);
@@ -22,38 +27,58 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        /* 风险等级徽章基础样式 */
+        .risk-badge {
+            display: inline-block;
+            padding: 0.15rem 0.5rem;
+            font-size: 0.75rem; /* text-xs */
+            font-weight: 500; /* font-medium */
+            border-radius: 0.375rem; /* rounded-md */
+            line-height: 1.2;
+        }
+        /* 特定风险等级颜色 */
+        .risk-badge-low { background-color: #ecfdf5; color: #065f46; } /* green-100 / green-800 */
+        .risk-badge-medium { background-color: #fffbeb; color: #b45309; } /* amber-100 / amber-700 */
+        .risk-badge-high { background-color: #fee2e2; color: #991b1b; } /* red-100 / red-800 */
+        .risk-badge-unknown { background-color: #f3f4f6; color: #4b5563; } /* gray-100 / gray-600 */
     </style>
 </head>
-<body class="bg-gray-100">
-    <div class="flex h-screen bg-gray-200">
-        <div class="w-64 bg-gray-800 text-white p-4 flex flex-col">
-            <h1 class="text-2xl font-bold mb-6">MySQL 日志审计</h1>
+<body class="bg-gray-50">
+    <div class="flex h-screen bg-gray-100">
+        <div class="w-64 bg-gray-900 text-gray-300 p-4 flex flex-col shadow-lg">
+            <h1 class="text-xl font-semibold mb-6 text-white flex items-center">
+                <i data-lucide="shield-check" class="mr-2 h-6 w-6"></i>
+                MySQL 日志审计
+            </h1>
             <nav>
                 <ul>
-                    <li class="mb-2"><a href="#" class="block px-4 py-2 rounded bg-gray-700" data-tab="dashboard">仪表盘</a></li>
-                    <li class="mb-2"><a href="#" class="block px-4 py-2 rounded hover:bg-gray-700" data-tab="activities">操作记录</a></li>
-                </ul>
+                    <li class="mb-1"><a href="#" class="flex items-center px-3 py-2 rounded text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white data-[active=true]:bg-gray-700 data-[active=true]:text-white" data-tab="dashboard" data-active="true"><i data-lucide="layout-dashboard" class="mr-3 h-5 w-5"></i>仪表盘</a></li>
+                    <li class="mb-1"><a href="#" class="flex items-center px-3 py-2 rounded text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white data-[active=true]:bg-gray-700 data-[active=true]:text-white" data-tab="activities" data-active="false"><i data-lucide="list-checks" class="mr-3 h-5 w-5"></i>操作记录</a></li>
+                    </ul>
             </nav>
             <div class="mt-auto">
                 <div id="scan-indicator" class="text-center my-3 hidden">
-                    <div class="spinner mx-auto"></div> <p class="text-sm text-gray-300 mt-2">扫描中...</p> </div>
-
-                <button id="scan-logs-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded mb-2">扫描日志</button>
-                <div id="scan-status" class="text-xs text-gray-400 text-center h-4"></div>
+                    <div class="spinner mx-auto"></div>
+                    <p class="text-sm text-gray-300 mt-2">扫描中...</p>
+                </div>
+                <button id="scan-logs-btn" class="w-full flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded mb-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-indigo-500 transition duration-150 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed">
+                    <i data-lucide="scan-line" class="mr-2 h-4 w-4"></i>扫描日志
+                </button>
+                <div id="scan-status" class="text-xs text-gray-500 text-center h-4"></div>
             </div>
         </div>
 
         <div class="flex-1 flex flex-col overflow-hidden">
-            <header class="bg-white shadow p-4">
-                <h2 class="text-xl font-semibold text-gray-800" id="main-content-title">仪表盘</h2>
+            <header class="bg-white shadow-md border-b border-gray-200 p-4">
+                <h2 class="text-lg font-semibold text-gray-800" id="main-content-title">仪表盘</h2>
             </header>
-            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6">
-                <div class="bg-white p-4 rounded shadow mb-6">
-                    <h3 class="text-lg font-medium mb-4 text-gray-700">筛选条件</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 items-end">
-                        <div>
-                            <label for="server-select" class="block text-sm font-medium text-gray-700">服务器</label>
-                            <select id="server-select" name="server" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 p-6">
+                <div class="bg-white p-5 rounded-lg shadow border border-gray-200 mb-6">
+                    <h3 class="text-md font-semibold mb-4 text-gray-700 border-b pb-2">筛选条件</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 items-end">
+                        <div class="col-span-1 md:col-span-1 lg:col-span-1">
+                            <label for="server-select" class="block text-xs font-medium text-gray-600 mb-1">服务器</label>
+                            <select id="server-select" name="server" class="mt-1 block w-full pl-3 pr-10 py-1.5 text-sm border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md shadow-sm">
                                 <option value="">全部服务器</option>
                                 {# Jinja2 循环生成服务器选项 #}
                                 {% for server in servers %}
@@ -61,43 +86,43 @@
                                 {% endfor %}
                             </select>
                         </div>
-                        <div>
-                            <label for="daterange" class="block text-sm font-medium text-gray-700">时间范围</label>
-                            <input type="text" id="daterange" name="daterange" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                        <div class="col-span-1 sm:col-span-2 md:col-span-1 lg:col-span-2">
+                            <label for="daterange" class="block text-xs font-medium text-gray-600 mb-1">时间范围</label>
+                            <input type="text" id="daterange" name="daterange" class="mt-1 block w-full pl-3 pr-10 py-1.5 text-sm border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md shadow-sm">
                         </div>
-                        <div>
-                            <label for="operation-type-select" class="block text-sm font-medium text-gray-700">操作类型</label>
-                            <select id="operation-type-select" name="operation_type" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                        <div class="col-span-1">
+                            <label for="operation-type-select" class="block text-xs font-medium text-gray-600 mb-1">操作类型</label>
+                            <select id="operation-type-select" name="operation_type" class="mt-1 block w-full pl-3 pr-10 py-1.5 text-sm border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md shadow-sm">
                                 <option value="">全部类型</option>
                                 <option value="SELECT">SELECT (查询)</option>
                                 <option value="INSERT">INSERT (插入)</option>
                                 <option value="UPDATE">UPDATE (更新)</option>
                                 <option value="DELETE">DELETE (删除)</option>
-                                <option value="DDL">DDL (创建/修改/删除表结构)</option>
-                                <option value="DCL">DCL (授权/撤销权限)</option>
-                                <option value="TCL">TCL (事务控制)</option>
-                                <option value="USE_DB">USE DB (切换数据库)</option>
+                                <option value="DDL">DDL (表结构)</option>
+                                <option value="DCL">DCL (权限)</option>
+                                <option value="TCL">TCL (事务)</option>
+                                <option value="USE_DB">USE DB (切换库)</option>
                                 <option value="CONNECT">CONNECT (连接)</option>
                                 <option value="QUIT">QUIT (断开)</option>
                                 <option value="OTHER">OTHER (其他)</option>
                             </select>
                         </div>
-                        <div>
-                            <label for="risk-level-select" class="block text-sm font-medium text-gray-700">风险等级</label>
-                             <select id="risk-level-select" name="risk_level" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                        <div class="col-span-1">
+                            <label for="risk-level-select" class="block text-xs font-medium text-gray-600 mb-1">风险等级</label>
+                             <select id="risk-level-select" name="risk_level" class="mt-1 block w-full pl-3 pr-10 py-1.5 text-sm border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md shadow-sm">
                                 <option value="">全部</option>
                                 <option value="Low">低危</option>
                                 <option value="Medium">中危</option>
                                 <option value="High">高危</option>
                             </select>
                         </div>
-                        <div>
-                            <label for="username-input" class="block text-sm font-medium text-gray-700">用户名</label>
-                            <input type="text" id="username-input" name="username" class="mt-1 block w-full pl-3 pr-2 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md" placeholder="输入用户名...">
+                        <div class="col-span-1">
+                            <label for="username-input" class="block text-xs font-medium text-gray-600 mb-1">用户名</label>
+                            <input type="text" id="username-input" name="username" class="mt-1 block w-full pl-3 pr-2 py-1.5 text-sm border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md shadow-sm" placeholder="输入...">
                         </div>
-                        <div>
-                             <button id="filter-btn" class="w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                应用筛选
+                        <div class="col-span-1">
+                             <button id="filter-btn" class="w-full inline-flex justify-center items-center px-4 py-1.5 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
+                                <i data-lucide="search" class="mr-1 h-4 w-4"></i>应用筛选
                             </button>
                         </div>
                     </div>
@@ -106,28 +131,60 @@
                 <div id="content-area">
                     <div id="dashboard-content" class="tab-content">
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <div class="bg-white p-4 rounded shadow"><h4 class="font-semibold mb-2 text-gray-600">风险等级分布</h4><div id="risk-levels-chart" style="height: 300px;"></div></div>
-                            <div class="bg-white p-4 rounded shadow"><h4 class="font-semibold mb-2 text-gray-600">操作类型分布</h4><div id="op-types-chart" style="height: 300px;"></div></div>
-                            <div class="bg-white p-4 rounded shadow"><h4 class="font-semibold mb-2 text-gray-600">活跃用户排行</h4><ul id="top-users-list" class="text-sm text-gray-700"></ul></div>
-                            <div class="bg-white p-4 rounded shadow md:col-span-2 lg:col-span-3"><h4 class="font-semibold mb-2 text-gray-600">操作次数按小时分布</h4><div id="hourly-chart" style="height: 300px;"></div></div>
+                            <div class="bg-white p-4 rounded-lg shadow border border-gray-200"><h4 class="font-semibold mb-3 text-gray-700 text-sm border-b pb-2">风险等级分布</h4><div id="risk-levels-chart" style="height: 280px;"></div></div>
+                            <div class="bg-white p-4 rounded-lg shadow border border-gray-200"><h4 class="font-semibold mb-3 text-gray-700 text-sm border-b pb-2">操作类型分布</h4><div id="op-types-chart" style="height: 280px;"></div></div>
+                            <div class="bg-white p-4 rounded-lg shadow border border-gray-200"><h4 class="font-semibold mb-3 text-gray-700 text-sm border-b pb-2">活跃用户排行</h4><ul id="top-users-list" class="text-xs text-gray-600 mt-2 space-y-1 overflow-y-auto" style="max-height: 250px;"></ul></div>
+                            <div class="bg-white p-4 rounded-lg shadow border border-gray-200 md:col-span-2 lg:col-span-3"><h4 class="font-semibold mb-3 text-gray-700 text-sm border-b pb-2">操作次数按小时分布</h4><div id="hourly-chart" style="height: 280px;"></div></div>
                         </div>
                          <div id="stats-container"></div> </div>
 
                     <div id="activities-content" class="tab-content hidden">
-                        <div class="bg-white p-4 rounded shadow">
-                            <h3 class="text-lg font-medium mb-4 text-gray-700">详细操作记录</h3>
+                        <div class="bg-white rounded-lg shadow border border-gray-200 overflow-hidden">
+                            <h3 class="text-md font-semibold p-4 text-gray-700 border-b">详细操作记录</h3>
                             <div class="overflow-x-auto">
-                                <table class="min-w-full divide-y divide-gray-200"><thead class="bg-gray-50"><tr><th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th><th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">时间</th><th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">用户</th><th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">客户端主机</th><th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">数据库</th><th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">操作类型</th><th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">参数/SQL语句</th><th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">风险等级</th></tr></thead><tbody id="activities-table-body" class="bg-white divide-y divide-gray-200"><tr><td colspan="8" class="text-center py-4">加载中...</td></tr></tbody></table>
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                                            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">时间</th>
+                                            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">用户</th>
+                                            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">客户端主机</th>
+                                            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">数据库</th>
+                                            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">操作类型</th>
+                                            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/3">参数/SQL语句</th>
+                                            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">风险等级</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="activities-table-body" class="bg-white divide-y divide-gray-200 text-sm">
+                                        <tr><td colspan="8" class="text-center py-10 text-gray-500">加载中...</td></tr>
+                                    </tbody>
+                                </table>
                             </div>
-                            <div id="pagination" class="mt-4"></div>
-                        </div>
+                            <div id="pagination" class="p-4 border-t"></div> </div>
                     </div>
                     </div>
             </main>
         </div>
     </div>
 
-    <div id="details-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center hidden z-50"><div class="relative mx-auto p-5 border w-11/12 md:w-1/2 shadow-lg rounded-md bg-white"><div class="mt-3 text-center"><h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">SQL 语句详情</h3><div class="mt-2 px-7 py-3 max-h-60 overflow-y-auto"><pre id="details-modal-content" class="text-sm text-gray-700 text-left whitespace-pre-wrap break-all"></pre></div><div class="items-center px-4 py-3"><button id="details-modal-close" class="px-4 py-2 bg-gray-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300">关闭</button></div></div></div></div>
+    <div id="details-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center hidden z-50">
+        <div class="relative mx-auto p-5 border w-11/12 md:w-2/3 lg:w-1/2 shadow-lg rounded-md bg-white">
+            <div class="mt-3">
+                <div class="flex justify-between items-center mb-3">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900">SQL 语句详情</h3>
+                    <button id="details-modal-close-icon" class="text-gray-400 hover:text-gray-600">
+                        <i data-lucide="x" class="h-5 w-5"></i>
+                    </button>
+                </div>
+                <div class="mt-2 px-2 py-3 max-h-80 overflow-y-auto bg-gray-50 rounded">
+                    <pre id="details-modal-content" class="text-sm text-gray-800 text-left whitespace-pre-wrap break-all"></pre>
+                </div>
+                <div class="items-center px-4 py-3 mt-2">
+                    <button id="details-modal-close" class="px-4 py-2 bg-gray-600 text-white text-sm font-medium rounded-md w-full shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -135,6 +192,10 @@
     <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script src='https://cdn.plot.ly/plotly-2.29.1.min.js'></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        // 初始化 Lucide 图标
+        lucide.createIcons();
+    </script>
 
 </body>
 </html>
