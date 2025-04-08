@@ -7,8 +7,6 @@ $(document).ready(function() {
 
     // --- 中文映射 ---
     const riskLevelMap = { 'Low': '低危', 'Medium': '中危', 'High': '高危' };
-    // 不再需要 crudTypes 变量
-    // const crudTypes = ['SELECT', 'INSERT', 'UPDATE', 'DELETE'];
 
     // --- 初始化日期范围选择器 ---
     // (保持不变)
@@ -20,53 +18,12 @@ $(document).ready(function() {
     function fetchActivities(page = 1) { const filters = getFilters(); currentPage = page; const params = new URLSearchParams({ server_id: filters.serverId || '', start_date: filters.startDate || '', end_date: filters.endDate || '', operation_type: filters.operationType || '', risk_level: filters.riskLevel || '', user_name: filters.userName || '', page: currentPage, limit: limit }); console.log("请求活动记录 API:", `/api/activities?${params.toString()}`); showLoadingIndicator('activities-table-body'); fetch(`/api/activities?${params.toString()}`).then(response => { if (!response.ok) { return response.json().then(err => { throw new Error(err.error || `HTTP error ${response.status}`) }); } return response.json(); }).then(data => { console.log("收到活动记录数据:", data); renderActivitiesTable(data.activities || []); renderPagination(data.total || 0); hideLoadingIndicator('activities-table-body'); }).catch(error => { console.error('加载活动记录失败:', error); showErrorAlert(`加载活动记录失败: ${error.message}`); renderActivitiesTable([]); renderPagination(0); hideLoadingIndicator('activities-table-body'); }); }
     function fetchStats() { const filters = getFilters(); const params = new URLSearchParams({ server_id: filters.serverId || '', start_date: filters.startDate || '', end_date: filters.endDate || '' }); console.log("请求统计数据 API:", `/api/stats?${params.toString()}`); showLoadingIndicator('stats-container'); fetch(`/api/stats?${params.toString()}`).then(response => { if (!response.ok) { return response.json().then(err => { throw new Error(err.error || `HTTP error ${response.status}`) }); } return response.json(); }).then(data => { console.log("收到统计数据:", data); currentStatsData = data; renderDashboardCharts(); hideLoadingIndicator('stats-container'); }).catch(error => { console.error('加载统计数据失败:', error); showErrorAlert(`加载统计数据失败: ${error.message}`); currentStatsData = null; clearDashboardCharts(); hideLoadingIndicator('stats-container'); }); }
 
-
     // --- 渲染函数 ---
-    // (renderActivitiesTable, renderPagination 保持不变)
+    // (renderActivitiesTable, renderPagination, renderDashboardCharts, renderSingleChartSet, clearDashboardCharts 保持不变)
     function renderActivitiesTable(activities) { const tableBody = $('#activities-table-body'); tableBody.empty(); if (!activities || activities.length === 0) { tableBody.append('<tr><td colspan="8" class="text-center text-gray-500 py-4">没有找到符合条件的记录</td></tr>'); return; } activities.forEach(act => { let riskClass = ''; const riskLevelChinese = riskLevelMap[act.risk_level] || act.risk_level || '未知'; switch (act.risk_level) { case 'High': riskClass = 'bg-red-100 text-red-800'; break; case 'Medium': riskClass = 'bg-yellow-100 text-yellow-800'; break; case 'Low': riskClass = 'bg-green-100 text-green-800'; break; default: riskClass = 'bg-gray-100 text-gray-800'; } const row = `<tr class="${riskClass}"><td class="px-4 py-2 border">${act.id || 'N/A'}</td><td class="px-4 py-2 border">${act.activity_time || 'N/A'}</td><td class="px-4 py-2 border">${escapeHtml(act.user_name || 'N/A')}</td><td class="px-4 py-2 border">${escapeHtml(act.client_host || 'N/A')}</td><td class="px-4 py-2 border">${escapeHtml(act.db_name || 'N/A')}</td><td class="px-4 py-2 border">${escapeHtml(act.operation_type || act.command_type || 'N/A')}</td><td class="px-4 py-2 border text-xs break-all" title="${escapeHtml(act.argument || '')}">${escapeHtml(truncateString(act.argument || '', 100))}${(act.argument || '').length > 100 ? '<button class="text-blue-500 text-xs ml-1 show-details-btn" data-details="' + escapeHtml(act.argument || '') + '">[详情]</button>' : ''}</td><td class="px-4 py-2 border font-semibold">${escapeHtml(riskLevelChinese)}</td></tr>`; tableBody.append(row); }); }
     function renderPagination(totalItems) { const totalPages = Math.ceil(totalItems / limit); const paginationContainer = $('#pagination'); paginationContainer.empty(); if (totalPages <= 1) return; let paginationHtml = '<div class="flex justify-center items-center space-x-2 mt-4">'; paginationHtml += `<button class="px-3 py-1 border rounded ${currentPage === 1 ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-white text-blue-600 hover:bg-blue-50'}" data-page="${currentPage - 1}" ${currentPage === 1 ? 'disabled' : ''}>上一页</button>`; paginationHtml += `<span class="text-gray-700">第 ${currentPage} / ${totalPages} 页</span>`; paginationHtml += `<button class="px-3 py-1 border rounded ${currentPage === totalPages ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-white text-blue-600 hover:bg-blue-50'}" data-page="${currentPage + 1}" ${currentPage === totalPages ? 'disabled' : ''}>下一页</button>`; paginationHtml += '</div>'; paginationContainer.html(paginationHtml); }
-
-    // (renderDashboardCharts 保持不变)
     function renderDashboardCharts() { if (!currentStatsData) { console.warn("没有可用的统计数据。"); clearDashboardCharts(); return; } renderSingleChartSet(currentStatsData); }
-
-    // !! 修改 renderSingleChartSet 以显示详细的操作类型 !!
-    function renderSingleChartSet(stats) {
-        const riskChartId = `risk-levels-chart`;
-        const opChartId = `op-types-chart`;
-        const hourlyChartId = `hourly-chart`;
-        const topUsersListId = `top-users-list`;
-        const plotlyConfig = { responsive: true, displayModeBar: false }; // 隐藏模式栏
-
-        try {
-            // 1. 操作类型分布饼图 (显示详细类型，不再简化)
-            const opTypesDataRaw = stats.operation_types || [];
-            // !! 直接使用从 API 获取的原始数据 !!
-            const opTypesLabels = opTypesDataRaw.map(item => item.operation_type || 'UNKNOWN');
-            const opTypesValues = opTypesDataRaw.map(item => item.count || 0);
-
-            if (opTypesLabels.length > 0) {
-                Plotly.newPlot(opChartId, [{
-                    labels: opTypesLabels, // 使用详细标签
-                    values: opTypesValues, // 使用详细计数值
-                    type: 'pie', hole: .4, textinfo: 'percent', hoverinfo: 'label+value'
-                }], {title: '操作类型分布', showlegend: true, legend: { x: 1, y: 0.5 }}, plotlyConfig);
-            } else { $(`#${opChartId}`).html('<p class="text-center text-gray-500 py-4">无操作类型数据</p>'); }
-
-            // 2. 风险等级分布条形图 (保持不变，使用中文标签)
-            const riskLevelsData = stats.risk_levels || []; const riskLevelsLabels = riskLevelsData.map(item => riskLevelMap[item.risk_level] || item.risk_level || '未知'); const riskLevelsValues = riskLevelsData.map(item => item.count); if (riskLevelsLabels.length > 0) { Plotly.newPlot(riskChartId, [{ x: riskLevelsLabels, y: riskLevelsValues, type: 'bar', marker: { color: riskLevelsData.map(item => { if (item.risk_level === 'High') return 'rgba(239, 68, 68, 0.7)'; if (item.risk_level === 'Medium') return 'rgba(245, 158, 11, 0.7)'; return 'rgba(16, 185, 129, 0.7)'; }) } }], {title: '风险等级分布', xaxis: { title: '风险等级' }, yaxis: { title: '次数' }}, plotlyConfig); } else { $(`#${riskChartId}`).html('<p class="text-center text-gray-500 py-4">无风险等级数据</p>'); }
-
-            // 3. 小时分布折线图 (保持不变)
-            const hourlyData = stats.hourly_distribution || {}; const hours = Object.keys(hourlyData).map(h => parseInt(h)).sort((a, b) => a - b); const hourlyCounts = hours.map(h => hourlyData[h]); if (hours.length > 0 && hourlyCounts.some(c => c > 0)) { Plotly.newPlot(hourlyChartId, [{x: hours.map(h => `${h}:00`), y: hourlyCounts, type: 'scatter', mode: 'lines+markers'}], {title: '操作次数按小时分布', xaxis: { title: '时间 (小时)' }, yaxis: { title: '次数' }}, plotlyConfig); } else { $(`#${hourlyChartId}`).html('<p class="text-center text-gray-500 py-4">无小时分布数据</p>'); }
-
-            // 4. Top 用户排行 (保持不变)
-            const topUsersData = stats.top_users || []; const topUsersContainer = $(`#${topUsersListId}`); topUsersContainer.empty(); if (topUsersData.length > 0) { topUsersData.forEach((user, index) => { topUsersContainer.append(`<li class="py-1">${index + 1}. ${escapeHtml(user.user_name)}: ${user.count} 次</li>`); }); } else { topUsersContainer.html('<li class="text-center text-gray-500 py-4">无活跃用户数据</li>'); }
-        } catch(e) {
-             console.error(`渲染图表时出错:`, e);
-             showErrorAlert(`渲染统计图表时出错，请检查控制台。`);
-        }
-    }
-
-    // (clearDashboardCharts 保持不变)
+    function renderSingleChartSet(stats) { const riskChartId = `risk-levels-chart`; const opChartId = `op-types-chart`; const hourlyChartId = `hourly-chart`; const topUsersListId = `top-users-list`; const plotlyConfig = { responsive: true, displayModeBar: false }; try { const opTypesDataRaw = stats.operation_types || []; const opTypesLabels = opTypesDataRaw.map(item => item.operation_type || 'UNKNOWN'); const opTypesValues = opTypesDataRaw.map(item => item.count || 0); if (opTypesLabels.length > 0) { Plotly.newPlot(opChartId, [{labels: opTypesLabels, values: opTypesValues, type: 'pie', hole: .4, textinfo: 'percent', hoverinfo: 'label+value'}], {title: '操作类型分布', showlegend: true, legend: { x: 1, y: 0.5 }}, plotlyConfig); } else { $(`#${opChartId}`).html('<p class="text-center text-gray-500 py-4">无操作类型数据</p>'); } const riskLevelsData = stats.risk_levels || []; const riskLevelsLabels = riskLevelsData.map(item => riskLevelMap[item.risk_level] || item.risk_level || '未知'); const riskLevelsValues = riskLevelsData.map(item => item.count); if (riskLevelsLabels.length > 0) { Plotly.newPlot(riskChartId, [{ x: riskLevelsLabels, y: riskLevelsValues, type: 'bar', marker: { color: riskLevelsData.map(item => { if (item.risk_level === 'High') return 'rgba(239, 68, 68, 0.7)'; if (item.risk_level === 'Medium') return 'rgba(245, 158, 11, 0.7)'; return 'rgba(16, 185, 129, 0.7)'; }) } }], {title: '风险等级分布', xaxis: { title: '风险等级' }, yaxis: { title: '次数' }}, plotlyConfig); } else { $(`#${riskChartId}`).html('<p class="text-center text-gray-500 py-4">无风险等级数据</p>'); } const hourlyData = stats.hourly_distribution || {}; const hours = Object.keys(hourlyData).map(h => parseInt(h)).sort((a, b) => a - b); const hourlyCounts = hours.map(h => hourlyData[h]); if (hours.length > 0 && hourlyCounts.some(c => c > 0)) { Plotly.newPlot(hourlyChartId, [{x: hours.map(h => `${h}:00`), y: hourlyCounts, type: 'scatter', mode: 'lines+markers'}], {title: '操作次数按小时分布', xaxis: { title: '时间 (小时)' }, yaxis: { title: '次数' }}, plotlyConfig); } else { $(`#${hourlyChartId}`).html('<p class="text-center text-gray-500 py-4">无小时分布数据</p>'); } const topUsersData = stats.top_users || []; const topUsersContainer = $(`#${topUsersListId}`); topUsersContainer.empty(); if (topUsersData.length > 0) { topUsersData.forEach((user, index) => { topUsersContainer.append(`<li class="py-1">${index + 1}. ${escapeHtml(user.user_name)}: ${user.count} 次</li>`); }); } else { topUsersContainer.html('<li class="text-center text-gray-500 py-4">无活跃用户数据</li>'); } } catch(e) { console.error(`渲染图表时出错:`, e); showErrorAlert(`渲染统计图表时出错，请检查控制台。`); } }
     function clearDashboardCharts() { $('#op-types-chart').empty().html('<p class="text-center text-gray-500 py-4">等待加载数据...</p>'); $('#risk-levels-chart').empty().html('<p class="text-center text-gray-500 py-4">等待加载数据...</p>'); $('#hourly-chart').empty().html('<p class="text-center text-gray-500 py-4">等待加载数据...</p>'); $('#top-users-list').empty().html('<li class="text-center text-gray-500 py-4">等待加载数据...</li>'); }
 
     // --- 工具函数 ---
@@ -78,14 +35,67 @@ $(document).ready(function() {
     function truncateString(str, num) { if (!str) return ''; if (str.length <= num) return str; return str.slice(0, num) + '...'; }
 
     // --- 事件绑定 ---
-    // (保持不变)
+    // (导航切换逻辑保持不变)
     $('nav a[data-tab]').on('click', function(e) { e.preventDefault(); const tabId = $(this).data('tab'); const targetContentId = `#${tabId}-content`; const pageTitle = $(this).text(); console.log(`切换到 Tab: ${tabId}`); $('nav a[data-tab]').removeClass('bg-gray-700'); $(this).addClass('bg-gray-700'); $('.tab-content').addClass('hidden'); $(targetContentId).removeClass('hidden'); $('#main-content-title').text(pageTitle); if (currentStatsData && tabId === 'dashboard') { renderDashboardCharts(); } });
+    // (筛选、分页、详情模态框事件保持不变)
     $('#filter-btn').on('click', function() { fetchData(1); });
     $('#pagination').on('click', 'button', function() { const page = $(this).data('page'); if (page && page !== currentPage) { fetchActivities(page); } });
     $('#activities-table-body').on('click', '.show-details-btn', function() { const details = $(this).data('details'); $('#details-modal-content').text(details || '无详情'); $('#details-modal').removeClass('hidden'); });
     $('#details-modal-close').on('click', function() { $('#details-modal').addClass('hidden'); });
     $('#details-modal').on('click', function(event) { if (event.target === this) { $(this).addClass('hidden'); } });
-    $('#scan-logs-btn').on('click', function() { const serverId = $('#server-select').val(); const url = '/api/scan'; const payload = {}; let message = '确定要扫描所有服务器的日志吗？'; if (serverId) { payload.server_id = parseInt(serverId); const serverName = $('#server-select option:selected').text(); message = `确定要扫描服务器 "${serverName}" 的日志吗？`; } if (confirm(message)) { $(this).prop('disabled', true).text('扫描中...'); fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json', }, body: JSON.stringify(payload), }).then(response => response.json().then(data => ({ status: response.status, body: data }))).then(({ status, body }) => { if (status >= 200 && status < 300) { console.log("扫描请求成功:", body.message); } else { throw new Error(body.error || `请求失败，状态码: ${status}`); } }).catch(error => { console.error('扫描日志请求失败:', error); }).finally(() => { $(this).prop('disabled', false).text('扫描日志'); }); } });
+
+    // !! 修改扫描日志按钮点击事件 - 使用侧边栏指示器 !!
+    $('#scan-logs-btn').on('click', function() {
+        const scanButton = $(this);
+        const statusDiv = $('#scan-status'); // 按钮下方的最终状态文本区域
+        const indicatorDiv = $('#scan-indicator'); // 侧边栏的扫描中指示器区域
+        const serverId = $('#server-select').val();
+        const url = '/api/scan';
+        const payload = {};
+        let confirmMessage = '确定要扫描所有服务器的日志吗？';
+
+        if (serverId) {
+            payload.server_id = parseInt(serverId);
+            const serverName = $('#server-select option:selected').text();
+            confirmMessage = `确定要扫描服务器 "${serverName}" 的日志吗？`;
+        }
+
+        if (confirm(confirmMessage)) {
+            // 更新 UI：禁用按钮，清空最终状态，显示侧边栏指示器
+            scanButton.prop('disabled', true).text('扫描中...'); // 按钮显示扫描中
+            statusDiv.text(''); // 清空按钮下方的状态
+            indicatorDiv.removeClass('hidden'); // 显示侧边栏的 spinner 和 "扫描中..." 文字
+
+            fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json', }, body: JSON.stringify(payload), })
+            .then(response => response.json().then(data => ({ status: response.status, body: data })))
+            .then(({ status, body }) => {
+                 if (status >= 200 && status < 300) {
+                     console.log("扫描请求成功:", body.message);
+                     // 在底部状态区显示成功信息
+                     statusDiv.text(body.message || '扫描任务已启动').removeClass('text-red-500 text-gray-400').addClass('text-green-500');
+                     // 短暂显示后清除
+                     setTimeout(() => { statusDiv.text('').removeClass('text-green-500'); }, 5000);
+                 } else {
+                     throw new Error(body.error || `请求失败，状态码: ${status}`);
+                 }
+            })
+            .catch(error => {
+                console.error('扫描日志请求失败:', error);
+                // 在底部状态区显示错误信息
+                statusDiv.text(`扫描失败: ${error.message}`).removeClass('text-green-500 text-gray-400').addClass('text-red-500');
+                 // 考虑错误信息是否需要自动清除，或者保留直到下次操作
+                 // setTimeout(() => { statusDiv.text('').removeClass('text-red-500'); }, 8000);
+            })
+            .finally(() => {
+                 // 恢复按钮状态并隐藏侧边栏指示器
+                 scanButton.prop('disabled', false).text('扫描日志');
+                 indicatorDiv.addClass('hidden'); // 隐藏侧边栏的 spinner 和文字
+            });
+        } else {
+             statusDiv.text(''); // 用户取消，清除状态
+        }
+    });
+
 
     // --- 初始数据加载 ---
     function fetchData(page = 1) { fetchActivities(page); fetchStats(); }
