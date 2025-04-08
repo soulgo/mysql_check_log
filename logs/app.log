@@ -5779,3 +5779,8 @@
 2025-04-08 10:48:26,384 - log_parser - INFO - 连接事件: 线程 9186 -> 用户=root, 主机=192.168.10.1, 数据库=mysql_log
 2025-04-08 10:48:26,387 - log_parser - INFO - 从 /data/general_log/mysql.log 解析了 9616 个活动。
 2025-04-08 10:48:26,388 - log_parser - INFO - 为服务器 MySQL服务器1 (192.168.10.129, ID: 1) 找到了 9616 个活动。
+2025-04-08 10:50:23,623 - log_parser - INFO - 成功将 9616/9616 个活动添加到服务器 MySQL服务器1 (192.168.10.129) 的数据库。
+2025-04-08 10:50:23,623 - paramiko.transport.sftp - INFO - [chan 0] sftp session closed.
+2025-04-08 10:50:23,624 - log_parser - INFO - SFTP 连接已关闭 (192.168.10.129)。
+2025-04-08 10:50:23,624 - log_parser - INFO - SSH 连接已关闭 (192.168.10.129)。
+2025-04-08 10:50:23,625 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 10:50:23] "POST /api/scan HTTP/1.1" 200 -
