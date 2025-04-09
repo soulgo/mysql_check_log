@@ -4,6 +4,9 @@ $(document).ready(function() {
     let currentPage = 1;
     const limit = 50;
     let currentStatsData = null;
+    let currentRiskRules = null;
+    let currentWriteRiskLevels = null;
+    let currentServerToDelete = null;
 
     // --- 中文映射 ---
     const riskLevelMap = { 'Low': '低危', 'Medium': '中危', 'High': '高危' };
@@ -98,8 +101,709 @@ $(document).ready(function() {
     $('#details-modal').on('click', function(event) { if (event.target === this) { $(this).addClass('hidden'); } });
     $('#scan-logs-btn').on('click', function() { const scanButton = $(this); const statusDiv = $('#scan-status'); const indicatorDiv = $('#scan-indicator'); const serverId = $('#server-select').val(); const url = '/api/scan'; const payload = {}; let confirmMessage = '确定要扫描所有服务器的日志吗？'; if (serverId) { payload.server_id = parseInt(serverId); const serverName = $('#server-select option:selected').text(); confirmMessage = `确定要扫描服务器 "${serverName}" 的日志吗？`; } if (confirm(confirmMessage)) { scanButton.prop('disabled', true).text('扫描中...'); statusDiv.text(''); indicatorDiv.removeClass('hidden'); fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json', }, body: JSON.stringify(payload), }).then(response => response.json().then(data => ({ status: response.status, body: data }))).then(({ status, body }) => { if (status >= 200 && status < 300 && body.status === 'success') { console.log("扫描请求成功:", body.message); statusDiv.text(body.message.includes("开始扫描") ? "扫描任务已提交" : "扫描完成").removeClass('text-red-500 text-gray-400').addClass('text-green-500'); fetchData(1); } else { throw new Error(body.error || body.message || `请求失败，状态码: ${status}`); } }).catch(error => { console.error('扫描日志请求失败:', error); statusDiv.text(`扫描失败: ${error.message}`).removeClass('text-green-500 text-gray-400').addClass('text-red-500'); }).finally(() => { scanButton.prop('disabled', false).text('扫描日志'); indicatorDiv.addClass('hidden'); setTimeout(() => { statusDiv.text('').removeClass('text-green-500 text-red-500'); }, 8000); }); } else { statusDiv.text(''); } });
 
+    // --- 服务器配置相关函数 ---
+    function fetchServers() {
+        showLoadingIndicator('servers-table-body');
+        fetch('/api/servers')
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => {
+                        throw new Error(err.error || `HTTP error ${response.status}`);
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                renderServersTable(data.servers || []);
+                hideLoadingIndicator('servers-table-body');
+            })
+            .catch(error => {
+                console.error('加载服务器配置失败:', error);
+                showErrorAlert(error.message || '加载服务器配置失败，请刷新页面重试。');
+                renderServersTable([]);
+                hideLoadingIndicator('servers-table-body');
+            });
+    }
+
+    function renderServersTable(servers) {
+        const tableBody = $('#servers-table-body');
+        tableBody.empty();
+
+        if (!servers || servers.length === 0) {
+            tableBody.append('<tr><td colspan="8" class="text-center text-gray-500 py-10">暂无服务器配置，请点击 "添加服务器" 按钮添加</td></tr>');
+            return;
+        }
+
+        servers.forEach(server => {
+            // 构建认证方式显示
+            let authDisplay;
+            if (server.has_password) {
+                authDisplay = '<span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">密码</span>';
+            } else if (server.has_ssh_key) {
+                authDisplay = '<span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">SSH密钥</span>';
+            } else {
+                authDisplay = '<span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">未配置</span>';
+            }
+
+            // 构建日志扫描配置显示
+            let logScanDisplay = [];
+            if (server.enable_general_log) {
+                logScanDisplay.push('<span class="bg-indigo-100 text-indigo-800 px-2 py-1 rounded text-xs mr-1">General</span>');
+            }
+            if (server.enable_binlog) {
+                logScanDisplay.push('<span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">Binlog</span>');
+            }
+            if (logScanDisplay.length === 0) {
+                logScanDisplay.push('<span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">未启用</span>');
+            }
+
+            const row = `
+                <tr>
+                    <td class="px-4 py-2 border-b border-gray-200 text-gray-700">${server.server_id || 'N/A'}</td>
+                    <td class="px-4 py-2 border-b border-gray-200 text-gray-700">${escapeHtml(server.name || 'N/A')}</td>
+                    <td class="px-4 py-2 border-b border-gray-200 text-gray-700">${escapeHtml(server.host || 'N/A')}</td>
+                    <td class="px-4 py-2 border-b border-gray-200 text-gray-700">${server.port || 'N/A'}</td>
+                    <td class="px-4 py-2 border-b border-gray-200 text-gray-700">${escapeHtml(server.user || 'N/A')}</td>
+                    <td class="px-4 py-2 border-b border-gray-200">${authDisplay}</td>
+                    <td class="px-4 py-2 border-b border-gray-200">${logScanDisplay.join('')}</td>
+                    <td class="px-4 py-2 border-b border-gray-200">
+                        <div class="flex space-x-2">
+                            <button class="edit-server-btn text-blue-600 hover:text-blue-800" data-server-id="${server.server_id}">
+                                <i data-lucide="edit" class="h-4 w-4"></i>
+                            </button>
+                            <button class="delete-server-btn text-red-600 hover:text-red-800" data-server-id="${server.server_id}">
+                                <i data-lucide="trash-2" class="h-4 w-4"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `;
+            tableBody.append(row);
+        });
+        
+        // 重新初始化Lucide图标
+        lucide.createIcons();
+    }
+
+    function fetchServerDetails(serverId) {
+        return fetch(`/api/server/${serverId}`)
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => {
+                        throw new Error(err.error || `HTTP error ${response.status}`);
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                return data.server;
+            });
+    }
+
+    function saveServer(formData, isNew) {
+        const url = isNew ? '/api/server' : `/api/server/${formData.server_id}`;
+        const method = isNew ? 'POST' : 'PUT';
+
+        return fetch(url, {
+            method: method,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => {
+                        throw new Error(err.error || `HTTP error ${response.status}`);
+                    });
+                }
+                return response.json();
+            });
+    }
+
+    function deleteServer(serverId) {
+        return fetch(`/api/server/${serverId}`, {
+            method: 'DELETE',
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => {
+                        throw new Error(err.error || `HTTP error ${response.status}`);
+                    });
+                }
+                return response.json();
+            });
+    }
+
+    function openServerModal(serverId = null) {
+        // 重置表单
+        $('#server-form')[0].reset();
+        $('#server-id').val('');
+        
+        // 默认显示密码输入框
+        $('#password-auth-container').show();
+        $('#ssh-key-auth-container').hide();
+        
+        if (serverId) {
+            // 编辑模式
+            $('#server-modal-title').text('编辑服务器');
+            
+            // 获取服务器详情
+            fetchServerDetails(serverId)
+                .then(server => {
+                    $('#server-id').val(server.server_id);
+                    $('#server-name').val(server.name);
+                    $('#server-host').val(server.host);
+                    $('#server-port').val(server.port);
+                    $('#server-user').val(server.user);
+                    
+                    // 设置认证方式
+                    if (server.has_ssh_key) {
+                        $('#server-auth-type').val('ssh_key');
+                        $('#password-auth-container').hide();
+                        $('#ssh-key-auth-container').show();
+                    } else {
+                        $('#server-auth-type').val('password');
+                        $('#password-auth-container').show();
+                        $('#ssh-key-auth-container').hide();
+                    }
+                    
+                    $('#server-general-log').val(server.general_log_path);
+                    $('#server-binlog').val(server.binlog_path);
+                    $('#server-enable-general').prop('checked', server.enable_general_log);
+                    $('#server-enable-binlog').prop('checked', server.enable_binlog);
+                    
+                    // 显示模态框
+                    $('#server-modal').removeClass('hidden');
+                })
+                .catch(error => {
+                    console.error('获取服务器详情失败:', error);
+                    showErrorAlert(error.message || '获取服务器详情失败，请重试。');
+                });
+        } else {
+            // 添加模式
+            $('#server-modal-title').text('添加服务器');
+            $('#server-modal').removeClass('hidden');
+        }
+    }
+
+    function closeServerModal() {
+        $('#server-modal').addClass('hidden');
+    }
+
+    // --- 风险规则相关函数 ---
+    function fetchRiskRules() {
+        fetch('/api/risk_rules')
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => {
+                        throw new Error(err.error || `HTTP error ${response.status}`);
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                currentRiskRules = data.risk_rules;
+                renderRiskRules(data.risk_rules);
+            })
+            .catch(error => {
+                console.error('加载风险规则失败:', error);
+                showErrorAlert(error.message || '加载风险规则失败，请刷新页面重试。');
+            });
+    }
+
+    function renderRiskRules(riskRules) {
+        // 渲染高风险规则
+        renderRiskRuleList('high-risk-rules', riskRules.High || []);
+        
+        // 渲染中风险规则
+        renderRiskRuleList('medium-risk-rules', riskRules.Medium || []);
+        
+        // 渲染低风险规则
+        renderRiskRuleList('low-risk-rules', riskRules.Low || []);
+    }
+
+    function renderRiskRuleList(containerId, rules) {
+        const container = $(`#${containerId}`);
+        container.empty();
+        
+        if (!rules || rules.length === 0) {
+            container.html('<p class="text-gray-500">暂无规则配置</p>');
+            return;
+        }
+        
+        let html = '<ul class="list-disc pl-5 space-y-1">';
+        rules.forEach(rule => {
+            if (rule.type) {
+                html += `<li><strong>类型：</strong>${escapeHtml(rule.type)}</li>`;
+            } else if (rule.keyword) {
+                html += `<li><strong>关键字：</strong>${escapeHtml(rule.keyword)}</li>`;
+            }
+        });
+        html += '</ul>';
+        
+        container.html(html);
+    }
+
+    function openRiskRulesModal() {
+        // 如果还没有加载风险规则，先加载
+        if (!currentRiskRules) {
+            fetchRiskRules();
+            return;
+        }
+        
+        // 清空编辑区域
+        $('#high-risk-items, #medium-risk-items, #low-risk-items').empty();
+        
+        // 填充高风险规则
+        fillRiskRuleItems('high-risk-items', currentRiskRules.High || []);
+        
+        // 填充中风险规则
+        fillRiskRuleItems('medium-risk-items', currentRiskRules.Medium || []);
+        
+        // 填充低风险规则
+        fillRiskRuleItems('low-risk-items', currentRiskRules.Low || []);
+        
+        // 显示模态框
+        $('#risk-rules-modal').removeClass('hidden');
+    }
+
+    function fillRiskRuleItems(containerId, rules) {
+        const container = $(`#${containerId}`);
+        
+        rules.forEach((rule, index) => {
+            addRuleItem(container, rule, index);
+        });
+    }
+
+    function addRuleItem(container, rule = null, index = null) {
+        const itemId = index !== null ? index : Date.now();
+        let ruleType = '';
+        let ruleKeyword = '';
+        
+        if (rule) {
+            ruleType = rule.type || '';
+            ruleKeyword = rule.keyword || '';
+        }
+        
+        const html = `
+            <div class="rule-item flex items-center gap-2 mb-2 p-2 bg-white rounded border border-gray-200">
+                <div class="flex-1">
+                    <div class="mb-1">
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="rule-type-${itemId}" class="rule-type-radio" value="type" ${ruleType ? 'checked' : ''}>
+                            <span class="ml-1 text-sm">类型</span>
+                        </label>
+                        <input type="text" class="rule-type-input ml-2 px-2 py-1 border border-gray-300 rounded text-sm ${!ruleType ? 'hidden' : ''}" value="${escapeHtml(ruleType)}">
+                    </div>
+                    <div>
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="rule-type-${itemId}" class="rule-type-radio" value="keyword" ${ruleKeyword ? 'checked' : ''}>
+                            <span class="ml-1 text-sm">关键字</span>
+                        </label>
+                        <input type="text" class="rule-keyword-input ml-2 px-2 py-1 border border-gray-300 rounded text-sm ${!ruleKeyword ? 'hidden' : ''}" value="${escapeHtml(ruleKeyword)}">
+                    </div>
+                </div>
+                <button type="button" class="delete-rule-btn text-red-600 hover:text-red-800">
+                    <i data-lucide="trash-2" class="h-4 w-4"></i>
+                </button>
+            </div>
+        `;
+        
+        container.append(html);
+        lucide.createIcons();
+    }
+
+    function closeRiskRulesModal() {
+        $('#risk-rules-modal').addClass('hidden');
+    }
+
+    function saveRiskRules() {
+        // 收集高风险规则
+        const highRiskRules = collectRulesFromContainer('high-risk-items');
+        
+        // 收集中风险规则
+        const mediumRiskRules = collectRulesFromContainer('medium-risk-items');
+        
+        // 收集低风险规则
+        const lowRiskRules = collectRulesFromContainer('low-risk-items');
+        
+        // 构建提交数据
+        const riskRules = {
+            High: highRiskRules,
+            Medium: mediumRiskRules,
+            Low: lowRiskRules
+        };
+        
+        return fetch('/api/risk_rules', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ risk_rules: riskRules }),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => {
+                        throw new Error(err.error || `HTTP error ${response.status}`);
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                currentRiskRules = riskRules;
+                renderRiskRules(riskRules);
+                closeRiskRulesModal();
+            });
+    }
+
+    function collectRulesFromContainer(containerId) {
+        const rules = [];
+        $(`#${containerId} .rule-item`).each(function() {
+            const $item = $(this);
+            const typeRadio = $item.find('.rule-type-radio:checked').val();
+            
+            if (typeRadio === 'type') {
+                const type = $item.find('.rule-type-input').val().trim();
+                if (type) {
+                    rules.push({ type });
+                }
+            } else if (typeRadio === 'keyword') {
+                const keyword = $item.find('.rule-keyword-input').val().trim();
+                if (keyword) {
+                    rules.push({ keyword });
+                }
+            }
+        });
+        
+        return rules;
+    }
+
+    // --- 写入风险级别相关函数 ---
+    function fetchWriteRiskLevels() {
+        fetch('/api/write_risk_levels')
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => {
+                        throw new Error(err.error || `HTTP error ${response.status}`);
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                currentWriteRiskLevels = data.write_risk_levels;
+                renderWriteRiskLevels(data.write_risk_levels);
+            })
+            .catch(error => {
+                console.error('加载写入风险级别失败:', error);
+                showErrorAlert(error.message || '加载写入风险级别失败，请刷新页面重试。');
+            });
+    }
+
+    function renderWriteRiskLevels(levels) {
+        const container = $('#write-risk-levels');
+        container.empty();
+        
+        if (!levels || levels.length === 0) {
+            container.html('<span class="risk-badge risk-badge-unknown">未配置</span>');
+            return;
+        }
+        
+        levels.forEach(level => {
+            let badgeClass = 'risk-badge-unknown';
+            if (level === 'High') {
+                badgeClass = 'risk-badge-high';
+            } else if (level === 'Medium') {
+                badgeClass = 'risk-badge-medium';
+            } else if (level === 'Low') {
+                badgeClass = 'risk-badge-low';
+            }
+            
+            container.append(`<span class="risk-badge ${badgeClass}">${riskLevelMap[level] || level}</span>`);
+        });
+    }
+
+    function openWriteLevelsModal() {
+        // 如果还没有加载写入风险级别，先加载
+        if (!currentWriteRiskLevels) {
+            fetchWriteRiskLevels();
+            return;
+        }
+        
+        // 重置选中状态
+        $('#write-high, #write-medium, #write-low').prop('checked', false);
+        
+        // 根据当前配置选中对应的复选框
+        if (currentWriteRiskLevels.includes('High')) {
+            $('#write-high').prop('checked', true);
+        }
+        if (currentWriteRiskLevels.includes('Medium')) {
+            $('#write-medium').prop('checked', true);
+        }
+        if (currentWriteRiskLevels.includes('Low')) {
+            $('#write-low').prop('checked', true);
+        }
+        
+        // 显示模态框
+        $('#write-levels-modal').removeClass('hidden');
+    }
+
+    function closeWriteLevelsModal() {
+        $('#write-levels-modal').addClass('hidden');
+    }
+
+    function saveWriteRiskLevels() {
+        // 收集选中的风险级别
+        const levels = [];
+        if ($('#write-high').prop('checked')) {
+            levels.push('High');
+        }
+        if ($('#write-medium').prop('checked')) {
+            levels.push('Medium');
+        }
+        if ($('#write-low').prop('checked')) {
+            levels.push('Low');
+        }
+        
+        return fetch('/api/write_risk_levels', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ write_risk_levels: levels }),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => {
+                        throw new Error(err.error || `HTTP error ${response.status}`);
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                currentWriteRiskLevels = levels;
+                renderWriteRiskLevels(levels);
+                closeWriteLevelsModal();
+            });
+    }
+
+    function openDeleteConfirmModal(serverId) {
+        currentServerToDelete = serverId;
+        $('#confirm-delete-modal').removeClass('hidden');
+    }
+
+    function closeDeleteConfirmModal() {
+        currentServerToDelete = null;
+        $('#confirm-delete-modal').addClass('hidden');
+    }
+
+    // --- 服务器配置相关事件绑定 ---
+    // 添加服务器按钮
+    $('#add-server-btn').on('click', function() {
+        openServerModal();
+    });
+    
+    // 服务器表单认证类型切换
+    $('#server-auth-type').on('change', function() {
+        const authType = $(this).val();
+        if (authType === 'password') {
+            $('#password-auth-container').show();
+            $('#ssh-key-auth-container').hide();
+        } else if (authType === 'ssh_key') {
+            $('#password-auth-container').hide();
+            $('#ssh-key-auth-container').show();
+        }
+    });
+    
+    // 服务器表单提交
+    $('#server-form').on('submit', function(e) {
+        e.preventDefault();
+        
+        // 收集表单数据
+        const serverId = $('#server-id').val();
+        const formData = {
+            name: $('#server-name').val(),
+            host: $('#server-host').val(),
+            port: parseInt($('#server-port').val(), 10),
+            user: $('#server-user').val(),
+            auth_type: $('#server-auth-type').val(),
+            general_log_path: $('#server-general-log').val(),
+            binlog_path: $('#server-binlog').val(),
+            enable_general_log: $('#server-enable-general').prop('checked'),
+            enable_binlog: $('#server-enable-binlog').prop('checked')
+        };
+        
+        // 添加认证信息
+        if (formData.auth_type === 'password') {
+            formData.password = $('#server-password').val();
+        } else if (formData.auth_type === 'ssh_key') {
+            formData.ssh_key_path = $('#server-ssh-key').val();
+        }
+        
+        // 如果是编辑模式，添加ID
+        if (serverId) {
+            formData.server_id = parseInt(serverId, 10);
+        }
+        
+        // 保存服务器配置
+        saveServer(formData, !serverId)
+            .then(data => {
+                closeServerModal();
+                fetchServers();
+            })
+            .catch(error => {
+                console.error('保存服务器配置失败:', error);
+                showErrorAlert(error.message || '保存服务器配置失败，请重试。');
+            });
+    });
+    
+    // 服务器模态框关闭按钮
+    $('#server-modal-close-icon, #server-modal-cancel').on('click', function() {
+        closeServerModal();
+    });
+    
+    // 服务器模态框点击背景关闭
+    $('#server-modal').on('click', function(event) {
+        if (event.target === this) {
+            closeServerModal();
+        }
+    });
+    
+    // 编辑服务器按钮
+    $(document).on('click', '.edit-server-btn', function() {
+        const serverId = $(this).data('server-id');
+        openServerModal(serverId);
+    });
+    
+    // 删除服务器按钮
+    $(document).on('click', '.delete-server-btn', function() {
+        const serverId = $(this).data('server-id');
+        openDeleteConfirmModal(serverId);
+    });
+    
+    // 确认删除按钮
+    $('#confirm-delete-confirm').on('click', function() {
+        if (currentServerToDelete) {
+            deleteServer(currentServerToDelete)
+                .then(data => {
+                    closeDeleteConfirmModal();
+                    fetchServers();
+                })
+                .catch(error => {
+                    console.error('删除服务器配置失败:', error);
+                    showErrorAlert(error.message || '删除服务器配置失败，请重试。');
+                });
+        }
+    });
+    
+    // 取消删除按钮
+    $('#confirm-delete-cancel').on('click', function() {
+        closeDeleteConfirmModal();
+    });
+    
+    // 确认删除模态框点击背景关闭
+    $('#confirm-delete-modal').on('click', function(event) {
+        if (event.target === this) {
+            closeDeleteConfirmModal();
+        }
+    });
+    
+    // --- 风险规则相关事件绑定 ---
+    // 编辑风险规则按钮
+    $('#edit-risk-rules-btn').on('click', function() {
+        openRiskRulesModal();
+    });
+    
+    // 风险规则模态框关闭按钮
+    $('#risk-rules-modal-close-icon, #risk-rules-modal-cancel').on('click', function() {
+        closeRiskRulesModal();
+    });
+    
+    // 风险规则模态框点击背景关闭
+    $('#risk-rules-modal').on('click', function(event) {
+        if (event.target === this) {
+            closeRiskRulesModal();
+        }
+    });
+    
+    // 添加风险规则按钮
+    $('.add-rule-btn').on('click', function() {
+        const level = $(this).data('level');
+        const container = $(`#${level.toLowerCase()}-risk-items`);
+        addRuleItem(container);
+    });
+    
+    // 规则类型单选按钮切换
+    $(document).on('change', '.rule-type-radio', function() {
+        const value = $(this).val();
+        const $item = $(this).closest('.rule-item');
+        
+        if (value === 'type') {
+            $item.find('.rule-type-input').removeClass('hidden');
+            $item.find('.rule-keyword-input').addClass('hidden');
+        } else if (value === 'keyword') {
+            $item.find('.rule-type-input').addClass('hidden');
+            $item.find('.rule-keyword-input').removeClass('hidden');
+        }
+    });
+    
+    // 删除规则按钮
+    $(document).on('click', '.delete-rule-btn', function() {
+        $(this).closest('.rule-item').remove();
+    });
+    
+    // 风险规则表单提交
+    $('#risk-rules-form').on('submit', function(e) {
+        e.preventDefault();
+        
+        saveRiskRules()
+            .catch(error => {
+                console.error('保存风险规则失败:', error);
+                showErrorAlert(error.message || '保存风险规则失败，请重试。');
+            });
+    });
+    
+    // --- 写入风险级别相关事件绑定 ---
+    // 编辑写入级别按钮
+    $('#edit-write-levels-btn').on('click', function() {
+        openWriteLevelsModal();
+    });
+    
+    // 写入级别模态框关闭按钮
+    $('#write-levels-modal-close-icon, #write-levels-modal-cancel').on('click', function() {
+        closeWriteLevelsModal();
+    });
+    
+    // 写入级别模态框点击背景关闭
+    $('#write-levels-modal').on('click', function(event) {
+        if (event.target === this) {
+            closeWriteLevelsModal();
+        }
+    });
+    
+    // 写入级别表单提交
+    $('#write-levels-form').on('submit', function(e) {
+        e.preventDefault();
+        
+        saveWriteRiskLevels()
+            .catch(error => {
+                console.error('保存写入风险级别失败:', error);
+                showErrorAlert(error.message || '保存写入风险级别失败，请重试。');
+            });
+    });
+    
+    // 当切换到配置页面时加载配置数据
+    $('nav a[data-tab="config"]').on('click', function() {
+        fetchServers();
+        fetchRiskRules();
+        fetchWriteRiskLevels();
+    });
+
     // --- 初始数据加载 ---
-    function fetchData(page = 1) { fetchActivities(page); fetchStats(); }
+    function fetchData(page = 1) { 
+        fetchActivities(page); 
+        fetchStats(); 
+    }
     setTimeout(fetchData, 150);
     lucide.createIcons();
 

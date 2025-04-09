@@ -12,31 +12,6 @@ DB_CONFIG = {
     'database': 'mysql_log'
 }
 
-# 日志服务器配置 (保持您提供的结构)
-LOG_CONFIG = {
-    'servers': [
-        {
-            'server_id': 1,
-            'name': 'MySQL服务器1',
-            'host': '192.168.10.129',  # SSH 连接的目标 IP
-            'port': 22,              # SSH 端口
-            'user': 'root',          # SSH 用户名
-            'password': '123456',      # SSH 密码 (建议使用密钥)
-            # 'ssh_key_path': '/path/to/your/private_key', # 或者使用密钥路径
-            'general_log_path': '/data/general_log',  # !! general log 所在的目录 !!
-            'binlog_path': '/var/lib/mysql',      # binlog 路径 (如果启用)
-            'enable_general_log': True,  # 是否解析 general log
-            'enable_binlog': False     # 是否解析 binlog
-        }
-        # 如果有更多服务器，在此处添加
-        # ,{
-        #     'server_id': 2,
-        #     'name': 'MySQL服务器2',
-        #     ...
-        # }
-    ]
-}
-
 # 应用配置
 APP_CONFIG = {
     'default_days': 3,  # 默认显示最近3天的数据

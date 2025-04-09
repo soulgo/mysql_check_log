@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # 导入所需库
 import re
@@ -7,10 +8,10 @@ from datetime import datetime, timezone, timedelta # 引入 timedelta
 import pytz # 确保 pytz 用于时区处理
 import posixpath # 用于处理远程路径
 from typing import List, Dict, Any, Optional, Generator
-# 从 config 导入 LOG_CONFIG 和 APP_CONFIG
-from config import LOG_CONFIG, APP_CONFIG
-# !! 从 models 导入需要的函数 !!
-from models import add_user_activities_batch, get_last_scan_time, update_last_scan_time
+# 从 config 导入APP_CONFIG
+from config import APP_CONFIG
+# 从 models 导入需要的函数
+from models import add_user_activities_batch, get_last_scan_time, update_last_scan_time, get_all_servers, get_server_full_config, get_system_setting
 
 # 配置日志记录器
 logger = logging.getLogger(__name__)
@@ -269,25 +270,36 @@ def scan_logs_for_server(server_config: dict):
 
 # !! 保持 scan_all_servers 的正确格式 !!
 def scan_all_servers():
-    """扫描 config.py 中 LOG_CONFIG['servers'] 定义的所有服务器的日志"""
-    logger.info("开始扫描所有已配置的服务器 (来自 config.py)...")
-    server_list = LOG_CONFIG.get('servers', [])
-    if not server_list or not isinstance(server_list, list):
-        logger.warning("config.py 中的 LOG_CONFIG['servers'] 未定义、为空或不是列表。无法扫描。")
-        return
-
-    logger.info(f"准备遍历 {len(server_list)} 个服务器配置...")
-    servers_processed = 0
-    # 直接遍历 LOG_CONFIG['servers'] 列表
-    for server_config in server_list:
-        # 检查每个配置是否为字典且包含 'server_id'
-        if isinstance(server_config, dict) and server_config.get('server_id') is not None:
-             logger.debug(f"正在调用 scan_logs_for_server 处理服务器配置: server_id={server_config.get('server_id')}")
-             scan_logs_for_server(server_config) # 直接传递配置字典
-             servers_processed += 1
-        else:
-             logger.error(f"在 LOG_CONFIG['servers'] 中发现无效的配置项: {server_config}。已跳过。")
-    logger.info(f"已完成对 {servers_processed}/{len(server_list)} 个服务器的日志扫描尝试。")
+    """扫描全部服务器日志"""
+    try:
+        # 从数据库获取所有服务器配置
+        servers = get_all_servers()
+        logger.info(f"从数据库获取到 {len(servers)} 个服务器配置")
+        
+        success_count = 0
+        fail_count = 0
+        
+        for server in servers:
+            server_id = server.get('server_id')
+            # 获取完整配置（包含密码/密钥）
+            full_config = get_server_full_config(server_id)
+            if full_config:
+                # 执行日志扫描
+                result = scan_logs_for_server(full_config)
+                if result:
+                    success_count += 1
+                else:
+                    fail_count += 1
+            else:
+                logger.warning(f"未能获取服务器 ID {server_id} 的完整配置")
+                fail_count += 1
+        
+        logger.info(f"扫描完成: {success_count} 个成功, {fail_count} 个失败")
+        return success_count > 0  # 至少有一个成功就返回 True
+    
+    except Exception as e:
+        logger.exception(f"扫描所有服务器日志时出错: {e}")
+        return False
 
 # !! 保持 parse_binlog 的正确格式 !!
 def parse_binlog(ssh_client, binlog_path, server_id, last_scan_time=None):

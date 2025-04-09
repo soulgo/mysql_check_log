@@ -54,6 +54,7 @@
                 <ul>
                     <li class="mb-1"><a href="#" class="flex items-center px-3 py-2 rounded text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white data-[active=true]:bg-gray-700 data-[active=true]:text-white" data-tab="dashboard" data-active="true"><i data-lucide="layout-dashboard" class="mr-3 h-5 w-5"></i>仪表盘</a></li>
                     <li class="mb-1"><a href="#" class="flex items-center px-3 py-2 rounded text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white data-[active=true]:bg-gray-700 data-[active=true]:text-white" data-tab="activities" data-active="false"><i data-lucide="list-checks" class="mr-3 h-5 w-5"></i>操作记录</a></li>
+                    <li class="mb-1"><a href="#" class="flex items-center px-3 py-2 rounded text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white data-[active=true]:bg-gray-700 data-[active=true]:text-white" data-tab="config" data-active="false"><i data-lucide="settings" class="mr-3 h-5 w-5"></i>系统配置</a></li>
                     </ul>
             </nav>
             <div class="mt-auto">
@@ -162,7 +163,88 @@
                             </div>
                             <div id="pagination" class="p-4 border-t"></div> </div>
                     </div>
+                    
+                    <div id="config-content" class="tab-content hidden">
+                        <div class="flex mb-6">
+                            <div class="w-full bg-white rounded-lg shadow border border-gray-200 p-4">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="text-md font-semibold text-gray-700">MySQL服务器配置</h3>
+                                    <button id="add-server-btn" class="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-150 ease-in-out">
+                                        <i data-lucide="plus" class="mr-1 h-4 w-4"></i>添加服务器
+                                    </button>
+                                </div>
+                                <div class="mt-4 overflow-x-auto">
+                                    <table class="min-w-full divide-y divide-gray-200">
+                                        <thead class="bg-gray-50">
+                                            <tr>
+                                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">名称</th>
+                                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">主机</th>
+                                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">端口</th>
+                                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">用户</th>
+                                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">认证</th>
+                                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">日志扫描</th>
+                                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="servers-table-body" class="bg-white divide-y divide-gray-200 text-sm">
+                                            <tr><td colspan="8" class="text-center py-10 text-gray-500">加载中...</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-white rounded-lg shadow border border-gray-200 p-4">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="text-md font-semibold text-gray-700">风险规则配置</h3>
+                                    <div>
+                                        <button id="edit-risk-rules-btn" class="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
+                                            <i data-lucide="edit" class="mr-1 h-4 w-4"></i>修改规则
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <div class="grid grid-cols-1 gap-4">
+                                        <div>
+                                            <h4 class="text-sm font-medium text-gray-700 mb-2">高风险操作</h4>
+                                            <div id="high-risk-rules" class="bg-gray-50 p-3 rounded text-sm"></div>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-sm font-medium text-gray-700 mb-2">中风险操作</h4>
+                                            <div id="medium-risk-rules" class="bg-gray-50 p-3 rounded text-sm"></div>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-sm font-medium text-gray-700 mb-2">低风险操作</h4>
+                                            <div id="low-risk-rules" class="bg-gray-50 p-3 rounded text-sm"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white rounded-lg shadow border border-gray-200 p-4">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="text-md font-semibold text-gray-700">写入过滤规则</h3>
+                                    <div>
+                                        <button id="edit-write-levels-btn" class="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
+                                            <i data-lucide="edit" class="mr-1 h-4 w-4"></i>修改规则
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <div class="bg-gray-50 p-4 rounded">
+                                        <p class="text-sm text-gray-600 mb-3">当前写入数据库的风险级别：</p>
+                                        <div id="write-risk-levels" class="flex gap-2"></div>
+                                    </div>
+                                    <div class="mt-4 text-sm text-gray-600">
+                                        <p>说明：系统只会将符合上述风险级别的操作记录写入数据库，其他级别的操作将被忽略。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                </div>
             </main>
         </div>
     </div>
@@ -181,6 +263,181 @@
                 </div>
                 <div class="items-center px-4 py-3 mt-2">
                     <button id="details-modal-close" class="px-4 py-2 bg-gray-600 text-white text-sm font-medium rounded-md w-full shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 服务器表单模态框 -->
+    <div id="server-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center hidden z-50">
+        <div class="relative mx-auto p-5 border w-11/12 md:w-2/3 lg:w-1/2 shadow-lg rounded-md bg-white">
+            <div class="mt-3">
+                <div class="flex justify-between items-center mb-3">
+                    <h3 id="server-modal-title" class="text-lg leading-6 font-medium text-gray-900">添加服务器</h3>
+                    <button id="server-modal-close-icon" class="text-gray-400 hover:text-gray-600">
+                        <i data-lucide="x" class="h-5 w-5"></i>
+                    </button>
+                </div>
+                <form id="server-form">
+                    <input type="hidden" id="server-id" name="server_id" value="">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="md:col-span-2">
+                            <label for="server-name" class="block text-sm font-medium text-gray-700">服务器名称</label>
+                            <input type="text" id="server-name" name="name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+                        </div>
+                        <div>
+                            <label for="server-host" class="block text-sm font-medium text-gray-700">主机地址</label>
+                            <input type="text" id="server-host" name="host" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+                        </div>
+                        <div>
+                            <label for="server-port" class="block text-sm font-medium text-gray-700">SSH端口</label>
+                            <input type="number" id="server-port" name="port" value="22" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+                        </div>
+                        <div>
+                            <label for="server-user" class="block text-sm font-medium text-gray-700">SSH用户名</label>
+                            <input type="text" id="server-user" name="user" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+                        </div>
+                        <div>
+                            <label for="server-auth-type" class="block text-sm font-medium text-gray-700">认证方式</label>
+                            <select id="server-auth-type" name="auth_type" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                <option value="password">密码</option>
+                                <option value="ssh_key">SSH密钥</option>
+                            </select>
+                        </div>
+                        <div id="password-auth-container">
+                            <label for="server-password" class="block text-sm font-medium text-gray-700">SSH密码</label>
+                            <input type="password" id="server-password" name="password" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                        </div>
+                        <div id="ssh-key-auth-container" class="hidden">
+                            <label for="server-ssh-key" class="block text-sm font-medium text-gray-700">SSH密钥路径</label>
+                            <input type="text" id="server-ssh-key" name="ssh_key_path" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="server-general-log" class="block text-sm font-medium text-gray-700">General Log路径</label>
+                            <input type="text" id="server-general-log" name="general_log_path" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="server-binlog" class="block text-sm font-medium text-gray-700">Binary Log路径</label>
+                            <input type="text" id="server-binlog" name="binlog_path" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                        </div>
+                        <div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="server-enable-general" name="enable_general_log" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                                <label for="server-enable-general" class="ml-2 block text-sm text-gray-700">启用General Log扫描</label>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="server-enable-binlog" name="enable_binlog" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                                <label for="server-enable-binlog" class="ml-2 block text-sm text-gray-700">启用Binary Log扫描</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-5 flex justify-end gap-3">
+                        <button type="button" id="server-modal-cancel" class="px-4 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-md shadow-sm hover:bg-gray-200">取消</button>
+                        <button type="submit" id="server-modal-save" class="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 风险规则编辑模态框 -->
+    <div id="risk-rules-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center hidden z-50">
+        <div class="relative mx-auto p-5 border w-11/12 md:w-2/3 lg:w-3/4 shadow-lg rounded-md bg-white">
+            <div class="mt-3">
+                <div class="flex justify-between items-center mb-3">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900">编辑风险规则</h3>
+                    <button id="risk-rules-modal-close-icon" class="text-gray-400 hover:text-gray-600">
+                        <i data-lucide="x" class="h-5 w-5"></i>
+                    </button>
+                </div>
+                <form id="risk-rules-form">
+                    <div class="grid grid-cols-1 gap-6">
+                        <div>
+                            <h4 class="text-md font-medium text-gray-700 mb-2">高风险操作</h4>
+                            <div id="high-risk-editor" class="bg-gray-50 p-4 rounded">
+                                <div id="high-risk-items"></div>
+                                <button type="button" class="add-rule-btn mt-2 text-indigo-600 hover:text-indigo-800 text-sm" data-level="High">+ 添加规则</button>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-md font-medium text-gray-700 mb-2">中风险操作</h4>
+                            <div id="medium-risk-editor" class="bg-gray-50 p-4 rounded">
+                                <div id="medium-risk-items"></div>
+                                <button type="button" class="add-rule-btn mt-2 text-indigo-600 hover:text-indigo-800 text-sm" data-level="Medium">+ 添加规则</button>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-md font-medium text-gray-700 mb-2">低风险操作</h4>
+                            <div id="low-risk-editor" class="bg-gray-50 p-4 rounded">
+                                <div id="low-risk-items"></div>
+                                <button type="button" class="add-rule-btn mt-2 text-indigo-600 hover:text-indigo-800 text-sm" data-level="Low">+ 添加规则</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-5 flex justify-end gap-3">
+                        <button type="button" id="risk-rules-modal-cancel" class="px-4 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-md shadow-sm hover:bg-gray-200">取消</button>
+                        <button type="submit" id="risk-rules-modal-save" class="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 写入级别编辑模态框 -->
+    <div id="write-levels-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center hidden z-50">
+        <div class="relative mx-auto p-5 border w-11/12 md:w-2/3 lg:w-1/2 shadow-lg rounded-md bg-white">
+            <div class="mt-3">
+                <div class="flex justify-between items-center mb-3">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900">编辑写入级别</h3>
+                    <button id="write-levels-modal-close-icon" class="text-gray-400 hover:text-gray-600">
+                        <i data-lucide="x" class="h-5 w-5"></i>
+                    </button>
+                </div>
+                <form id="write-levels-form">
+                    <div class="bg-gray-50 p-4 rounded">
+                        <p class="text-sm text-gray-700 mb-3">选择需要写入数据库的风险级别：</p>
+                        <div class="space-y-2">
+                            <div class="flex items-center">
+                                <input type="checkbox" id="write-high" name="write_levels" value="High" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                                <label for="write-high" class="ml-2 block text-sm text-gray-700">高风险 (High)</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="write-medium" name="write_levels" value="Medium" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                                <label for="write-medium" class="ml-2 block text-sm text-gray-700">中风险 (Medium)</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="write-low" name="write_levels" value="Low" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                                <label for="write-low" class="ml-2 block text-sm text-gray-700">低风险 (Low)</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-5 flex justify-end gap-3">
+                        <button type="button" id="write-levels-modal-cancel" class="px-4 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-md shadow-sm hover:bg-gray-200">取消</button>
+                        <button type="submit" id="write-levels-modal-save" class="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 确认删除模态框 -->
+    <div id="confirm-delete-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center hidden z-50">
+        <div class="relative mx-auto p-5 border w-11/12 md:w-1/3 shadow-lg rounded-md bg-white">
+            <div class="mt-3 text-center">
+                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
+                    <i data-lucide="alert-triangle" class="h-6 w-6 text-red-600"></i>
+                </div>
+                <h3 class="text-lg leading-6 font-medium text-gray-900 mt-3">确认删除</h3>
+                <div class="mt-2 px-7 py-3">
+                    <p class="text-sm text-gray-500">
+                        确定要删除此服务器配置吗？此操作无法撤销。
+                    </p>
+                </div>
+                <div class="items-center px-4 py-3 mt-2 flex justify-center gap-3">
+                    <button id="confirm-delete-cancel" class="px-4 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-md shadow-sm hover:bg-gray-200">取消</button>
+                    <button id="confirm-delete-confirm" class="px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">确认删除</button>
                 </div>
             </div>
         </div>
