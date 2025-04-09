@@ -9,9 +9,63 @@ import json
 import time
 import copy
 from config import APP_CONFIG
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import create_engine, Column, Integer, String, DateTime, Enum, Text, BigInteger, Boolean, ForeignKey
+from sqlalchemy.ext.declarative import declarative_base
 
 # 配置日志记录器
 logger = logging.getLogger(__name__)
+
+# 创建SQLAlchemy实例
+db = SQLAlchemy()
+
+# 定义UserActivity模型
+class UserActivity(db.Model):
+    __tablename__ = 'user_activities'
+    
+    id = Column(BigInteger, primary_key=True, autoincrement=True)
+    server_id = Column(Integer, nullable=False)
+    timestamp = Column(DateTime(6), nullable=False)
+    user_name = Column(String(100))
+    client_host = Column(String(255))
+    db_name = Column(String(100))
+    thread_id = Column(Integer)
+    command_type = Column(String(50))
+    operation_type = Column(String(50))
+    argument = Column(Text)
+    risk_level = Column(Enum('Low', 'Medium', 'High'), default='Low')
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+# 定义ServerConfig模型
+class ServerConfig(db.Model):
+    __tablename__ = 'server_configs'
+    
+    server_id = Column(Integer, primary_key=True)
+    name = Column(String(100), nullable=False)
+    host = Column(String(255), nullable=False)
+    port = Column(Integer, default=22)
+    user = Column(String(100), nullable=False)
+    password = Column(String(255))
+    ssh_key_path = Column(String(255))
+    general_log_path = Column(String(255))
+    binlog_path = Column(String(255))
+    enable_general_log = Column(Boolean, default=True)
+    enable_binlog = Column(Boolean, default=False)
+
+# 定义SystemSetting模型
+class SystemSetting(db.Model):
+    __tablename__ = 'system_settings'
+    
+    key = Column(String(50), primary_key=True)
+    value = Column(Text, nullable=False)
+    updated_at = Column(DateTime, nullable=False)
+
+# 定义ServerScanRecord模型
+class ServerScanRecord(db.Model):
+    __tablename__ = 'server_scan_records'
+    
+    server_id = Column(Integer, primary_key=True)
+    last_scan_time = Column(DateTime(6), nullable=False)
 
 # --- 数据库连接 ---
 def get_db_connection():

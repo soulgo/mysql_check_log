@@ -3,18 +3,21 @@
 import logging
 import logging.handlers
 import os
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_file
 from datetime import datetime, timedelta
-# 从 models 导入需要的函数
+import pandas as pd
+from io import BytesIO
+# 从 models 导入需要的函数和类
 from models import (
     init_db, add_user_activity, get_user_activities, get_operation_stats,
     get_all_servers, get_server_by_id, get_server_full_config, add_server, update_server, delete_server,
-    get_system_setting, update_system_setting
+    get_system_setting, update_system_setting, db, UserActivity
 )
 # 从 log_parser 导入需要的函数
 from log_parser import scan_logs_for_server, scan_all_servers
 # 从 config 导入默认配置
-from config import APP_CONFIG
+from config import APP_CONFIG, DB_CONFIG
+from reports import ReportGenerator
 
 # --- 日志配置 ---
 # 移除文件日志配置
@@ -26,19 +29,32 @@ logger = logging.getLogger(__name__)
 # --- Flask 应用初始化 ---
 app = Flask(__name__)
 
+# 配置 SQLAlchemy
+app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{DB_CONFIG['user']}:{DB_CONFIG['password']}@{DB_CONFIG['host']}:{DB_CONFIG['port']}/{DB_CONFIG['database']}"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# 初始化 SQLAlchemy
+db.init_app(app)
+
 # --- 初始配置缓存 ---
 # 这两个缓存会在应用启动时和配置变更时更新
 CACHED_RISK_OPERATIONS = None
 CACHED_WRITE_RISK_LEVELS = None
 
 # --- 数据库初始化 ---
-try:
-    if init_db():
-        logger.info("数据库初始化成功或已存在。")
-    else:
-        logger.error("数据库初始化失败。请检查数据库连接和权限。")
-except Exception as e:
-    logger.exception(f"数据库初始化过程中发生意外错误: {e}")
+with app.app_context():
+    try:
+        # 创建所有表
+        db.create_all()
+        logger.info("数据库表创建成功")
+        
+        # 初始化系统设置
+        if init_db():
+            logger.info("数据库初始化成功")
+        else:
+            logger.error("数据库初始化失败")
+    except Exception as e:
+        logger.exception(f"数据库初始化过程中发生错误: {e}")
 
 # --- 初始加载配置 ---
 def load_system_settings():
@@ -396,7 +412,7 @@ def update_write_risk_levels():
                 return jsonify({'status': 'error', 'error': f'无效的风险等级: {level}'}), 400
                 
         # 更新数据库和内存缓存中的写入风险级别
-        success = update_system_setting('WRITE_RISK_LEVELS', write_risk_levels, '写入数据库的风险级别')
+        success = update_system_setting('WRITE_RISK_LEVELS', write_risk_levels)
         if success:
             global CACHED_WRITE_RISK_LEVELS
             CACHED_WRITE_RISK_LEVELS = write_risk_levels
@@ -409,6 +425,83 @@ def update_write_risk_levels():
     except Exception as e:
         logger.exception(f"更新写入风险级别失败: {e}")
         return jsonify({'status': 'error', 'error': f'更新写入风险级别失败: {str(e)}'}), 500
+
+@app.route('/api/reports/daily', methods=['GET'])
+def get_daily_report():
+    """获取日报"""
+    try:
+        report = ReportGenerator.generate_daily_report()
+        return jsonify(report)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/reports/weekly', methods=['GET'])
+def get_weekly_report():
+    """获取周报"""
+    try:
+        report = ReportGenerator.generate_weekly_report()
+        return jsonify(report)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/reports/monthly', methods=['GET'])
+def get_monthly_report():
+    """获取月报"""
+    try:
+        report = ReportGenerator.generate_monthly_report()
+        return jsonify(report)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/export', methods=['GET'])
+def export_activities():
+    """导出操作记录"""
+    try:
+        # 获取查询参数
+        start_date = request.args.get('start_date')
+        end_date = request.args.get('end_date')
+        risk_levels = request.args.getlist('risk_levels')
+        users = request.args.getlist('users')
+        operation_types = request.args.getlist('operation_types')
+        export_format = request.args.get('format', 'csv')  # 默认导出为CSV
+
+        # 转换日期字符串为datetime对象
+        start_date = datetime.strptime(start_date, '%Y-%m-%d') if start_date else datetime.now() - timedelta(days=7)
+        end_date = datetime.strptime(end_date, '%Y-%m-%d') if end_date else datetime.now()
+
+        # 生成DataFrame
+        df = ReportGenerator.export_activities(
+            start_date, 
+            end_date,
+            risk_levels=risk_levels if risk_levels else None,
+            users=users if users else None,
+            operation_types=operation_types if operation_types else None
+        )
+
+        # 创建内存文件对象
+        buffer = BytesIO()
+
+        if export_format.lower() == 'excel':
+            # 导出为Excel
+            df.to_excel(buffer, index=False, engine='openpyxl')
+            mimetype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            filename = f'操作记录_{start_date.strftime("%Y%m%d")}_{end_date.strftime("%Y%m%d")}.xlsx'
+        else:
+            # 导出为CSV
+            df.to_csv(buffer, index=False, encoding='utf-8-sig')
+            mimetype = 'text/csv'
+            filename = f'操作记录_{start_date.strftime("%Y%m%d")}_{end_date.strftime("%Y%m%d")}.csv'
+
+        buffer.seek(0)
+        return send_file(
+            buffer,
+            mimetype=mimetype,
+            as_attachment=True,
+            download_name=filename
+        )
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 # --- 应用运行 ---
 if __name__ == '__main__':

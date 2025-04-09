@@ -54,8 +54,9 @@
                 <ul>
                     <li class="mb-1"><a href="#" class="flex items-center px-3 py-2 rounded text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white data-[active=true]:bg-gray-700 data-[active=true]:text-white" data-tab="dashboard" data-active="true"><i data-lucide="layout-dashboard" class="mr-3 h-5 w-5"></i>仪表盘</a></li>
                     <li class="mb-1"><a href="#" class="flex items-center px-3 py-2 rounded text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white data-[active=true]:bg-gray-700 data-[active=true]:text-white" data-tab="activities" data-active="false"><i data-lucide="list-checks" class="mr-3 h-5 w-5"></i>操作记录</a></li>
+                    <li class="mb-1"><a href="#" class="flex items-center px-3 py-2 rounded text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white data-[active=true]:bg-gray-700 data-[active=true]:text-white" data-tab="reports" data-active="false"><i data-lucide="file-text" class="mr-3 h-5 w-5"></i>报表导出</a></li>
                     <li class="mb-1"><a href="#" class="flex items-center px-3 py-2 rounded text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white data-[active=true]:bg-gray-700 data-[active=true]:text-white" data-tab="config" data-active="false"><i data-lucide="settings" class="mr-3 h-5 w-5"></i>系统配置</a></li>
-                    </ul>
+                </ul>
             </nav>
             <div class="mt-auto">
                 <div id="scan-indicator" class="text-center my-3 hidden">
@@ -164,6 +165,42 @@
                             <div id="pagination" class="p-4 border-t"></div> </div>
                     </div>
                     
+                    <div id="reports-content" class="tab-content hidden">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- 定期报表 -->
+                            <div class="bg-white rounded-lg shadow border border-gray-200 p-6">
+                                <h3 class="text-lg font-semibold mb-4 text-gray-700 border-b pb-2">定期报表</h3>
+                                <div class="space-y-4">
+                                    <button onclick="generateReport('daily')" class="w-full flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded transition duration-150 ease-in-out">
+                                        <i data-lucide="file-text" class="mr-2 h-4 w-4"></i>生成日报
+                                    </button>
+                                    <button onclick="generateReport('weekly')" class="w-full flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded transition duration-150 ease-in-out">
+                                        <i data-lucide="file-text" class="mr-2 h-4 w-4"></i>生成周报
+                                    </button>
+                                    <button onclick="generateReport('monthly')" class="w-full flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded transition duration-150 ease-in-out">
+                                        <i data-lucide="file-text" class="mr-2 h-4 w-4"></i>生成月报
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- 数据导出 -->
+                            <div class="bg-white rounded-lg shadow border border-gray-200 p-6">
+                                <h3 class="text-lg font-semibold mb-4 text-gray-700 border-b pb-2">数据导出</h3>
+                                <div class="space-y-4">
+                                    <button onclick="exportData('csv')" class="w-full flex items-center justify-center bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded transition duration-150 ease-in-out">
+                                        <i data-lucide="file-text" class="mr-2 h-4 w-4"></i>导出为CSV
+                                    </button>
+                                    <button onclick="exportData('excel')" class="w-full flex items-center justify-center bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded transition duration-150 ease-in-out">
+                                        <i data-lucide="file-spreadsheet" class="mr-2 h-4 w-4"></i>导出为Excel
+                                    </button>
+                                </div>
+                                <div class="mt-4">
+                                    <p class="text-sm text-gray-500">注：导出数据将包含当前筛选条件下的所有记录</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div id="config-content" class="tab-content hidden">
                         <div class="flex mb-6">
                             <div class="w-full bg-white rounded-lg shadow border border-gray-200 p-4">
@@ -225,7 +262,7 @@
                             
                             <div class="bg-white rounded-lg shadow border border-gray-200 p-4">
                                 <div class="flex justify-between items-center">
-                                    <h3 class="text-md font-semibold text-gray-700">写入过滤规则</h3>
+                                    <h3 class="text-md font-medium text-gray-700">写入过滤规则</h3>
                                     <div>
                                         <button id="edit-write-levels-btn" class="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
                                             <i data-lucide="edit" class="mr-1 h-4 w-4"></i>修改规则
@@ -452,6 +489,258 @@
     <script>
         // 初始化 Lucide 图标
         lucide.createIcons();
+
+        // 更新标题函数
+        function updateTitle(tab) {
+            const titles = {
+                'dashboard': '仪表盘',
+                'activities': '操作记录',
+                'reports': '报表导出',
+                'config': '系统配置'
+            };
+            document.getElementById('main-content-title').textContent = titles[tab] || '仪表盘';
+        }
+
+        // 标签切换处理
+        document.querySelectorAll('[data-tab]').forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                e.preventDefault();
+                const tabId = tab.getAttribute('data-tab');
+                
+                // 更新导航项状态
+                document.querySelectorAll('[data-tab]').forEach(t => {
+                    t.setAttribute('data-active', 'false');
+                });
+                tab.setAttribute('data-active', 'true');
+                
+                // 更新内容区域显示
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.add('hidden');
+                });
+                document.getElementById(`${tabId}-content`).classList.remove('hidden');
+                
+                // 更新标题
+                updateTitle(tabId);
+            });
+        });
+
+        // 生成报表函数
+        function generateReport(type) {
+            fetch(`/api/reports/${type}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        showError(`生成${type}报表失败：${data.error}`);
+                        return;
+                    }
+                    
+                    // 创建报表预览模态框
+                    const modal = document.createElement('div');
+                    modal.className = 'fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center z-50';
+                    modal.innerHTML = `
+                        <div class="relative mx-auto p-5 border w-11/12 md:w-3/4 shadow-lg rounded-md bg-white">
+                            <div class="mt-3">
+                                <div class="flex justify-between items-center mb-4 border-b pb-3">
+                                    <div class="flex items-center">
+                                        <i data-lucide="file-text" class="h-6 w-6 text-indigo-600 mr-2"></i>
+                                        <h3 class="text-xl font-semibold text-gray-900">${type === 'daily' ? '日报' : type === 'weekly' ? '周报' : '月报'}</h3>
+                                    </div>
+                                    <button class="text-gray-400 hover:text-gray-600 close-modal">
+                                        <i data-lucide="x" class="h-5 w-5"></i>
+                                    </button>
+                                </div>
+                                <div class="mt-2 px-4 py-3">
+                                    <!-- 报表周期卡片 -->
+                                    <div class="mb-6 bg-indigo-50 rounded-lg p-4 border border-indigo-100">
+                                        <div class="flex items-center mb-2">
+                                            <i data-lucide="calendar" class="h-5 w-5 text-indigo-600 mr-2"></i>
+                                            <h6 class="font-semibold text-gray-900">报表周期</h6>
+                                        </div>
+                                        <div class="grid grid-cols-2 gap-4">
+                                            <div class="bg-white rounded p-3 border border-indigo-100">
+                                                <div class="text-xs text-gray-500">开始时间</div>
+                                                <div class="text-sm font-medium text-gray-700">${new Date(data.period.start).toLocaleString()}</div>
+                                            </div>
+                                            <div class="bg-white rounded p-3 border border-indigo-100">
+                                                <div class="text-xs text-gray-500">结束时间</div>
+                                                <div class="text-sm font-medium text-gray-700">${new Date(data.period.end).toLocaleString()}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 统计数据网格 -->
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <!-- 风险等级统计卡片 -->
+                                        <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                                            <div class="flex items-center mb-3">
+                                                <i data-lucide="shield-alert" class="h-5 w-5 text-gray-600 mr-2"></i>
+                                                <h6 class="font-semibold text-gray-900">风险等级统计</h6>
+                                            </div>
+                                            <div class="space-y-2">
+                                                ${Object.entries(data.risk_level_summary).map(([level, count]) => `
+                                                    <div class="flex items-center justify-between bg-white p-2 rounded border border-gray-200">
+                                                        <span class="inline-flex items-center">
+                                                            <span class="w-2 h-2 rounded-full ${level === 'High' ? 'bg-red-500' : level === 'Medium' ? 'bg-yellow-500' : 'bg-green-500'} mr-2"></span>
+                                                            <span class="text-sm text-gray-600">${level === 'High' ? '高危操作' : level === 'Medium' ? '中危操作' : '低危操作'}</span>
+                                                        </span>
+                                                        <span class="text-sm font-medium ${level === 'High' ? 'text-red-600' : level === 'Medium' ? 'text-yellow-600' : 'text-green-600'}">${count}次</span>
+                                                    </div>
+                                                `).join('')}
+                                            </div>
+                                        </div>
+
+                                        <!-- 活跃用户统计卡片 -->
+                                        <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                                            <div class="flex items-center mb-3">
+                                                <i data-lucide="users" class="h-5 w-5 text-gray-600 mr-2"></i>
+                                                <h6 class="font-semibold text-gray-900">活跃用户统计</h6>
+                                            </div>
+                                            <div class="space-y-2 max-h-40 overflow-y-auto">
+                                                ${Object.entries(data.active_users).map(([user, count], index) => `
+                                                    <div class="flex items-center justify-between bg-white p-2 rounded border border-gray-200">
+                                                        <span class="inline-flex items-center">
+                                                            <span class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-600 text-xs flex items-center justify-center mr-2">${index + 1}</span>
+                                                            <span class="text-sm text-gray-600">${user}</span>
+                                                        </span>
+                                                        <span class="text-sm font-medium text-indigo-600">${count}次</span>
+                                                    </div>
+                                                `).join('')}
+                                            </div>
+                                        </div>
+
+                                        <!-- 操作类型统计卡片 -->
+                                        <div class="md:col-span-2 bg-gray-50 rounded-lg p-4 border border-gray-200">
+                                            <div class="flex items-center mb-3">
+                                                <i data-lucide="activity" class="h-5 w-5 text-gray-600 mr-2"></i>
+                                                <h6 class="font-semibold text-gray-900">操作类型统计</h6>
+                                            </div>
+                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                                <!-- 高风险操作 -->
+                                                <div class="bg-red-50 rounded-lg p-3 border border-red-100">
+                                                    <h7 class="text-sm font-medium text-red-700 flex items-center">
+                                                        <i data-lucide="alert-triangle" class="h-4 w-4 mr-1"></i>高风险操作
+                                                    </h7>
+                                                    <div class="mt-2 space-y-1">
+                                                        ${Object.entries(data.operation_types.high_risk).map(([type, count]) => `
+                                                            <div class="flex justify-between items-center bg-white rounded p-2 text-sm">
+                                                                <span class="text-gray-600">${type}</span>
+                                                                <span class="font-medium text-red-600">${count}次</span>
+                                                            </div>
+                                                        `).join('')}
+                                                    </div>
+                                                </div>
+                                                <!-- 中风险操作 -->
+                                                <div class="bg-yellow-50 rounded-lg p-3 border border-yellow-100">
+                                                    <h7 class="text-sm font-medium text-yellow-700 flex items-center">
+                                                        <i data-lucide="alert-circle" class="h-4 w-4 mr-1"></i>中风险操作
+                                                    </h7>
+                                                    <div class="mt-2 space-y-1">
+                                                        ${Object.entries(data.operation_types.medium_risk).map(([type, count]) => `
+                                                            <div class="flex justify-between items-center bg-white rounded p-2 text-sm">
+                                                                <span class="text-gray-600">${type}</span>
+                                                                <span class="font-medium text-yellow-600">${count}次</span>
+                                                            </div>
+                                                        `).join('')}
+                                                    </div>
+                                                </div>
+                                                <!-- 低风险操作 -->
+                                                <div class="bg-green-50 rounded-lg p-3 border border-green-100">
+                                                    <h7 class="text-sm font-medium text-green-700 flex items-center">
+                                                        <i data-lucide="info" class="h-4 w-4 mr-1"></i>低风险操作
+                                                    </h7>
+                                                    <div class="mt-2 space-y-1">
+                                                        ${Object.entries(data.operation_types.low_risk).map(([type, count]) => `
+                                                            <div class="flex justify-between items-center bg-white rounded p-2 text-sm">
+                                                                <span class="text-gray-600">${type}</span>
+                                                                <span class="font-medium text-green-600">${count}次</span>
+                                                            </div>
+                                                        `).join('')}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-6 px-4 py-3 flex justify-end">
+                                    <button class="px-6 py-2 bg-gray-600 text-white text-sm font-medium rounded-md shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 close-modal flex items-center">
+                                        <i data-lucide="x" class="h-4 w-4 mr-2"></i>关闭
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // 添加到页面
+                    document.body.appendChild(modal);
+                    
+                    // 初始化新的图标
+                    lucide.createIcons();
+                    
+                    // 添加关闭事件
+                    modal.querySelectorAll('.close-modal').forEach(button => {
+                        button.addEventListener('click', () => {
+                            document.body.removeChild(modal);
+                        });
+                    });
+                })
+                .catch(error => {
+                    showError(`生成报表失败：${error}`);
+                });
+        }
+
+        // 导出数据函数
+        function exportData(format) {
+            // 获取当前筛选条件
+            const filters = {
+                startDate: document.querySelector('#daterange').value.split(' - ')[0],
+                endDate: document.querySelector('#daterange').value.split(' - ')[1],
+                riskLevel: document.querySelector('#risk-level-select').value,
+                operationType: document.querySelector('#operation-type-select').value,
+                username: document.querySelector('#username-input').value,
+                serverId: document.querySelector('#server-select').value
+            };
+            
+            // 构建URL
+            const url = new URL('/api/export', window.location.origin);
+            url.searchParams.append('format', format);
+            
+            if (filters.startDate) url.searchParams.append('start_date', filters.startDate);
+            if (filters.endDate) url.searchParams.append('end_date', filters.endDate);
+            if (filters.riskLevel) url.searchParams.append('risk_levels', filters.riskLevel);
+            if (filters.username) url.searchParams.append('users', filters.username);
+            if (filters.operationType) url.searchParams.append('operation_types', filters.operationType);
+            if (filters.serverId) url.searchParams.append('server_id', filters.serverId);
+            
+            // 触发下载
+            window.location.href = url.toString();
+        }
+
+        // 显示错误信息函数
+        function showError(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'fixed bottom-4 right-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded z-50';
+            errorDiv.innerHTML = `
+                <span class="block sm:inline">${message}</span>
+                <button class="absolute top-0 bottom-0 right-0 px-4 py-3">
+                    <i data-lucide="x" class="h-4 w-4"></i>
+                </button>
+            `;
+            
+            document.body.appendChild(errorDiv);
+            lucide.createIcons();
+            
+            // 添加关闭按钮事件
+            errorDiv.querySelector('button').addEventListener('click', () => {
+                document.body.removeChild(errorDiv);
+            });
+            
+            // 5秒后自动消失
+            setTimeout(() => {
+                if (document.body.contains(errorDiv)) {
+                    document.body.removeChild(errorDiv);
+                }
+            }, 5000);
+        }
     </script>
 
 </body>
